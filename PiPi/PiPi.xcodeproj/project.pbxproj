@@ -17,6 +17,8 @@
 		EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */; };
 		EBEBE4F8253D64F300C7E100 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4F7253D64F300C7E100 /* Token.swift */; };
 		EBEBE4FB253D650000C7E100 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBEBE4FA253D650000C7E100 /* Auth.storyboard */; };
+		EBEBE504253D6A8D00C7E100 /* SIgnInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE503253D6A8D00C7E100 /* SIgnInViewController.swift */; };
+		EBEBE507253D6A9A00C7E100 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE506253D6A9A00C7E100 /* SignInViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		EBEBE4F7253D64F300C7E100 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		EBEBE4FA253D650000C7E100 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
+		EBEBE503253D6A8D00C7E100 /* SIgnInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIgnInViewController.swift; sourceTree = "<group>"; };
+		EBEBE506253D6A9A00C7E100 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				EBAC81072539690100DAD71B /* ViewController.swift */,
+				EBEBE503253D6A8D00C7E100 /* SIgnInViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -134,6 +139,7 @@
 		EBEBE4EA253D643100C7E100 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				EBEBE506253D6A9A00C7E100 /* SignInViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -288,9 +294,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */,
+				EBEBE507253D6A9A00C7E100 /* SignInViewModel.swift in Sources */,
 				EBEBE4EF253D64A500C7E100 /* Extension.swift in Sources */,
 				EBEBE4F8253D64F300C7E100 /* Token.swift in Sources */,
 				EBAC81082539690100DAD71B /* ViewController.swift in Sources */,
+				EBEBE504253D6A8D00C7E100 /* SIgnInViewController.swift in Sources */,
 				EBAC81042539690100DAD71B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
