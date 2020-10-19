@@ -82,7 +82,7 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 
-_DS.Store
+.DS_Store
 
 # Code Injection
 #
