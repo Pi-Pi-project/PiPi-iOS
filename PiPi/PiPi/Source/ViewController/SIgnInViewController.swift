@@ -6,24 +6,51 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 class SIgnInViewController: UIViewController {
 
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var pwTextField: UITextField!
+    @IBOutlet weak var signInBtn: UIButton!
+    @IBOutlet weak var findPwBtn: UIButton!
+    
+    private let viewModel = SignInViewModel()
+    private let emailLabel = UILabel()
+    private let errorLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        setUI()
+        bindViewModel()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setUI() {
+        signInBtn.rx.tap.subscribe(onNext: { _ in
+            if PiPiFilter.checkEmail(self.emailTextField.text!) {
+                self.setUpErrorMessage(self.emailLabel, title: "이메일 형식이 맞지 않습니다", superTextField: self.emailTextField)
+            }
+        }).disposed(by: rx.disposeBag)
     }
-    */
-
+    
+    func bindViewModel() {
+        let input = SignInViewModel.input(
+            userEmail: emailTextField.rx.text.orEmpty.asDriver(),
+            userPw: pwTextField.rx.text.orEmpty.asDriver(),
+            doneTap: signInBtn.rx.tap.asSignal()
+        )
+        let output = viewModel.transform(input)
+        
+        output.isEnable.drive(signInBtn.rx.isEnabled).disposed(by: rx.disposeBag)
+        output.isEnable.drive(onNext: {_ in
+            self.setButton(self.signInBtn)
+        }).disposed(by: rx.disposeBag)
+        
+        output.result.emit(
+            onNext: { self.setUpErrorMessage(self.errorLabel, title: $0, superTextField: self.pwTextField )},
+            onCompleted: { self.moveScene("main") }).disposed(by: rx.disposeBag)
+    }
 }
