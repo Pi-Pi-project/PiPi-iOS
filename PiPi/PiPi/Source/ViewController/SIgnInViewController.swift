@@ -51,6 +51,6 @@ class SIgnInViewController: UIViewController {
         
         output.result.emit(
             onNext: { self.setUpErrorMessage(self.errorLabel, title: $0, superTextField: self.pwTextField )},
-            onCompleted: { self.moveScene("main") }).disposed(by: rx.disposeBag)
+            onCompleted: { self.moveScene("signUp") }).disposed(by: rx.disposeBag)
     }
 }
