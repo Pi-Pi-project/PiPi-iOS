@@ -13,7 +13,7 @@ enum PiPiAPI {
     //Auth
     case signIn
     case refreshToken
-    case sendAuthCode
+    case postAuthCode
     case checkAuthCode
     case register
     case setProfile
@@ -38,10 +38,10 @@ enum PiPiAPI {
             return "/auth"
         case .refreshToken:
             return "/auth/refresh"
-        case .sendAuthCode:
-            return "/email"
+        case .postAuthCode:
+            return "/user/email"
         case .checkAuthCode:
-            return "/email/check"
+            return "/user/email/check"
         case .register:
             return "/user"
         case .setProfile:
@@ -68,9 +68,6 @@ enum PiPiAPI {
     }
     
     func header() -> HTTPHeaders? {
-        switch self {
-        default:
-            return nil
-        }
+        return nil
     }
 }
