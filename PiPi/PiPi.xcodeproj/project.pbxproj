@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		42AEE32C3D28E4A1AADDBE2B /* Pods_PiPi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024533B68530941FD4183AC7 /* Pods_PiPi.framework */; };
+		EB046F372545646F00340F12 /* SendCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F362545646F00340F12 /* SendCodeViewModel.swift */; };
+		EB046F3A2545663600340F12 /* CodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F392545663600340F12 /* CodeCheckViewController.swift */; };
+		EB046F4F254667C900340F12 /* CodeCheckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */; };
+		EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F5125469A1700340F12 /* RegisterViewController.swift */; };
+		EB8C8B98254003A800ACA865 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B97254003A800ACA865 /* Provider.swift */; };
+		EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9C2540051800ACA865 /* AuthAPI.swift */; };
+		EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9F254009C200ACA865 /* SplashViewController.swift */; };
+		EB8C8BA32540140000ACA865 /* SendCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8BA22540140000ACA865 /* SendCodeViewController.swift */; };
 		EBAC81042539690100DAD71B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC81032539690100DAD71B /* AppDelegate.swift */; };
 		EBAC81082539690100DAD71B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC81072539690100DAD71B /* ViewController.swift */; };
 		EBAC810B2539690100DAD71B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBAC81092539690100DAD71B /* Main.storyboard */; };
@@ -19,12 +27,24 @@
 		EBEBE4FB253D650000C7E100 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBEBE4FA253D650000C7E100 /* Auth.storyboard */; };
 		EBEBE504253D6A8D00C7E100 /* SIgnInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE503253D6A8D00C7E100 /* SIgnInViewController.swift */; };
 		EBEBE507253D6A9A00C7E100 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE506253D6A9A00C7E100 /* SignInViewModel.swift */; };
+		EBEBE50A253D706F00C7E100 /* PiPiAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE509253D706F00C7E100 /* PiPiAPI.swift */; };
+		EBEBE50E253D709E00C7E100 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE50D253D709E00C7E100 /* ViewModelType.swift */; };
+		EBF85A9825494A53008F4302 /* SetProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF85A9725494A53008F4302 /* SetProfileViewController.swift */; };
+		EBF85A9B25494A60008F4302 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF85A9A25494A60008F4302 /* RegisterViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		024533B68530941FD4183AC7 /* Pods_PiPi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PiPi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		36BF6DEA2973E191FB58422A /* Pods-PiPi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiPi.debug.xcconfig"; path = "Target Support Files/Pods-PiPi/Pods-PiPi.debug.xcconfig"; sourceTree = "<group>"; };
 		DF8139E77E6E9455F9BFC12A /* Pods-PiPi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiPi.release.xcconfig"; path = "Target Support Files/Pods-PiPi/Pods-PiPi.release.xcconfig"; sourceTree = "<group>"; };
+		EB046F362545646F00340F12 /* SendCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCodeViewModel.swift; sourceTree = "<group>"; };
+		EB046F392545663600340F12 /* CodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckViewController.swift; sourceTree = "<group>"; };
+		EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckViewModel.swift; sourceTree = "<group>"; };
+		EB046F5125469A1700340F12 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		EB8C8B97254003A800ACA865 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		EB8C8B9C2540051800ACA865 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
+		EB8C8B9F254009C200ACA865 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		EB8C8BA22540140000ACA865 /* SendCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCodeViewController.swift; sourceTree = "<group>"; };
 		EBAC81002539690100DAD71B /* PiPi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiPi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBAC81032539690100DAD71B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBAC81072539690100DAD71B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +58,10 @@
 		EBEBE4FA253D650000C7E100 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		EBEBE503253D6A8D00C7E100 /* SIgnInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIgnInViewController.swift; sourceTree = "<group>"; };
 		EBEBE506253D6A9A00C7E100 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		EBEBE509253D706F00C7E100 /* PiPiAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiPiAPI.swift; sourceTree = "<group>"; };
+		EBEBE50D253D709E00C7E100 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		EBF85A9725494A53008F4302 /* SetProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewController.swift; sourceTree = "<group>"; };
+		EBF85A9A25494A60008F4302 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +82,14 @@
 				024533B68530941FD4183AC7 /* Pods_PiPi.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EB8C8B9A2540050B00ACA865 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				EB8C8B9C2540051800ACA865 /* AuthAPI.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		EBAC80F72539690100DAD71B = {
@@ -122,7 +154,10 @@
 		EBEBE4E8253D642600C7E100 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				EB8C8B9A2540050B00ACA865 /* API */,
 				EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */,
+				EBEBE509253D706F00C7E100 /* PiPiAPI.swift */,
+				EB8C8B97254003A800ACA865 /* Provider.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -132,6 +167,11 @@
 			children = (
 				EBAC81072539690100DAD71B /* ViewController.swift */,
 				EBEBE503253D6A8D00C7E100 /* SIgnInViewController.swift */,
+				EB8C8B9F254009C200ACA865 /* SplashViewController.swift */,
+				EB8C8BA22540140000ACA865 /* SendCodeViewController.swift */,
+				EB046F392545663600340F12 /* CodeCheckViewController.swift */,
+				EB046F5125469A1700340F12 /* RegisterViewController.swift */,
+				EBF85A9725494A53008F4302 /* SetProfileViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -140,6 +180,10 @@
 			isa = PBXGroup;
 			children = (
 				EBEBE506253D6A9A00C7E100 /* SignInViewModel.swift */,
+				EBEBE50D253D709E00C7E100 /* ViewModelType.swift */,
+				EB046F362545646F00340F12 /* SendCodeViewModel.swift */,
+				EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */,
+				EBF85A9A25494A60008F4302 /* RegisterViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -295,11 +339,23 @@
 			files = (
 				EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */,
 				EBEBE507253D6A9A00C7E100 /* SignInViewModel.swift in Sources */,
+				EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */,
+				EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */,
 				EBEBE4EF253D64A500C7E100 /* Extension.swift in Sources */,
 				EBEBE4F8253D64F300C7E100 /* Token.swift in Sources */,
+				EB046F3A2545663600340F12 /* CodeCheckViewController.swift in Sources */,
+				EBF85A9825494A53008F4302 /* SetProfileViewController.swift in Sources */,
+				EBF85A9B25494A60008F4302 /* RegisterViewModel.swift in Sources */,
 				EBAC81082539690100DAD71B /* ViewController.swift in Sources */,
+				EB046F4F254667C900340F12 /* CodeCheckViewModel.swift in Sources */,
+				EB046F372545646F00340F12 /* SendCodeViewModel.swift in Sources */,
 				EBEBE504253D6A8D00C7E100 /* SIgnInViewController.swift in Sources */,
 				EBAC81042539690100DAD71B /* AppDelegate.swift in Sources */,
+				EBEBE50A253D706F00C7E100 /* PiPiAPI.swift in Sources */,
+				EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */,
+				EB8C8B98254003A800ACA865 /* Provider.swift in Sources */,
+				EBEBE50E253D709E00C7E100 /* ViewModelType.swift in Sources */,
+				EB8C8BA32540140000ACA865 /* SendCodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
