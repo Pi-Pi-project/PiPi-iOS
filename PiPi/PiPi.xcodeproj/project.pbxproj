@@ -12,6 +12,10 @@
 		EB046F3A2545663600340F12 /* CodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F392545663600340F12 /* CodeCheckViewController.swift */; };
 		EB046F4F254667C900340F12 /* CodeCheckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */; };
 		EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F5125469A1700340F12 /* RegisterViewController.swift */; };
+		EB0BF401254F0EA700317097 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF3FF254F0EA700317097 /* MainTableViewCell.swift */; };
+		EB0BF402254F0EA700317097 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB0BF400254F0EA700317097 /* MainTableViewCell.xib */; };
+		EB0BF406254F117900317097 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF404254F117900317097 /* ListTableViewCell.swift */; };
+		EB0BF407254F117900317097 /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB0BF405254F117900317097 /* ListTableViewCell.xib */; };
 		EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */; };
 		EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */; };
 		EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */; };
@@ -46,6 +50,10 @@
 		EB046F392545663600340F12 /* CodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckViewController.swift; sourceTree = "<group>"; };
 		EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckViewModel.swift; sourceTree = "<group>"; };
 		EB046F5125469A1700340F12 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		EB0BF3FF254F0EA700317097 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		EB0BF400254F0EA700317097 /* MainTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
+		EB0BF404254F117900317097 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		EB0BF405254F117900317097 /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
 		EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewModel.swift; sourceTree = "<group>"; };
 		EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCodeViewController.swift; sourceTree = "<group>"; };
 		EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCheckViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +231,10 @@
 			isa = PBXGroup;
 			children = (
 				EBEBE4EE253D64A500C7E100 /* Extension.swift */,
+				EB0BF3FF254F0EA700317097 /* MainTableViewCell.swift */,
+				EB0BF400254F0EA700317097 /* MainTableViewCell.xib */,
+				EB0BF404254F117900317097 /* ListTableViewCell.swift */,
+				EB0BF405254F117900317097 /* ListTableViewCell.xib */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -313,9 +325,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBEBE4FB253D650000C7E100 /* Auth.storyboard in Resources */,
+				EB0BF407254F117900317097 /* ListTableViewCell.xib in Resources */,
 				EBAC81102539690400DAD71B /* LaunchScreen.storyboard in Resources */,
 				EBAC810D2539690400DAD71B /* Assets.xcassets in Resources */,
 				EBAC810B2539690100DAD71B /* Main.storyboard in Resources */,
+				EB0BF402254F0EA700317097 /* MainTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +391,9 @@
 				EBEBE4F8253D64F300C7E100 /* Token.swift in Sources */,
 				EB046F3A2545663600340F12 /* CodeCheckViewController.swift in Sources */,
 				EBF85A9825494A53008F4302 /* SetProfileViewController.swift in Sources */,
+				EB0BF401254F0EA700317097 /* MainTableViewCell.swift in Sources */,
 				EBF85A9B25494A60008F4302 /* RegisterViewModel.swift in Sources */,
+				EB0BF406254F117900317097 /* ListTableViewCell.swift in Sources */,
 				EBAC81082539690100DAD71B /* ViewController.swift in Sources */,
 				EB046F4F254667C900340F12 /* CodeCheckViewModel.swift in Sources */,
 				EB046F372545646F00340F12 /* SendCodeViewModel.swift in Sources */,
