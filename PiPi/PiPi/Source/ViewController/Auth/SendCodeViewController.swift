@@ -11,6 +11,7 @@ class SendCodeViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var nextBtn: UIButton!
+    @IBOutlet weak var introLabel: UILabel!
     
     private let viewModel = SendCodeViewModel()
     private let emailError = UILabel()

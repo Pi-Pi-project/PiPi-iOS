@@ -22,6 +22,7 @@ class SetProfileViewController: UIViewController {
     let imagePicker = UIImagePickerController()
     var email = String()
     let imageString = String()
+    let skillSet = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,17 +34,17 @@ class SetProfileViewController: UIViewController {
     }
     
     func bindViewModel() {
-//        let input = SetProfileViewModel.input(userImage: ),
-//                                              userSkill: skillTextField.rx.text.orEmpty.asDriver(),
-//                                              userGit: gitTextField.rx.text.orEmpty.asDriver(),
-//                                              userEmail: Driver.just(email),
-//                                              doneTap: completeBtn.rx.tap.asSignal())
+        let input = SetProfileViewModel.input(userImage: Driver.just(imageString),
+                                              userSkill: Driver.just(skillSet),
+                                              userGit: gitTextField.rx.text.orEmpty.asDriver(),
+                                              userEmail: Driver.just(email),
+                                              doneTap: completeBtn.rx.tap.asSignal())
         
         let output = viewModel.transform(input)
         
-        output.isEnabel.drive(completeBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-        output.isEnabel.drive(onNext: { _ in
-            self.setButton(self.nextBtn)
+        output.isEnable.drive(completeBtn.rx.isEnabled).disposed(by: rx.disposeBag)
+        output.isEnable.drive(onNext: { _ in
+            self.setButton(self.completeBtn)
         }).disposed(by: rx.disposeBag)
         
         output.result.emit(onNext: {
