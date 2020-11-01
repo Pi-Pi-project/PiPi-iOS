@@ -16,6 +16,7 @@
 		EB0BF402254F0EA700317097 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB0BF400254F0EA700317097 /* MainTableViewCell.xib */; };
 		EB0BF406254F117900317097 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF404254F117900317097 /* ListTableViewCell.swift */; };
 		EB0BF407254F117900317097 /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB0BF405254F117900317097 /* ListTableViewCell.xib */; };
+		EB0BF40A254F12AC00317097 /* PostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF409254F12AC00317097 /* PostAPI.swift */; };
 		EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */; };
 		EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */; };
 		EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */; };
@@ -54,6 +55,7 @@
 		EB0BF400254F0EA700317097 /* MainTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
 		EB0BF404254F117900317097 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		EB0BF405254F117900317097 /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
+		EB0BF409254F12AC00317097 /* PostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAPI.swift; sourceTree = "<group>"; };
 		EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewModel.swift; sourceTree = "<group>"; };
 		EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCodeViewController.swift; sourceTree = "<group>"; };
 		EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCheckViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				EB8C8B9C2540051800ACA865 /* AuthAPI.swift */,
+				EB0BF409254F12AC00317097 /* PostAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				EBEBE50A253D706F00C7E100 /* PiPiAPI.swift in Sources */,
 				EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */,
 				EB129FDE254EFE8A009D5151 /* ChangePwViewController.swift in Sources */,
+				EB0BF40A254F12AC00317097 /* PostAPI.swift in Sources */,
 				EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */,
 				EB8C8B98254003A800ACA865 /* Provider.swift in Sources */,
 				EBEBE50E253D709E00C7E100 /* ViewModelType.swift in Sources */,

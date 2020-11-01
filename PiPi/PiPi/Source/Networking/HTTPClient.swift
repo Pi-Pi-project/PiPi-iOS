@@ -15,30 +15,28 @@ class HTTPClient {
     
     typealias httpResult = Observable<(HTTPURLResponse, Data)>
     
-    func get(_ api: PiPiAPI, param: Parameters) -> httpResult {
+    func get(_ api: PiPiAPI, param: Parameters?) -> httpResult {
         return requestData(.get, baseURL + api.path(),
                            parameters: param,
                            encoding: JSONEncoding.prettyPrinted,
                            headers: api.header())
     }
     
-    func post(_ api: PiPiAPI, param: [String:Any]) -> httpResult {
-        print(baseURL + api.path())
-        print(param)
+    func post(_ api: PiPiAPI, param: Parameters?) -> httpResult {
         return requestData(.post, baseURL + api.path(),
                            parameters: param,
                            encoding: JSONEncoding.prettyPrinted,
                            headers: api.header())
     }
     
-    func put(_ api: PiPiAPI, param: Parameters) -> httpResult {
+    func put(_ api: PiPiAPI, param: Parameters?) -> httpResult {
         return requestData(.put, baseURL + api.path(),
                            parameters: param,
                            encoding: JSONEncoding.prettyPrinted,
                            headers: api.header())
     }
     
-    func delete(_ api: PiPiAPI, param: Parameters) -> httpResult {
+    func delete(_ api: PiPiAPI, param: Parameters?) -> httpResult {
         return requestData(.delete, baseURL + api.path(),
                            parameters: param,
                            encoding: JSONEncoding.prettyPrinted,

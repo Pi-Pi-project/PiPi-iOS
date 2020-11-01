@@ -8,11 +8,12 @@
 import Foundation
 import RxSwift
 
-private let httpClient = HTTPClient()
+let httpClient = HTTPClient()
+let baseURL = "http://10.156.145.141:8080"
 
 class AuthAPI: AuthProvider {
     
-    let url = URL(string: "http://10.156.145.141:8080")
+    
     
     func sendAuthCode(_ email: String) -> Observable<networkingResult> {
         httpClient.post(.postAuthCode, param: ["email": email])
