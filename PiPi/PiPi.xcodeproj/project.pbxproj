@@ -12,6 +12,7 @@
 		EB046F3A2545663600340F12 /* CodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F392545663600340F12 /* CodeCheckViewController.swift */; };
 		EB046F4F254667C900340F12 /* CodeCheckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */; };
 		EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F5125469A1700340F12 /* RegisterViewController.swift */; };
+		EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */; };
 		EB8C8B98254003A800ACA865 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B97254003A800ACA865 /* Provider.swift */; };
 		EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9C2540051800ACA865 /* AuthAPI.swift */; };
 		EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9F254009C200ACA865 /* SplashViewController.swift */; };
@@ -41,6 +42,7 @@
 		EB046F392545663600340F12 /* CodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckViewController.swift; sourceTree = "<group>"; };
 		EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckViewModel.swift; sourceTree = "<group>"; };
 		EB046F5125469A1700340F12 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewModel.swift; sourceTree = "<group>"; };
 		EB8C8B97254003A800ACA865 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		EB8C8B9C2540051800ACA865 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		EB8C8B9F254009C200ACA865 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				EB046F362545646F00340F12 /* SendCodeViewModel.swift */,
 				EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */,
 				EBF85A9A25494A60008F4302 /* RegisterViewModel.swift */,
+				EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				EB046F4F254667C900340F12 /* CodeCheckViewModel.swift in Sources */,
 				EB046F372545646F00340F12 /* SendCodeViewModel.swift in Sources */,
 				EBEBE504253D6A8D00C7E100 /* SIgnInViewController.swift in Sources */,
+				EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */,
 				EBAC81042539690100DAD71B /* AppDelegate.swift in Sources */,
 				EBEBE50A253D706F00C7E100 /* PiPiAPI.swift in Sources */,
 				EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */,

@@ -12,23 +12,40 @@ private let httpClient = HTTPClient()
 
 class AuthAPI: AuthProvider {
     
+    let url = URL(string: "http://10.156.145.141:8080")
+    
     func sendAuthCode(_ email: String) -> Observable<networkingResult> {
         httpClient.post(.postAuthCode, param: ["email": email])
-            .map { response, data -> networkingResult in
-                print(response.statusCode)
+          .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://10.156.145.141:8080")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }
+          .map { response, data -> networkingResult in
+            print(response.statusCode)
             switch response.statusCode {
             case 200:
-                print("send email")
-                return .ok
+              print("send email")
+              return .ok
             case 409:
-                print("Dd")
-                return .conflict
+              print("Dd")
+              return .conflict
             default:
-                print(response.statusCode)
-                return .fault
+              print(response.statusCode)
+              return .fault
             }
-        }
-    }
+          }
+      }
     
     func checkAuthCode(_ email: String, _ code: String) -> Observable<networkingResult> {
         httpClient.post(.checkAuthCode, param: ["email":email, "code":code])

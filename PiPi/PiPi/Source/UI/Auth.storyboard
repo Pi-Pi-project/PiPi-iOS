@@ -407,6 +407,12 @@ back!</string>
                             <constraint firstItem="4Hc-bs-tLg" firstAttribute="leading" secondItem="ZwZ-lz-bPh" secondAttribute="leading" constant="47" id="pce-Dm-jcn"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="completeBtn" destination="506-te-46P" id="NzU-g2-HT3"/>
+                        <outlet property="gitTextField" destination="ZZm-gB-eUt" id="zEI-xj-dcX"/>
+                        <outlet property="skillTextField" destination="Org-Ua-uVX" id="2CA-Ea-Z8e"/>
+                        <outlet property="userImageView" destination="hYN-d9-mpi" id="kQB-GJ-oJ5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U29-Jo-NxJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

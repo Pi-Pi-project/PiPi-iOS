@@ -6,19 +6,56 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 class SetProfileViewController: UIViewController {
 
+    @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var skillTextField: UITextField!
+    @IBOutlet weak var gitTextField: UITextField!
+    @IBOutlet weak var completeBtn: UIButton!
+    
+    private let viewModel = SetProfileViewModel()
+    private let errorLabel = UILabel()
+    let imagePicker = UIImagePickerController()
     var email = String()
+    let imageString = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchToPickPhoto))
+          userImageView.addGestureRecognizer(tapGesture)
+          userImageView.isUserInteractionEnabled = true
         // Do any additional setup after loading the view.
     }
     
-    
+    func bindViewModel() {
+//        let input = SetProfileViewModel.input(userImage: ),
+//                                              userSkill: skillTextField.rx.text.orEmpty.asDriver(),
+//                                              userGit: gitTextField.rx.text.orEmpty.asDriver(),
+//                                              userEmail: Driver.just(email),
+//                                              doneTap: completeBtn.rx.tap.asSignal())
+        
+        let output = viewModel.transform(input)
+        
+        output.isEnabel.drive(completeBtn.rx.isEnabled).disposed(by: rx.disposeBag)
+        output.isEnabel.drive(onNext: { _ in
+            self.setButton(self.nextBtn)
+        }).disposed(by: rx.disposeBag)
+        
+        output.result.emit(onNext: {
+            self.setUpErrorMessage(self.errorLabel, title: $0, superTextField: self.gitTextField)
+        }, onCompleted: { [unowned self] in moveScene("main")}).disposed(by: rx.disposeBag)
+    }
 
+    @objc func touchToPickPhoto() {
+        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+        imagePicker.allowsEditing = false
+        self.present(imagePicker, animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 
