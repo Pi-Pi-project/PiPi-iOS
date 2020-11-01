@@ -13,6 +13,10 @@
 		EB046F4F254667C900340F12 /* CodeCheckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */; };
 		EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB046F5125469A1700340F12 /* RegisterViewController.swift */; };
 		EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */; };
+		EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */; };
+		EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */; };
+		EB129FDE254EFE8A009D5151 /* ChangePwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FDD254EFE8A009D5151 /* ChangePwViewController.swift */; };
+		EB129FE1254EFFE0009D5151 /* ChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FE0254EFFE0009D5151 /* ChangeViewModel.swift */; };
 		EB8C8B98254003A800ACA865 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B97254003A800ACA865 /* Provider.swift */; };
 		EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9C2540051800ACA865 /* AuthAPI.swift */; };
 		EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9F254009C200ACA865 /* SplashViewController.swift */; };
@@ -43,6 +47,10 @@
 		EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckViewModel.swift; sourceTree = "<group>"; };
 		EB046F5125469A1700340F12 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewModel.swift; sourceTree = "<group>"; };
+		EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCodeViewController.swift; sourceTree = "<group>"; };
+		EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCheckViewController.swift; sourceTree = "<group>"; };
+		EB129FDD254EFE8A009D5151 /* ChangePwViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePwViewController.swift; sourceTree = "<group>"; };
+		EB129FE0254EFFE0009D5151 /* ChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeViewModel.swift; sourceTree = "<group>"; };
 		EB8C8B97254003A800ACA865 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		EB8C8B9C2540051800ACA865 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		EB8C8B9F254009C200ACA865 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +92,35 @@
 				024533B68530941FD4183AC7 /* Pods_PiPi.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EB129FD4254EFD57009D5151 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				EBEBE503253D6A8D00C7E100 /* SIgnInViewController.swift */,
+				EB8C8B9F254009C200ACA865 /* SplashViewController.swift */,
+				EB8C8BA22540140000ACA865 /* SendCodeViewController.swift */,
+				EB046F392545663600340F12 /* CodeCheckViewController.swift */,
+				EB046F5125469A1700340F12 /* RegisterViewController.swift */,
+				EBF85A9725494A53008F4302 /* SetProfileViewController.swift */,
+				EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */,
+				EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */,
+				EB129FDD254EFE8A009D5151 /* ChangePwViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		EB129FD5254EFD61009D5151 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				EB046F362545646F00340F12 /* SendCodeViewModel.swift */,
+				EBEBE506253D6A9A00C7E100 /* SignInViewModel.swift */,
+				EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */,
+				EBF85A9A25494A60008F4302 /* RegisterViewModel.swift */,
+				EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */,
+				EB129FE0254EFFE0009D5151 /* ChangeViewModel.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		EB8C8B9A2540050B00ACA865 /* API */ = {
@@ -167,13 +204,8 @@
 		EBEBE4E9253D642C00C7E100 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				EB129FD4254EFD57009D5151 /* Auth */,
 				EBAC81072539690100DAD71B /* ViewController.swift */,
-				EBEBE503253D6A8D00C7E100 /* SIgnInViewController.swift */,
-				EB8C8B9F254009C200ACA865 /* SplashViewController.swift */,
-				EB8C8BA22540140000ACA865 /* SendCodeViewController.swift */,
-				EB046F392545663600340F12 /* CodeCheckViewController.swift */,
-				EB046F5125469A1700340F12 /* RegisterViewController.swift */,
-				EBF85A9725494A53008F4302 /* SetProfileViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -181,12 +213,8 @@
 		EBEBE4EA253D643100C7E100 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				EBEBE506253D6A9A00C7E100 /* SignInViewModel.swift */,
+				EB129FD5254EFD61009D5151 /* Auth */,
 				EBEBE50D253D709E00C7E100 /* ViewModelType.swift */,
-				EB046F362545646F00340F12 /* SendCodeViewModel.swift */,
-				EB046F4E254667C900340F12 /* CodeCheckViewModel.swift */,
-				EBF85A9A25494A60008F4302 /* RegisterViewModel.swift */,
-				EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -342,6 +370,7 @@
 			files = (
 				EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */,
 				EBEBE507253D6A9A00C7E100 /* SignInViewModel.swift in Sources */,
+				EB129FE1254EFFE0009D5151 /* ChangeViewModel.swift in Sources */,
 				EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */,
 				EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */,
 				EBEBE4EF253D64A500C7E100 /* Extension.swift in Sources */,
@@ -356,9 +385,12 @@
 				EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */,
 				EBAC81042539690100DAD71B /* AppDelegate.swift in Sources */,
 				EBEBE50A253D706F00C7E100 /* PiPiAPI.swift in Sources */,
+				EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */,
+				EB129FDE254EFE8A009D5151 /* ChangePwViewController.swift in Sources */,
 				EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */,
 				EB8C8B98254003A800ACA865 /* Provider.swift in Sources */,
 				EBEBE50E253D709E00C7E100 /* ViewModelType.swift in Sources */,
+				EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */,
 				EB8C8BA32540140000ACA865 /* SendCodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

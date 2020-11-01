@@ -183,6 +183,7 @@ back!</string>
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="iv5-vn-w1S" id="WND-Cd-bsB"/>
+                        <outlet property="introLabel" destination="Vfp-SR-JRN" id="W4o-EE-bvu"/>
                         <outlet property="nextBtn" destination="VF9-xo-3dM" id="aUh-IP-m3T"/>
                     </connections>
                 </viewController>
@@ -418,10 +419,10 @@ back!</string>
             </objects>
             <point key="canvasLocation" x="4004" y="-3"/>
         </scene>
-        <!--View Controller-->
+        <!--Change Pw View Controller-->
         <scene sceneID="qjm-Mh-Gcn">
             <objects>
-                <viewController id="RyI-L7-iT7" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="changePw" id="RyI-L7-iT7" customClass="ChangePwViewController" customModule="PiPi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RSU-lT-NNm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -472,10 +473,125 @@ back!</string>
                             <constraint firstItem="NX6-nC-REU" firstAttribute="leading" secondItem="9Qw-MF-Mbq" secondAttribute="leading" constant="47" id="uUd-eQ-gDN"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="changePwBtn" destination="HTp-WC-mQA" id="oaL-r5-OJB"/>
+                        <outlet property="newPwTextField" destination="eeP-A0-Mmi" id="VIb-Lq-HIo"/>
+                        <outlet property="rePwTextField" destination="NX6-nC-REU" id="zfr-3l-CDi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1AX-vJ-Bq0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3229" y="693"/>
+        </scene>
+        <!--Pw Code View Controller-->
+        <scene sceneID="uTz-Ii-dYp">
+            <objects>
+                <viewController storyboardIdentifier="findPw" id="dsj-07-OjX" customClass="PwCodeViewController" customModule="PiPi" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PI0-hy-A4M">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFm-ME-fT0">
+                                <rect key="frame" x="47" y="505" width="320" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="Uiw-E3-f6L"/>
+                                </constraints>
+                                <state key="normal" title="인증번호 보내기"/>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NeO-3G-f8P">
+                                <rect key="frame" x="47" y="331" width="320" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0PY-u2-Yft">
+                                <rect key="frame" x="47" y="114" width="163" height="77"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Forgot password?">
+                                        <attributes>
+                                            <font key="NSFont" size="33" name="NanumSquareOTFEB"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="8s3-7G-4sN"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8s3-7G-4sN" firstAttribute="trailing" secondItem="wFm-ME-fT0" secondAttribute="trailing" constant="47" id="4Ha-Tj-nOi"/>
+                            <constraint firstItem="NeO-3G-f8P" firstAttribute="top" secondItem="0PY-u2-Yft" secondAttribute="bottom" constant="140" id="Qa0-JM-cq9"/>
+                            <constraint firstItem="wFm-ME-fT0" firstAttribute="top" secondItem="NeO-3G-f8P" secondAttribute="bottom" constant="140" id="Yd1-7Z-iav"/>
+                            <constraint firstItem="0PY-u2-Yft" firstAttribute="leading" secondItem="8s3-7G-4sN" secondAttribute="leading" constant="47" id="eBZ-FL-3lv"/>
+                            <constraint firstItem="wFm-ME-fT0" firstAttribute="leading" secondItem="8s3-7G-4sN" secondAttribute="leading" constant="47" id="hLW-0g-BHU"/>
+                            <constraint firstItem="0PY-u2-Yft" firstAttribute="top" secondItem="8s3-7G-4sN" secondAttribute="top" constant="70" id="oW6-6w-aOu"/>
+                            <constraint firstItem="NeO-3G-f8P" firstAttribute="leading" secondItem="8s3-7G-4sN" secondAttribute="leading" constant="47" id="pkL-bN-srs"/>
+                            <constraint firstItem="8s3-7G-4sN" firstAttribute="trailing" secondItem="NeO-3G-f8P" secondAttribute="trailing" constant="47" id="zA1-ie-yfn"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="NeO-3G-f8P" id="kWg-MC-bVn"/>
+                        <outlet property="nextBtn" destination="wFm-ME-fT0" id="aGC-tg-VQO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e9l-Gq-nsK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1603" y="698"/>
+        </scene>
+        <!--Pw Check View Controller-->
+        <scene sceneID="Pkd-pc-IBo">
+            <objects>
+                <viewController storyboardIdentifier="pwCheck" id="knk-bf-Dvy" customClass="PwCheckViewController" customModule="PiPi" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="s2g-je-l1J">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YXE-9A-hOK">
+                                <rect key="frame" x="47" y="505" width="320" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="FM7-CL-nuV"/>
+                                </constraints>
+                                <state key="normal" title="확인"/>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tfb-Xg-DcL">
+                                <rect key="frame" x="47" y="331" width="320" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJL-Bz-xRE">
+                                <rect key="frame" x="47" y="114" width="163" height="77"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Forgot password?">
+                                        <attributes>
+                                            <font key="NSFont" size="33" name="NanumSquareOTFEB"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="nyo-Yp-Asu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="dJL-Bz-xRE" firstAttribute="top" secondItem="nyo-Yp-Asu" secondAttribute="top" constant="70" id="8Rg-8S-PQa"/>
+                            <constraint firstItem="YXE-9A-hOK" firstAttribute="top" secondItem="tfb-Xg-DcL" secondAttribute="bottom" constant="140" id="ELP-lz-tAX"/>
+                            <constraint firstItem="nyo-Yp-Asu" firstAttribute="trailing" secondItem="YXE-9A-hOK" secondAttribute="trailing" constant="47" id="GhH-hJ-wk1"/>
+                            <constraint firstItem="YXE-9A-hOK" firstAttribute="leading" secondItem="nyo-Yp-Asu" secondAttribute="leading" constant="47" id="HXq-hb-9Xv"/>
+                            <constraint firstItem="tfb-Xg-DcL" firstAttribute="top" secondItem="dJL-Bz-xRE" secondAttribute="bottom" constant="140" id="hlR-VQ-p7v"/>
+                            <constraint firstItem="nyo-Yp-Asu" firstAttribute="trailing" secondItem="tfb-Xg-DcL" secondAttribute="trailing" constant="47" id="l7q-Fe-gGs"/>
+                            <constraint firstItem="dJL-Bz-xRE" firstAttribute="leading" secondItem="nyo-Yp-Asu" secondAttribute="leading" constant="47" id="yps-dq-OWq"/>
+                            <constraint firstItem="tfb-Xg-DcL" firstAttribute="leading" secondItem="nyo-Yp-Asu" secondAttribute="leading" constant="47" id="yx8-wV-HSG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="codeTextField" destination="tfb-Xg-DcL" id="bja-w9-lpo"/>
+                        <outlet property="nextBtn" destination="YXE-9A-hOK" id="IYU-eQ-a2z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jjf-f8-o9C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2419" y="686"/>
         </scene>
     </scenes>
     <resources>

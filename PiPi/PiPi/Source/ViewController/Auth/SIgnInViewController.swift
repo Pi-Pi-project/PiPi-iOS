@@ -34,6 +34,10 @@ class SIgnInViewController: UIViewController {
                 self.setUpErrorMessage(self.emailLabel, title: "이메일 형식이 맞지 않습니다", superTextField: self.emailTextField)
             }
         }).disposed(by: rx.disposeBag)
+        
+        findPwBtn.rx.tap.subscribe(onNext: { _ in
+            
+        })
     }
     
     func bindViewModel() {
