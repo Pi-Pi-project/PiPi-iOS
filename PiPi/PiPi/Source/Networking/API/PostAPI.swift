@@ -26,7 +26,19 @@ class PostAPI{
             switch response.statusCode {
             case 200:
                 guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault)}
-                print(data)
+                return (data, .ok)
+            default:
+                return (nil, .fault)
+            }
+        }
+    }
+    
+    func getApplyPosts() -> Observable<([postModel]?, networkingResult)> {
+        httpClient.get(.getApplyList("1"), param: nil).map { response, data -> ([postModel]?, networkingResult) in
+            print(response.statusCode)
+            switch response.statusCode {
+            case 200:
+                guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault)}
                 return (data, .ok)
             default:
                 return (nil, .fault)
@@ -60,13 +72,14 @@ class PostAPI{
         }
     }
 
-    func getApplyList(_ id: String) -> Observable<networkingResult> {
-        httpClient.get(.getApplyList(id), param: nil).map { response, data -> networkingResult in
+    func getApplyList(_ id: String) -> Observable<([postModel]?, networkingResult)> {
+        httpClient.get(.getApplyList(id), param: nil).map { response, data -> ([postModel]?, networkingResult) in
             switch response.statusCode {
             case 200:
-                return .ok
+                guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault)}
+                return (data, .ok)
             default:
-                return .fault
+                return (nil, .fault)
             }
         }
     }
@@ -93,13 +106,15 @@ class PostAPI{
         }
     }
     
-    func getMyPost() -> Observable<networkingResult> {
-        httpClient.post(.getMyPost, param: nil).map { response, data -> networkingResult in
+    func getMyPost() -> Observable<([postModel]?, networkingResult)> {
+        httpClient.get(.getMyPost, param: nil).map { response, data -> ([postModel]?, networkingResult) in
+            print(response.statusCode)
             switch response.statusCode {
             case 200:
-                return .ok
+                guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault)}
+                return (data, .ok)
             default:
-                return .fault
+                return (nil, .fault)
             }
         }
     }
