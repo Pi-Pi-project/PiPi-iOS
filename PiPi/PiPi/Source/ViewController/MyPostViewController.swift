@@ -1,24 +1,22 @@
 //
-//  JoinViewController.swift
+//  MyPostViewController.swift
 //  PiPi
 //
-//  Created by 이가영 on 2020/11/02.
+//  Created by 이가영 on 2020/11/03.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
-import Kingfisher
 
-class JoinViewController: UIViewController {
+class MyPostViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    private let viewModel = MainViewModel()
+    private let viewModel = MyPostViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
 
-    
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -59,10 +57,10 @@ class JoinViewController: UIViewController {
     }
     
     func bindViewModel() {
-        let input = MainViewModel.input(loadData: loadData.asSignal(onErrorJustReturn: ()), selectPostRow: tableView.rx.itemSelected.asSignal())
+        let input = MyPostViewModel.input(loadMyPost: loadData.asSignal(onErrorJustReturn: ()))
         let output = viewModel.transform(input)
         
-        MainViewModel.loadData
+        MyPostViewModel.loadMyPost
             .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
                 
                 var skillSet = String()
@@ -78,14 +76,7 @@ class JoinViewController: UIViewController {
                 cell.userImageView.image = UIImage(named: repository.userImg!)
             }.disposed(by: rx.disposeBag)
 
-        output.data.drive().disposed(by: rx.disposeBag)
-        output.data.drive(onNext: { _ in self.tableView.reloadData()}).disposed(by: rx.disposeBag)
-        output.nextView.asObservable().subscribe(onNext: { id in
-            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
-            vc.selectIndexPath = id
-            print(id)
-            self.navigationController?.pushViewController(vc, animated: true)
-        }).disposed(by: rx.disposeBag)
+        
     }
     
     func setupUI(){

@@ -15,7 +15,7 @@ class MainViewModel: ViewModelType {
     
     struct input {
         let loadData: Signal<Void>
-        let selectIndexPath: Signal<IndexPath>
+        let selectPostRow: Signal<IndexPath>
     }
     
     struct output {
@@ -29,7 +29,7 @@ class MainViewModel: ViewModelType {
         let api = PostAPI()
         let result = PublishSubject<String>()
         let nextView = PublishSubject<String>()
-        let info = Signal.combineLatest(input.selectIndexPath, MainViewModel.loadData.asSignal()).asObservable()
+        let info = Signal.combineLatest(input.selectPostRow, MainViewModel.loadData.asSignal()).asObservable()
         var select = String()
         
         input.loadData.asObservable().subscribe(onNext: { _ in
@@ -45,8 +45,8 @@ class MainViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.selectIndexPath.asObservable().withLatestFrom(info).subscribe(onNext: { indexPath, data in
-            print("select vm in")
+        input.selectPostRow.asObservable().withLatestFrom(info).subscribe(onNext: { indexPath, data in
+
             select = String(data[indexPath.row].id)
             nextView.onNext(select)
         }).disposed(by: disposeBag)

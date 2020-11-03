@@ -41,15 +41,21 @@ class DetailViewController: UIViewController {
         DetailViewModel.loadDetail.asObservable().subscribe(onNext: { result in
             let backimg = URL(string: "http://10.156.145.141:8080/image/\(result.img)/")
             self.backImageView.kf.setImage(with: backimg)
+            
             let userimg = URL(string: "http://10.156.145.141:8080/image/\(result.User?.img ?? "")/")
             self.userImg.kf.setImage(with: userimg)
             self.circleOfImageView(self.userImg)
             self.userImg.image = UIImage(named: result.User?.img ?? "")
             self.userName.text = result.User?.nickname
             self.ppNameLabel.text = result.title
-            self.ppSkillLabel.text = " df"
+            
+            for i in 0..<result.postSkillsets.count {
+                print(result.postSkillsets[i].skill)
+            }
+            
             self.ppDetailTextView.text = result.content
             self.ppMaxLabel.text = String(format: "0", result.max ?? "0")
+            self.setButton(self.applyBtn, result.applied)
         }).disposed(by: rx.disposeBag)
     }
 
@@ -62,5 +68,4 @@ class DetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

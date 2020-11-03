@@ -20,20 +20,22 @@ class DetailViewModel: ViewModelType {
     
     struct output {
         let result: Signal<String>
+        let isApply: Driver<Bool>
     }
     
     func transform(_ input: input) -> output {
         let api = PostAPI()
         let result = PublishSubject<String>()
 //        let info = Signal.combineLatest(input.selectIndexPath, MainViewModel.loadData.asSignal()).asObservable()
+        let isApply = PublishSubject<Bool>()
         
         input.loadDetail.asObservable().subscribe(onNext: { id in
-            print("server \(input.selectIndexPath)")
             api.getDetailPost(input.selectIndexPath).subscribe(onNext: { response,statusCode in
                 print(statusCode)
                 switch statusCode {
                 case .ok:
                     DetailViewModel.loadDetail.accept(response!)
+                    
                     result.onCompleted()
                 default:
                     result.onNext("디테일 포스트 로드 실패")
@@ -41,6 +43,6 @@ class DetailViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        return output(result: result.asSignal(onErrorJustReturn: "get detail 실패"))
+        return output(result: result.asSignal(onErrorJustReturn: "get detail 실패"), isApply: isApply.asDriver(onErrorJustReturn: false))
     }
 }

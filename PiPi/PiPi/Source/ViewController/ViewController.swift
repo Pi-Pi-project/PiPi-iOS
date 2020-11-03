@@ -26,6 +26,13 @@ class ViewController: UIViewController {
             self.moveScene("joinVC")
         }).disposed(by: rx.disposeBag)
         
+        applyListBtn.rx.tap.subscribe(onNext: {
+            self.moveScene("applyVC")
+        }).disposed(by: rx.disposeBag)
+        
+        myPostBtn.rx.tap.subscribe(onNext: {
+            self.moveScene("mypostVC")
+        }).disposed(by: rx.disposeBag)
         // Do any additional setup after loading the view.
     }
 
