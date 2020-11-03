@@ -57,6 +57,7 @@ struct detailModel: Codable {
     let postSkillsets: [postSkillsets]
     let content: String
     let max: Int?
+    let applied: Bool
 }
 
 struct User: Codable {

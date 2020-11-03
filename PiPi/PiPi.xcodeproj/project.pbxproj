@@ -22,6 +22,10 @@
 		EB0BF414254FC11A00317097 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF413254FC11A00317097 /* MainViewModel.swift */; };
 		EB0BF4172550224B00317097 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF4162550224B00317097 /* DetailViewController.swift */; };
 		EB0BF41A2550E99B00317097 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF4192550E99B00317097 /* DetailViewModel.swift */; };
+		EB0BF42025518E5000317097 /* ApplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF41F25518E5000317097 /* ApplyViewController.swift */; };
+		EB0BF42325518F6000317097 /* ApplyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF42225518F6000317097 /* ApplyViewModel.swift */; };
+		EB0BF4262551916500317097 /* MyPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF4252551916500317097 /* MyPostViewModel.swift */; };
+		EB0BF42A25519ADB00317097 /* MyPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF42925519ADB00317097 /* MyPostViewController.swift */; };
 		EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */; };
 		EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */; };
 		EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */; };
@@ -66,6 +70,10 @@
 		EB0BF413254FC11A00317097 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		EB0BF4162550224B00317097 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EB0BF4192550E99B00317097 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		EB0BF41F25518E5000317097 /* ApplyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyViewController.swift; sourceTree = "<group>"; };
+		EB0BF42225518F6000317097 /* ApplyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyViewModel.swift; sourceTree = "<group>"; };
+		EB0BF4252551916500317097 /* MyPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostViewModel.swift; sourceTree = "<group>"; };
+		EB0BF42925519ADB00317097 /* MyPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostViewController.swift; sourceTree = "<group>"; };
 		EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewModel.swift; sourceTree = "<group>"; };
 		EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCodeViewController.swift; sourceTree = "<group>"; };
 		EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCheckViewController.swift; sourceTree = "<group>"; };
@@ -229,6 +237,8 @@
 				EBAC81072539690100DAD71B /* ViewController.swift */,
 				EB0BF40D254FBDC600317097 /* JoinViewController.swift */,
 				EB0BF4162550224B00317097 /* DetailViewController.swift */,
+				EB0BF41F25518E5000317097 /* ApplyViewController.swift */,
+				EB0BF42925519ADB00317097 /* MyPostViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -240,6 +250,8 @@
 				EBEBE50D253D709E00C7E100 /* ViewModelType.swift */,
 				EB0BF413254FC11A00317097 /* MainViewModel.swift */,
 				EB0BF4192550E99B00317097 /* DetailViewModel.swift */,
+				EB0BF42225518F6000317097 /* ApplyViewModel.swift */,
+				EB0BF4252551916500317097 /* MyPostViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -403,6 +415,7 @@
 				EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */,
 				EBEBE507253D6A9A00C7E100 /* SignInViewModel.swift in Sources */,
 				EB129FE1254EFFE0009D5151 /* ChangeViewModel.swift in Sources */,
+				EB0BF4262551916500317097 /* MyPostViewModel.swift in Sources */,
 				EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */,
 				EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */,
 				EB0BF414254FC11A00317097 /* MainViewModel.swift in Sources */,
@@ -414,8 +427,11 @@
 				EB0BF401254F0EA700317097 /* MainTableViewCell.swift in Sources */,
 				EBF85A9B25494A60008F4302 /* RegisterViewModel.swift in Sources */,
 				EB0BF411254FC08300317097 /* MainModel.swift in Sources */,
+				EB0BF42025518E5000317097 /* ApplyViewController.swift in Sources */,
+				EB0BF42A25519ADB00317097 /* MyPostViewController.swift in Sources */,
 				EB0BF406254F117900317097 /* ListTableViewCell.swift in Sources */,
 				EB0BF41A2550E99B00317097 /* DetailViewModel.swift in Sources */,
+				EB0BF42325518F6000317097 /* ApplyViewModel.swift in Sources */,
 				EBAC81082539690100DAD71B /* ViewController.swift in Sources */,
 				EB046F4F254667C900340F12 /* CodeCheckViewModel.swift in Sources */,
 				EB046F372545646F00340F12 /* SendCodeViewModel.swift in Sources */,

@@ -73,6 +73,20 @@ extension UIViewController {
         }
     }
     
+    func setButton(_ button: UIButton, _ isApply: Bool) {
+        if isApply {
+            button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
+            button.layer.cornerRadius = 20
+            button.tintColor = .white
+            button.setTitle("취소하기", for: .normal)
+        } else {
+            button.backgroundColor = .clear
+            button.layer.cornerRadius = 20
+            button.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
+            button.layer.borderWidth = 1
+        }
+    }
+    
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let Ok = UIAlertAction(title: "OK", style: .default, handler: nil)
