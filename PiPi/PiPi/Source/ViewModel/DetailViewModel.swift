@@ -6,3 +6,41 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
+
+class DetailViewModel: ViewModelType {
+    static var loadDetail = PublishRelay<detailModel>()
+    private let disposeBag = DisposeBag()
+    
+    struct input {
+        let loadDetail: Signal<Void>
+        let selectIndexPath: String
+    }
+    
+    struct output {
+        let result: Signal<String>
+    }
+    
+    func transform(_ input: input) -> output {
+        let api = PostAPI()
+        let result = PublishSubject<String>()
+//        let info = Signal.combineLatest(input.selectIndexPath, MainViewModel.loadData.asSignal()).asObservable()
+        
+        input.loadDetail.asObservable().subscribe(onNext: { id in
+            print("server \(input.selectIndexPath)")
+            api.getDetailPost(input.selectIndexPath).subscribe(onNext: { response,statusCode in
+                print(statusCode)
+                switch statusCode {
+                case .ok:
+                    DetailViewModel.loadDetail.accept(response!)
+                    result.onCompleted()
+                default:
+                    result.onNext("디테일 포스트 로드 실패")
+                }
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+        
+        return output(result: result.asSignal(onErrorJustReturn: "get detail 실패"))
+    }
+}

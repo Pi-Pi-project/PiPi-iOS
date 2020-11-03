@@ -6,24 +6,110 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
 class JoinViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    private let viewModel = MainViewModel()
+    private let loadData = BehaviorRelay<Void>(value: ())
+
+    
+    lazy var floatingButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .magenta
+        button.addTarget(self, action: #selector(floatingBtn), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        bindViewModel()
+        registerCell()
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let view = UIApplication.shared.windows.filter({$0.isKeyWindow}).first{
+            view.addSubview(floatingButton)
+            setupUI()
+        }
+        tableView.reloadData()
     }
-    */
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let view = UIApplication.shared.windows.filter({$0.isKeyWindow}).first, floatingButton.isDescendant(of: view) {
+            floatingButton.removeFromSuperview()
+        }
+    }
+    
+    func registerCell() {
+        let nib = UINib(nibName: "MainTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "joinCell")
+        
+        tableView.rowHeight = 200
+    }
+    
+    func bindViewModel() {
+        let input = MainViewModel.input(loadData: loadData.asSignal(onErrorJustReturn: ()), selectIndexPath: tableView.rx.itemSelected.asSignal())
+        let output = viewModel.transform(input)
+        
+        MainViewModel.loadData
+            .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
+                
+                var skillSet = String()
+                
+                for i in 0..<repository.postSkillsets.count {
+                    skillSet = repository.postSkillsets[i].skill
+                }
+                let backimg = URL(string: "http://10.156.145.141:8080/image/\(repository.img ?? "")/")
+                
+                cell.backImageView.kf.setImage(with: backimg)
+                cell.projectLabel.text = repository.title
+                cell.skilsLabel.text = skillSet
+                cell.userImageView.image = UIImage(named: repository.userImg!)
+            }.disposed(by: rx.disposeBag)
 
+        output.data.drive().disposed(by: rx.disposeBag)
+        output.data.drive(onNext: { _ in self.tableView.reloadData()}).disposed(by: rx.disposeBag)
+        output.nextView.asObservable().subscribe(onNext: { id in
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
+            vc.selectIndexPath = id
+            print(id)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }).disposed(by: rx.disposeBag)
+    }
+    
+    func setupUI(){
+        NSLayoutConstraint.activate([
+            floatingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            floatingButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            floatingButton.heightAnchor.constraint(equalToConstant: 80),
+            floatingButton.widthAnchor.constraint(equalToConstant: 80)
+        ])
+        floatingButton.layer.cornerRadius = 40
+        floatingButton.layer.masksToBounds = true
+        floatingButton.layer.borderColor = UIColor.systemPink.cgColor
+        floatingButton.layer.borderWidth = 4
+    }
+    
+    @objc func floatingBtn(){
+        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "") as! ViewController
+        self.navigationController?.pushViewController(pushVC, animated: true)
+    }
+    
+//    func nextWithData() {
+//        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
+//        vc.selectIndexPath = dkdk
+//        print(dkdk)
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
 }

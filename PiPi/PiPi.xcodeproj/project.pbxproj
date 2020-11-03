@@ -17,6 +17,11 @@
 		EB0BF406254F117900317097 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF404254F117900317097 /* ListTableViewCell.swift */; };
 		EB0BF407254F117900317097 /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB0BF405254F117900317097 /* ListTableViewCell.xib */; };
 		EB0BF40A254F12AC00317097 /* PostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF409254F12AC00317097 /* PostAPI.swift */; };
+		EB0BF40E254FBDC600317097 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF40D254FBDC600317097 /* JoinViewController.swift */; };
+		EB0BF411254FC08300317097 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF410254FC08300317097 /* MainModel.swift */; };
+		EB0BF414254FC11A00317097 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF413254FC11A00317097 /* MainViewModel.swift */; };
+		EB0BF4172550224B00317097 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF4162550224B00317097 /* DetailViewController.swift */; };
+		EB0BF41A2550E99B00317097 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF4192550E99B00317097 /* DetailViewModel.swift */; };
 		EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */; };
 		EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */; };
 		EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */; };
@@ -56,6 +61,11 @@
 		EB0BF404254F117900317097 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		EB0BF405254F117900317097 /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
 		EB0BF409254F12AC00317097 /* PostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAPI.swift; sourceTree = "<group>"; };
+		EB0BF40D254FBDC600317097 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
+		EB0BF410254FC08300317097 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
+		EB0BF413254FC11A00317097 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		EB0BF4162550224B00317097 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		EB0BF4192550E99B00317097 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewModel.swift; sourceTree = "<group>"; };
 		EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCodeViewController.swift; sourceTree = "<group>"; };
 		EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCheckViewController.swift; sourceTree = "<group>"; };
@@ -217,6 +227,8 @@
 			children = (
 				EB129FD4254EFD57009D5151 /* Auth */,
 				EBAC81072539690100DAD71B /* ViewController.swift */,
+				EB0BF40D254FBDC600317097 /* JoinViewController.swift */,
+				EB0BF4162550224B00317097 /* DetailViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -226,6 +238,8 @@
 			children = (
 				EB129FD5254EFD61009D5151 /* Auth */,
 				EBEBE50D253D709E00C7E100 /* ViewModelType.swift */,
+				EB0BF413254FC11A00317097 /* MainViewModel.swift */,
+				EB0BF4192550E99B00317097 /* DetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -255,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				EBEBE4F7253D64F300C7E100 /* Token.swift */,
+				EB0BF410254FC08300317097 /* MainModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -390,17 +405,22 @@
 				EB129FE1254EFFE0009D5151 /* ChangeViewModel.swift in Sources */,
 				EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */,
 				EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */,
+				EB0BF414254FC11A00317097 /* MainViewModel.swift in Sources */,
 				EBEBE4EF253D64A500C7E100 /* Extension.swift in Sources */,
+				EB0BF40E254FBDC600317097 /* JoinViewController.swift in Sources */,
 				EBEBE4F8253D64F300C7E100 /* Token.swift in Sources */,
 				EB046F3A2545663600340F12 /* CodeCheckViewController.swift in Sources */,
 				EBF85A9825494A53008F4302 /* SetProfileViewController.swift in Sources */,
 				EB0BF401254F0EA700317097 /* MainTableViewCell.swift in Sources */,
 				EBF85A9B25494A60008F4302 /* RegisterViewModel.swift in Sources */,
+				EB0BF411254FC08300317097 /* MainModel.swift in Sources */,
 				EB0BF406254F117900317097 /* ListTableViewCell.swift in Sources */,
+				EB0BF41A2550E99B00317097 /* DetailViewModel.swift in Sources */,
 				EBAC81082539690100DAD71B /* ViewController.swift in Sources */,
 				EB046F4F254667C900340F12 /* CodeCheckViewModel.swift in Sources */,
 				EB046F372545646F00340F12 /* SendCodeViewModel.swift in Sources */,
 				EBEBE504253D6A8D00C7E100 /* SIgnInViewController.swift in Sources */,
+				EB0BF4172550224B00317097 /* DetailViewController.swift in Sources */,
 				EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */,
 				EBAC81042539690100DAD71B /* AppDelegate.swift in Sources */,
 				EBEBE50A253D706F00C7E100 /* PiPiAPI.swift in Sources */,

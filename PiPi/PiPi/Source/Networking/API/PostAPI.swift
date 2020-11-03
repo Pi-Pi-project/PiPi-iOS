@@ -20,25 +20,29 @@ class PostAPI{
         }
     }
     
-    func getPosts() -> Observable<networkingResult> {
-        httpClient.get(.getPost(7), param: nil).map { response, data -> networkingResult in
+    func getPosts() -> Observable<([postModel]?, networkingResult)> {
+        httpClient.get(.getPost(7), param: nil).map { response, data -> ([postModel]?, networkingResult) in
+            print(response.statusCode)
             switch response.statusCode {
             case 200:
-//                guard let data = JSONDecoder().decode(Token.self, from: data)
-                return .ok
+                guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault)}
+                print(data)
+                return (data, .ok)
             default:
-                return .fault
+                return (nil, .fault)
             }
         }
     }
 
-    func getDetailPost(_ id: String) -> Observable<networkingResult> {
-        httpClient.get(.getDetailPost(id), param: nil).map { response, data -> networkingResult in
+    func getDetailPost(_ id: String) -> Observable<(detailModel?, networkingResult)> {
+        httpClient.get(.getDetailPost(id), param: nil).map { response, data -> (detailModel?, networkingResult) in
+            print(response.statusCode)
             switch response.statusCode {
             case 200:
-                return .ok
+                guard let data  = try? JSONDecoder().decode(detailModel.self, from: data) else {return (nil, .fault)}
+                return (data, .ok)
             default:
-                return .fault
+                return (nil, .fault)
             }
         }
     }

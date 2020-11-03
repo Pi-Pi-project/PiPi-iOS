@@ -52,7 +52,7 @@ enum PiPiAPI {
         case .wirtePost:
             return "/post"
         case .getPost(let page):
-            return "/post/\(page)"
+            return "/post?page=0"
         case .getDetailPost(let id):
             return "/post/\(id)"
         case .projectApply:
@@ -71,6 +71,6 @@ enum PiPiAPI {
     }
     
     func header() -> HTTPHeaders? {
-        return nil
+        return ["Authorization" : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDQzNzI5NzIsImV4cCI6MzAwMDAxNjA0MzcyOTcyLCJzdWIiOiJzZXVuZ2Jpbjk4NTBAZHNtbS5ocy5rciIsInR5cGUiOiJhY2Nlc3NUb2tlbiJ9.yllsKaZQKakD7XIqpvbD8Do04-I72FapK3i9sOiYgcc"]
     }
 }

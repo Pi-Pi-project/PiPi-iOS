@@ -72,7 +72,21 @@ extension UIViewController {
             button.layer.borderWidth = 1
         }
     }
-
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let Ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(Ok)
+        alert.addAction(cancel)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func circleOfImageView(_ imageView: UIImageView) {
+        imageView.layer.cornerRadius = imageView.layer.borderWidth/2
+    }
 }
 
 struct PiPiFilter {
