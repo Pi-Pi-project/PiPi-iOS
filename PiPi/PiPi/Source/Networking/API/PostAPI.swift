@@ -60,7 +60,22 @@ class PostAPI{
     }
 
     func postProjectApply(_ id: String) -> Observable<networkingResult> {
-        httpClient.post(.projectApply, param: ["id": id]).map { response, data -> networkingResult in
+        httpClient.post(.projectApply, param: ["id": id])
+            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://10.156.145.141:8080")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }.map { response, data -> networkingResult in
             switch response.statusCode {
             case 200:
                 return .ok
@@ -72,6 +87,34 @@ class PostAPI{
         }
     }
 
+    func deleteProjectApply(_ id: String) -> Observable<networkingResult> {
+        httpClient.delete(.deProjectApply, param: ["id" : id])
+            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://10.156.145.141:8080")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }.map { response, data -> networkingResult in
+            switch response.statusCode {
+            case 200:
+                return .ok
+            case 404:
+                return .notFound
+            default:
+                return .fault
+            }
+        }
+    }
+    
     func getApplyList(_ id: String) -> Observable<([postModel]?, networkingResult)> {
         httpClient.get(.getApplyList(id), param: nil).map { response, data -> ([postModel]?, networkingResult) in
             switch response.statusCode {

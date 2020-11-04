@@ -35,7 +35,10 @@ class DetailViewController: UIViewController {
     }
     
     func bindViewModel() {
-        let input = DetailViewModel.input(loadDetail: loadDetail.asSignal(onErrorJustReturn: ()), selectIndexPath: selectIndexPath)
+        let input = DetailViewModel.input(
+            loadDetail: loadDetail.asSignal(onErrorJustReturn: ()),
+            selectIndexPath: selectIndexPath,
+            selectApply: applyBtn.rx.tap.asDriver())
         let output = viewModel.transform(input)
         
         DetailViewModel.loadDetail.asObservable().subscribe(onNext: { result in
@@ -56,6 +59,16 @@ class DetailViewController: UIViewController {
             self.ppDetailTextView.text = result.content
             self.ppMaxLabel.text = String(format: "0", result.max ?? "0")
             self.setButton(self.applyBtn, result.applied)
+        }).disposed(by: rx.disposeBag)
+        
+        output.resultApplyT.asObservable().subscribe(onCompleted: {
+            print("ddffdfs")
+            self.setButton(self.applyBtn, true)
+        }).disposed(by: rx.disposeBag)
+        
+        output.resultApplyF.asObservable().subscribe(onCompleted: {
+            print("adfasfaasdf")
+            self.setButton(self.applyBtn, false)
         }).disposed(by: rx.disposeBag)
     }
 

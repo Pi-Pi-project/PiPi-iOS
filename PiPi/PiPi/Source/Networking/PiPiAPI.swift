@@ -27,8 +27,9 @@ enum PiPiAPI {
     case getApplyList(_ id: String)
     case rejectApply
     case acceptApply
-    case getApplyPosts(_ id: String)
+    case getApplyPosts
     case getMyPost
+    case deProjectApply
     
     //Projects
     case createProject
@@ -54,11 +55,11 @@ enum PiPiAPI {
             return "/post"
         case .getPost(let page):
             return "/post?page=0"
-        case .getApplyPosts(let id):
+        case .getApplyPosts:
             return "/post/apply?page=0"
         case .getDetailPost(let id):
             return "/post/\(id)"
-        case .projectApply:
+        case .projectApply, .deProjectApply:
             return "/post/apply"
         case .getApplyList:
             return "/post/apply"

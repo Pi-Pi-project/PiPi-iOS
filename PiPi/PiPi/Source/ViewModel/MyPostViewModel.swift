@@ -16,15 +16,20 @@ class MyPostViewModel: ViewModelType {
     
     struct input {
         let loadMyPost: Signal<Void>
+        let selectMyPostRow: Signal<IndexPath>
     }
     
     struct output {
         let result: Signal<String>
+        let detailView: Signal<String>
     }
     
     func transform(_ input: input) -> output {
         let api = PostAPI()
         let result = PublishSubject<String>()
+        let info = Signal.combineLatest(input.selectMyPostRow, MyPostViewModel.loadMyPost.asSignal()).asObservable()
+        let detailView = PublishSubject<String>()
+        var select = String()
         
         input.loadMyPost.asObservable().subscribe(onNext: { _ in
             api.getMyPost().subscribe(onNext: { response, statusCode in
@@ -39,6 +44,11 @@ class MyPostViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        return output(result: result.asSignal(onErrorJustReturn: "get mypost 실패"))
+        input.selectMyPostRow.asObservable().withLatestFrom(info).subscribe(onNext: { indexPath, data in
+            select = String(data[indexPath.row].id)
+            detailView.onNext(select)
+        }).disposed(by: disposeBag)
+        
+        return output(result: result.asSignal(onErrorJustReturn: "get mypost 실패"), detailView: detailView.asSignal(onErrorJustReturn: "get mypost detail 실패"))
     }
 }

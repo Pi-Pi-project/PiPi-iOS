@@ -70,12 +70,14 @@ class JoinViewController: UIViewController {
                 for i in 0..<repository.postSkillsets.count {
                     skillSet = repository.postSkillsets[i].skill
                 }
-                let backimg = URL(string: "http://10.156.145.141:8080/image/\(repository.img ?? "")/")
                 
+                let backimg = URL(string: "http://10.156.145.141:8080/image/\(repository.img ?? "")/")
+                let userimg = URL(string: "http://10.156.145.141:8080/image/\(repository.userImg ?? "")/")
+    
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet
-                cell.userImageView.image = UIImage(named: repository.userImg!)
+                cell.userImgBtn.imageView?.kf.setImage(with: userimg)
             }.disposed(by: rx.disposeBag)
 
         output.data.drive().disposed(by: rx.disposeBag)
@@ -83,7 +85,6 @@ class JoinViewController: UIViewController {
         output.nextView.asObservable().subscribe(onNext: { id in
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
             vc.selectIndexPath = id
-            print(id)
             self.navigationController?.pushViewController(vc, animated: true)
         }).disposed(by: rx.disposeBag)
     }

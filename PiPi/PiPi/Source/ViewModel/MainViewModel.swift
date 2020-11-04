@@ -46,7 +46,6 @@ class MainViewModel: ViewModelType {
         }).disposed(by: disposeBag)
         
         input.selectPostRow.asObservable().withLatestFrom(info).subscribe(onNext: { indexPath, data in
-
             select = String(data[indexPath.row].id)
             nextView.onNext(select)
         }).disposed(by: disposeBag)

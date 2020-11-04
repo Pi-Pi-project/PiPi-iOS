@@ -52,6 +52,10 @@ class ApplyViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        bindViewModel()
+    }
+    
     func registerCell() {
         let nib = UINib(nibName: "MainTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "joinCell")
@@ -72,12 +76,14 @@ class ApplyViewController: UIViewController {
                     skillSet = repository.postSkillsets[i].skill
                 }
                 let backimg = URL(string: "http://10.156.145.141:8080/image/\(repository.img ?? "")/")
+                let userimg = URL(string: "http://10.156.145.141:8080/image/\(repository.userImg ?? "")/")
                 
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet
-                cell.userImageView.image = UIImage(named: repository.userImg!)
+                cell.userImgBtn.imageView?.kf.setImage(with: userimg)
             }.disposed(by: rx.disposeBag)
+        
         
         output.detailView.asObservable().subscribe(onNext: { id in
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
@@ -85,8 +91,8 @@ class ApplyViewController: UIViewController {
             print(id)
             self.navigationController?.pushViewController(vc, animated: true)
         }).disposed(by: rx.disposeBag)
-
-        output.result.emit(onCompleted: { print("nice!") })
+        
+        output.result.emit(onCompleted : { self.tableView.reloadData() }).disposed(by: rx.disposeBag)
     }
     
     func setupUI(){
