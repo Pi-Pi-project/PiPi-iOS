@@ -34,7 +34,7 @@ class PostAPI{
     }
     
     func getApplyPosts() -> Observable<([postModel]?, networkingResult)> {
-        httpClient.get(.getApplyList("1"), param: nil).map { response, data -> ([postModel]?, networkingResult) in
+        httpClient.get(.getApplyPosts("1"), param: nil).map { response, data -> ([postModel]?, networkingResult) in
             print(response.statusCode)
             switch response.statusCode {
             case 200:
@@ -115,12 +115,22 @@ class PostAPI{
         }
     }
     
-    func getApplyList(_ id: String) -> Observable<([postModel]?, networkingResult)> {
-        httpClient.get(.getApplyList(id), param: nil).map { response, data -> ([postModel]?, networkingResult) in
+    func getApplyList(_ id: String) -> Observable<([ApplyList]?, networkingResult)> {
+        httpClient.get(.getApplyList(id), param: nil).map { response, data -> ([ApplyList]?, networkingResult) in
+            print(data)
             switch response.statusCode {
             case 200:
-                guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault)}
-                return (data, .ok)
+                print(response.statusCode)
+//                guard let data = try? JSONDecoder().decode(Applies.self, from: data) else { return (nil, .fault)}
+                do {
+                    let data = try? JSONDecoder().decode([ApplyList].self, from: data)
+                    print(data)
+                    return (data, .ok)
+                } catch {
+                    print(" error \(error)")
+                    return (nil, .ok)
+                }
+                
             default:
                 return (nil, .fault)
             }

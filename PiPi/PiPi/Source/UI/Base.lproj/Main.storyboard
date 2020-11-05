@@ -375,10 +375,10 @@
             </objects>
             <point key="canvasLocation" x="4481" y="-524"/>
         </scene>
-        <!--View Controller-->
+        <!--Apply List View Controller-->
         <scene sceneID="GAs-ZB-aN1">
             <objects>
-                <viewController id="Ia1-Lg-1PK" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="applylistVC" id="Ia1-Lg-1PK" customClass="ApplyListViewController" customModule="PiPi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KdO-Fo-PWE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -407,6 +407,9 @@
                             <constraint firstItem="uoA-Ft-aEx" firstAttribute="bottom" secondItem="Ot9-LH-QtW" secondAttribute="bottom" id="r2u-l2-GNg"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="Ot9-LH-QtW" id="mAX-Ap-yBq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WVQ-3a-Wbj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

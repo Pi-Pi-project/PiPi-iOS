@@ -35,23 +35,31 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1gc-up-UGh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bV-0b-c26">
                                 <rect key="frame" x="244" y="16" width="60" height="60"/>
-                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="UKm-TF-VoG"/>
-                                    <constraint firstAttribute="width" constant="60" id="X9P-a1-ik0"/>
+                                    <constraint firstAttribute="width" constant="60" id="9cM-ks-B6l"/>
+                                    <constraint firstAttribute="height" constant="60" id="Yfv-ry-u8Q"/>
                                 </constraints>
-                            </imageView>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sqS-Ey-xxt">
+                                <rect key="frame" x="184" y="35" width="120" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="TDS-eM-NRd"/>
+                                </constraints>
+                                <state key="normal" title="신청자 목록"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="1gc-up-UGh" secondAttribute="trailing" constant="16" id="Bcr-o5-bSs"/>
                             <constraint firstItem="Byc-DK-cg9" firstAttribute="leading" secondItem="ctJ-tr-Xz0" secondAttribute="leading" id="EUi-kM-Vxz"/>
                             <constraint firstAttribute="bottom" secondItem="Byc-DK-cg9" secondAttribute="bottom" constant="18" id="IKl-pT-DXI"/>
+                            <constraint firstAttribute="trailing" secondItem="sqS-Ey-xxt" secondAttribute="trailing" constant="16" id="Lld-bd-qY8"/>
+                            <constraint firstItem="9bV-0b-c26" firstAttribute="top" secondItem="HBe-h4-qZ1" secondAttribute="top" constant="16" id="WkU-rL-vu8"/>
                             <constraint firstItem="ctJ-tr-Xz0" firstAttribute="leading" secondItem="HBe-h4-qZ1" secondAttribute="leading" constant="16" id="bNx-iE-t8M"/>
-                            <constraint firstItem="1gc-up-UGh" firstAttribute="top" secondItem="HBe-h4-qZ1" secondAttribute="top" constant="16" id="eJg-7X-zGf"/>
+                            <constraint firstAttribute="trailing" secondItem="9bV-0b-c26" secondAttribute="trailing" constant="16" id="lqW-U2-Unr"/>
                             <constraint firstItem="ctJ-tr-Xz0" firstAttribute="top" secondItem="HBe-h4-qZ1" secondAttribute="top" constant="16" id="m6m-wW-9WW"/>
+                            <constraint firstItem="sqS-Ey-xxt" firstAttribute="centerY" secondItem="HBe-h4-qZ1" secondAttribute="centerY" id="nPD-Lj-GdB"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -68,11 +76,12 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="applyListBtn" destination="sqS-Ey-xxt" id="yj6-71-t7T"/>
                 <outlet property="backImageView" destination="cMg-g3-pjg" id="JRf-cs-sza"/>
                 <outlet property="coverView" destination="HBe-h4-qZ1" id="hcd-Cb-AeG"/>
                 <outlet property="projectLabel" destination="ctJ-tr-Xz0" id="ANH-FS-hBr"/>
                 <outlet property="skilsLabel" destination="Byc-DK-cg9" id="2LO-7S-vUY"/>
-                <outlet property="userImageView" destination="1gc-up-UGh" id="ut9-hd-1Yb"/>
+                <outlet property="userImgBtn" destination="9bV-0b-c26" id="yq0-x3-hdu"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="95.758928571428569"/>
         </tableViewCell>

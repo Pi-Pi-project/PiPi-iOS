@@ -53,7 +53,7 @@ class ApplyViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        bindViewModel()
+        tableView.reloadData()
     }
     
     func registerCell() {

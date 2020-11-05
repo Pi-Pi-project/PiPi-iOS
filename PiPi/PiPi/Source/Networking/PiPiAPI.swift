@@ -23,13 +23,17 @@ enum PiPiAPI {
     case wirtePost
     case getPost(_ page: Int)
     case getDetailPost(_ id: String)
+    
+    case getApplyPosts(_ id: String)
     case projectApply
+    case deProjectApply
+    
     case getApplyList(_ id: String)
     case rejectApply
     case acceptApply
-    case getApplyPosts
+    
     case getMyPost
-    case deProjectApply
+    
     
     //Projects
     case createProject
@@ -61,8 +65,8 @@ enum PiPiAPI {
             return "/post/\(id)"
         case .projectApply, .deProjectApply:
             return "/post/apply"
-        case .getApplyList:
-            return "/post/apply"
+        case .getApplyList(let id):
+            return "/post/apply/\(id)"
         case .rejectApply:
             return "/post/apply/reject"
         case .acceptApply:
@@ -75,6 +79,6 @@ enum PiPiAPI {
     }
     
     func header() -> HTTPHeaders? {
-        return ["Authorization" : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDQzNzI5NzIsImV4cCI6MzAwMDAxNjA0MzcyOTcyLCJzdWIiOiJzZXVuZ2Jpbjk4NTBAZHNtbS5ocy5rciIsInR5cGUiOiJhY2Nlc3NUb2tlbiJ9.yllsKaZQKakD7XIqpvbD8Do04-I72FapK3i9sOiYgcc"]
+        return ["Authorization" : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDQ0Njk5MzQsImV4cCI6MzAwMDAxNjA0NDY5OTM0LCJzdWIiOiJzZXVuZ2Jpbjk4NTBAZHNtbS5ocy5rciIsInR5cGUiOiJhY2Nlc3NUb2tlbiJ9.toaYfawuHvEFFh8MHltGvz-hF_8vWClxL6YDW1UCvoc"]
     }
 }

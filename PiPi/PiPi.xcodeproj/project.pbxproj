@@ -26,6 +26,8 @@
 		EB0BF42325518F6000317097 /* ApplyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF42225518F6000317097 /* ApplyViewModel.swift */; };
 		EB0BF4262551916500317097 /* MyPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF4252551916500317097 /* MyPostViewModel.swift */; };
 		EB0BF42A25519ADB00317097 /* MyPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF42925519ADB00317097 /* MyPostViewController.swift */; };
+		EB0BF43B2552B10C00317097 /* ApplyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF43A2552B10B00317097 /* ApplyListViewController.swift */; };
+		EB0BF43E2552B1A600317097 /* ApplyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF43D2552B1A600317097 /* ApplyListViewModel.swift */; };
 		EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */; };
 		EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */; };
 		EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */; };
@@ -74,6 +76,8 @@
 		EB0BF42225518F6000317097 /* ApplyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyViewModel.swift; sourceTree = "<group>"; };
 		EB0BF4252551916500317097 /* MyPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostViewModel.swift; sourceTree = "<group>"; };
 		EB0BF42925519ADB00317097 /* MyPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostViewController.swift; sourceTree = "<group>"; };
+		EB0BF43A2552B10B00317097 /* ApplyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyListViewController.swift; sourceTree = "<group>"; };
+		EB0BF43D2552B1A600317097 /* ApplyListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyListViewModel.swift; sourceTree = "<group>"; };
 		EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewModel.swift; sourceTree = "<group>"; };
 		EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCodeViewController.swift; sourceTree = "<group>"; };
 		EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCheckViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 				EB0BF4162550224B00317097 /* DetailViewController.swift */,
 				EB0BF41F25518E5000317097 /* ApplyViewController.swift */,
 				EB0BF42925519ADB00317097 /* MyPostViewController.swift */,
+				EB0BF43A2552B10B00317097 /* ApplyListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -252,6 +257,7 @@
 				EB0BF4192550E99B00317097 /* DetailViewModel.swift */,
 				EB0BF42225518F6000317097 /* ApplyViewModel.swift */,
 				EB0BF4252551916500317097 /* MyPostViewModel.swift */,
+				EB0BF43D2552B1A600317097 /* ApplyListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -413,6 +419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */,
+				EB0BF43E2552B1A600317097 /* ApplyListViewModel.swift in Sources */,
 				EBEBE507253D6A9A00C7E100 /* SignInViewModel.swift in Sources */,
 				EB129FE1254EFFE0009D5151 /* ChangeViewModel.swift in Sources */,
 				EB0BF4262551916500317097 /* MyPostViewModel.swift in Sources */,
@@ -440,6 +447,7 @@
 				EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */,
 				EBAC81042539690100DAD71B /* AppDelegate.swift in Sources */,
 				EBEBE50A253D706F00C7E100 /* PiPiAPI.swift in Sources */,
+				EB0BF43B2552B10C00317097 /* ApplyListViewController.swift in Sources */,
 				EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */,
 				EB129FDE254EFE8A009D5151 /* ChangePwViewController.swift in Sources */,
 				EB0BF40A254F12AC00317097 /* PostAPI.swift in Sources */,

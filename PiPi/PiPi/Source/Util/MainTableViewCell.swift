@@ -12,14 +12,14 @@ class MainTableViewCell: UITableViewCell {
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var projectLabel: UILabel!
     @IBOutlet weak var skilsLabel: UILabel!
-    @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var coverView: UIView!
+    @IBOutlet weak var userImgBtn: UIButton!
+    @IBOutlet weak var applyListBtn: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         setupUI()
-        // Initialization code
     }
     
     func setupUI() {
@@ -33,7 +33,11 @@ class MainTableViewCell: UITableViewCell {
         skilsLabel.textColor = .black
         skilsLabel.layer.cornerRadius = 4
         
-        circleOfImageView(userImageView)
+        applyListBtn.backgroundColor = .white
+        applyListBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
+        applyListBtn.layer.cornerRadius = 10
+        
+        applyListBtn.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -41,7 +45,6 @@ class MainTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
 }
 
 

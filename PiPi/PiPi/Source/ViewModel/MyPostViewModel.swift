@@ -16,12 +16,13 @@ class MyPostViewModel: ViewModelType {
     
     struct input {
         let loadMyPost: Signal<Void>
-        let selectMyPostRow: Signal<IndexPath>
+        let selectMyPostRow: Signal<Int>
     }
     
     struct output {
         let result: Signal<String>
         let detailView: Signal<String>
+        let indexPath: Signal<String>
     }
     
     func transform(_ input: input) -> output {
@@ -45,10 +46,10 @@ class MyPostViewModel: ViewModelType {
         }).disposed(by: disposeBag)
         
         input.selectMyPostRow.asObservable().withLatestFrom(info).subscribe(onNext: { indexPath, data in
-            select = String(data[indexPath.row].id)
+            select = String(data[indexPath].id)
             detailView.onNext(select)
         }).disposed(by: disposeBag)
         
-        return output(result: result.asSignal(onErrorJustReturn: "get mypost 실패"), detailView: detailView.asSignal(onErrorJustReturn: "get mypost detail 실패"))
+        return output(result: result.asSignal(onErrorJustReturn: "get mypost 실패"), detailView: detailView.asSignal(onErrorJustReturn: "get mypost detail 실패"), indexPath: Signal.just(select))
     }
 }

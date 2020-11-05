@@ -64,3 +64,13 @@ struct User: Codable {
     let nickname: String
     let img: String
 }
+struct ApplyList: Codable{
+    let userEmail: String
+    let userNickname: String
+    let userImg: String
+    let status: String
+}
+
+struct Applies: Codable {
+    let applies: [ApplyList]
+}

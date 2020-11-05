@@ -76,12 +76,12 @@ extension UIViewController {
     func setButton(_ button: UIButton, _ isApply: Bool) {
         if isApply {
             button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
-            button.layer.cornerRadius = 20
+            button.layer.cornerRadius = 10
             button.tintColor = .white
             button.setTitle("취소하기", for: .normal)
         } else {
             button.backgroundColor = .clear
-            button.layer.cornerRadius = 20
+            button.layer.cornerRadius = 10
             button.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
             button.layer.borderWidth = 1
         }
@@ -96,6 +96,37 @@ extension UIViewController {
         alert.addAction(cancel)
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func setListBtn(_ access: UIButton, _ reject: UIButton, _ status: String){
+        if status == "WAITING"{
+            access.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
+            access.layer.cornerRadius = 10
+            access.tintColor = .white
+            
+            reject.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
+            reject.layer.cornerRadius = 10
+            reject.tintColor = .white
+        } else if status == "ACCEPTED" {
+            access.backgroundColor = .clear
+            access.layer.cornerRadius = 10
+            access.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
+            access.layer.borderWidth = 1
+            
+            reject.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
+            reject.layer.cornerRadius = 10
+            reject.tintColor = .white
+            reject.layer.borderWidth = 1
+        }else {
+            reject.backgroundColor = .clear
+            reject.layer.cornerRadius = 10
+            reject.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
+            reject.layer.borderWidth = 1
+            
+            access.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
+            access.layer.cornerRadius = 10
+            access.tintColor = .white
+        }
     }
     
     func circleOfImageView(_ imageView: UIImageView) {

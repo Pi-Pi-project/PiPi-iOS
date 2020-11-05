@@ -16,7 +16,8 @@ class MyPostViewController: UIViewController {
     
     private let viewModel = MyPostViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
-
+    private var selectIndexPath = BehaviorRelay<Int>(value: 0)
+    
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +58,7 @@ class MyPostViewController: UIViewController {
     }
     
     func bindViewModel() {
-        let input = MyPostViewModel.input(loadMyPost: loadData.asSignal(onErrorJustReturn: ()))
+        let input = MyPostViewModel.input(loadMyPost: loadData.asSignal(onErrorJustReturn: ()), selectMyPostRow: selectIndexPath.asSignal(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
         MyPostViewModel.loadMyPost
@@ -73,10 +74,19 @@ class MyPostViewController: UIViewController {
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet
-                cell.userImageView.image = UIImage(named: repository.userImg!)
+                cell.userImgBtn.isHidden = true
+                cell.applyListBtn.isHidden = false
+                cell.applyListBtn.rx.tap.subscribe(onNext: { _ in
+                    self.selectIndexPath.accept(row)
+                }).disposed(by: self.rx.disposeBag)
+                
             }.disposed(by: rx.disposeBag)
 
-        
+        output.detailView.asObservable().subscribe(onNext: { id in
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "applylistVC") as? ApplyListViewController else { return }
+            vc.selectIndexPath = id
+            self.navigationController?.pushViewController(vc, animated: true)
+        }).disposed(by: rx.disposeBag)
     }
     
     func setupUI(){

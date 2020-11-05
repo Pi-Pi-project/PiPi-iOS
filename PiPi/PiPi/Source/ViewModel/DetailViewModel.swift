@@ -16,7 +16,6 @@ class DetailViewModel: ViewModelType {
     struct input {
         let loadDetail: Signal<Void>
         let selectIndexPath: String
-        
         let selectApply: Driver<Void>
     }
     
