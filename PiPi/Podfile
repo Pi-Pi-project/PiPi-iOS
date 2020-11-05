@@ -16,6 +16,7 @@ pod 'FSCalendar'
 pod 'Kingfisher', '~> 5.0'
 pod "TKFormTextField"
 pod 'NSObject+Rx'
+pod 'iOSDropDown'
 
   # Pods for PiPi
 

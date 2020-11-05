@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (5.2.1)
   - FSCalendar (2.8.1)
+  - iOSDropDown (0.3.4)
   - Kingfisher (5.15.6):
     - Kingfisher/Core (= 5.15.6)
   - Kingfisher/Core (5.15.6)
@@ -28,6 +29,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 5.2)
   - FSCalendar
+  - iOSDropDown
   - Kingfisher (~> 5.0)
   - Moya (~> 14.0)
   - "NSObject+Rx"
@@ -42,6 +44,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - FSCalendar
+    - iOSDropDown
     - Kingfisher
     - Moya
     - "NSObject+Rx"
@@ -56,6 +59,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
   FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
+  iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
   Kingfisher: b3554e7bf6106115b44e8795300bad580ef2fdc7
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   "NSObject+Rx": fa6bbcc1ab1faa06b01466bc09b1e0692bbc5946
@@ -67,6 +71,6 @@ SPEC CHECKSUMS:
   SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
   TKFormTextField: def6294d3d3bd944d864ee48d5cc6e36863d6ade
 
-PODFILE CHECKSUM: 3eee14462dc878eedaf1cb4ccedcc7bb72f65fc8
+PODFILE CHECKSUM: 05e1a2f5e93bafef1a0df7f634fd0edc08f80ec2
 
 COCOAPODS: 1.9.3
