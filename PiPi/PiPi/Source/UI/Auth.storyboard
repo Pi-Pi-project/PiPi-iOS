@@ -107,6 +107,17 @@ back!</string>
                                 <rect key="frame" x="285" y="470" width="82" height="30"/>
                                 <state key="normal" title="비밀번호 찾기"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="자동로그인" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EqO-Vc-OAT">
+                                <rect key="frame" x="47" y="407" width="74" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9D-Wo-tIF">
+                                <rect key="frame" x="121" y="407" width="24" height="22"/>
+                                <state key="normal" image="rectangle" catalog="system"/>
+                                <state key="selected" image="checkmark.rectangle" catalog="system"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Kos-Oo-BHP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -114,19 +125,24 @@ back!</string>
                             <constraint firstItem="GAW-2o-dfa" firstAttribute="leading" secondItem="Kos-Oo-BHP" secondAttribute="leading" constant="47" id="1af-yu-nd3"/>
                             <constraint firstItem="Fpx-A4-81t" firstAttribute="leading" secondItem="Kos-Oo-BHP" secondAttribute="leading" constant="47" id="52q-i5-HSW"/>
                             <constraint firstItem="ChJ-kD-FxV" firstAttribute="leading" secondItem="Kos-Oo-BHP" secondAttribute="leading" constant="47" id="5q0-R9-uwB"/>
+                            <constraint firstItem="J9D-Wo-tIF" firstAttribute="top" secondItem="EqO-Vc-OAT" secondAttribute="top" id="AEq-PG-XPY"/>
                             <constraint firstItem="Kos-Oo-BHP" firstAttribute="trailing" secondItem="Fpx-A4-81t" secondAttribute="trailing" constant="47" id="B9C-wW-Fvq"/>
                             <constraint firstItem="GAW-2o-dfa" firstAttribute="top" secondItem="wSc-iF-2C7" secondAttribute="bottom" constant="100" id="DMo-4X-zvF"/>
                             <constraint firstItem="rAV-9X-igD" firstAttribute="trailing" secondItem="ChJ-kD-FxV" secondAttribute="trailing" id="Fjz-cp-v8b"/>
                             <constraint firstItem="wSc-iF-2C7" firstAttribute="leading" secondItem="Kos-Oo-BHP" secondAttribute="leading" constant="47" id="Jy9-aN-fFl"/>
+                            <constraint firstItem="EqO-Vc-OAT" firstAttribute="top" secondItem="Fpx-A4-81t" secondAttribute="bottom" constant="8" symbolic="YES" id="Nhn-Fe-idR"/>
+                            <constraint firstItem="EqO-Vc-OAT" firstAttribute="leading" secondItem="Fpx-A4-81t" secondAttribute="leading" id="Pl1-6R-NyG"/>
                             <constraint firstItem="Kos-Oo-BHP" firstAttribute="trailing" secondItem="GAW-2o-dfa" secondAttribute="trailing" constant="47" id="Xbu-tI-60f"/>
                             <constraint firstItem="ChJ-kD-FxV" firstAttribute="top" secondItem="Fpx-A4-81t" secondAttribute="bottom" constant="100" id="Y5u-fc-fEm"/>
                             <constraint firstItem="wSc-iF-2C7" firstAttribute="top" secondItem="Kos-Oo-BHP" secondAttribute="top" constant="70" id="iVQ-dN-Xhy"/>
                             <constraint firstItem="Kos-Oo-BHP" firstAttribute="trailing" secondItem="ChJ-kD-FxV" secondAttribute="trailing" constant="47" id="jBg-YB-Q0n"/>
                             <constraint firstItem="ChJ-kD-FxV" firstAttribute="top" secondItem="rAV-9X-igD" secondAttribute="bottom" constant="-1" id="lCi-UH-Idv"/>
+                            <constraint firstItem="J9D-Wo-tIF" firstAttribute="leading" secondItem="EqO-Vc-OAT" secondAttribute="trailing" id="ogH-rY-Lmd"/>
                             <constraint firstItem="Fpx-A4-81t" firstAttribute="top" secondItem="GAW-2o-dfa" secondAttribute="bottom" constant="40" id="qOM-0S-Ifh"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="autoAuthBtn" destination="J9D-Wo-tIF" id="SeS-S2-7xE"/>
                         <outlet property="emailTextField" destination="GAW-2o-dfa" id="uQS-GS-ckX"/>
                         <outlet property="findPwBtn" destination="rAV-9X-igD" id="Gbb-CK-JDn"/>
                         <outlet property="pwTextField" destination="Fpx-A4-81t" id="RPi-v3-fSr"/>
@@ -632,7 +648,9 @@ back!</string>
     </scenes>
     <resources>
         <image name="StartView" width="258" height="295"/>
+        <image name="checkmark.rectangle" catalog="system" width="128" height="93"/>
         <image name="photo.on.rectangle.fill" catalog="system" width="128" height="96"/>
+        <image name="rectangle" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -17,6 +17,7 @@ class SIgnInViewController: UIViewController {
     @IBOutlet weak var pwTextField: TKFormTextField!
     @IBOutlet weak var signInBtn: UIButton!
     @IBOutlet weak var findPwBtn: UIButton!
+    @IBOutlet weak var autoAuthBtn: UIButton!
     
     private let viewModel = SignInViewModel()
     private let emailLabel = UILabel()
@@ -30,12 +31,6 @@ class SIgnInViewController: UIViewController {
     }
     
     func setUI() {
-        signInBtn.rx.tap.subscribe(onNext: { _ in
-            if PiPiFilter.checkEmail(self.emailTextField.text!) {
-                self.setUpErrorMessage(self.emailLabel, title: "이메일 형식이 맞지 않습니다", superTextField: self.emailTextField)
-            }
-        }).disposed(by: rx.disposeBag)
-        
         findPwBtn.rx.tap.subscribe(onNext: { _ in
             self.moveScene("findVC")
         }).disposed(by: rx.disposeBag)
@@ -45,7 +40,8 @@ class SIgnInViewController: UIViewController {
         let input = SignInViewModel.input(
             userEmail: emailTextField.rx.text.orEmpty.asDriver(),
             userPw: pwTextField.rx.text.orEmpty.asDriver(),
-            doneTap: signInBtn.rx.tap.asSignal()
+            doneTap: signInBtn.rx.tap.asSignal(),
+            isAuto: autoAuthBtn.isSelected
         )
         let output = viewModel.transform(input)
         

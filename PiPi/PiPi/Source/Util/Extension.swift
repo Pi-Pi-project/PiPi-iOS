@@ -38,6 +38,13 @@ extension UIButton {
 
 extension UIViewController {
         
+    func moveReference() {
+        let mainView: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let nextVC = mainView.instantiateViewController(identifier: "main")
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: false, completion: nil)
+    }
+    
     func moveScene(_ identifier: String) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: identifier)
         navigationController?.pushViewController(vc!, animated: true)
