@@ -8,11 +8,12 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import TKFormTextField
 
 class ChangePwViewController: UIViewController {
 
-    @IBOutlet weak var newPwTextField: UITextField!
-    @IBOutlet weak var rePwTextField: UITextField!
+    @IBOutlet weak var newPwTextField: TKFormTextField!
+    @IBOutlet weak var rePwTextField: TKFormTextField!
     @IBOutlet weak var changePwBtn: UIButton!
     
     var email = String()
@@ -23,7 +24,7 @@ class ChangePwViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        bindViewModel()
     }
     
     func bindViewModel() {
@@ -40,7 +41,7 @@ class ChangePwViewController: UIViewController {
         
         output.result.emit(onNext: {
             self.setUpErrorMessage(self.errorLabel, title: $0, superTextField: self.rePwTextField)
-        }, onCompleted: {  self.moveScene("signin")}).disposed(by: rx.disposeBag)
+        }, onCompleted: {  self.moveScene("signIn")}).disposed(by: rx.disposeBag)
     }
     /*
     // MARK: - Navigation

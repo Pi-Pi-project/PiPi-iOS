@@ -9,12 +9,13 @@ import UIKit
 import RxCocoa
 import RxSwift
 import NSObject_Rx
+import TKFormTextField
 
 class RegisterViewController: UIViewController {
 
-    @IBOutlet weak var nicknameTextField: UITextField!
-    @IBOutlet weak var pwTextField: UITextField!
-    @IBOutlet weak var rePwTextField: UITextField!
+    @IBOutlet weak var nicknameTextField: TKFormTextField!
+    @IBOutlet weak var pwTextField: TKFormTextField!
+    @IBOutlet weak var rePwTextField: TKFormTextField!
     @IBOutlet weak var nextBtn: UIButton!
     
     var email = String()

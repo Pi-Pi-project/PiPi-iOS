@@ -8,10 +8,11 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import TKFormTextField
 
 class PwCheckViewController: UIViewController {
 
-    @IBOutlet weak var codeTextField: UITextField!
+    @IBOutlet weak var codeTextField: TKFormTextField!
     @IBOutlet weak var nextBtn: UIButton!
     
     private let viewModel = CodeCheckViewModel()

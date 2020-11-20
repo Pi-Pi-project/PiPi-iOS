@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import TKFormTextField
 
 class SendCodeViewController: UIViewController {
 
-    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var emailTextField: TKFormTextField!
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var introLabel: UILabel!
     

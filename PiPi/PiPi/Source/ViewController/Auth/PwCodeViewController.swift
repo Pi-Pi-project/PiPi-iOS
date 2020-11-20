@@ -7,13 +7,14 @@
 
 import UIKit
 import RxSwift
+import TKFormTextField
 
 class PwCodeViewController: UIViewController {
 
-    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var emailTextField: TKFormTextField!
     @IBOutlet weak var nextBtn: UIButton!
     
-    private let viewModel = SendCodeViewModel()
+    private let viewModel = PwCheckViewModel()
     private let emailError = UILabel()
     
     override func viewDidLoad() {
@@ -37,7 +38,7 @@ class PwCodeViewController: UIViewController {
     
     func bindViewModel() {
         //api 바꿔야함
-        let input = SendCodeViewModel.input(email: emailTextField.rx.text.orEmpty.asDriver(),
+        let input = PwCheckViewModel.input(email: emailTextField.rx.text.orEmpty.asDriver(),
                                             doneTap: nextBtn.rx.tap.asSignal())
         let output = viewModel.transform(input)
         
@@ -52,7 +53,7 @@ class PwCodeViewController: UIViewController {
     }
     
     func nextWithData() {
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "pwCode") as? PwCheckViewController else { return }
+        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "pwCheck") as? PwCheckViewController else { return }
         vc.email = emailTextField.text!
         self.navigationController?.pushViewController(vc, animated: true)
     }

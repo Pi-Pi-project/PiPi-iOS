@@ -33,14 +33,14 @@ class ChangeViewModel: ViewModelType {
         input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext:{ newPw, rePw, userE in
             api.changePassword(userE, rePw).subscribe(onNext: { response in
                 switch response {
-                case .ok1:
+                case .ok:
                     return result.onCompleted()
                 default:
-                    return result.onNext("가입이 되지 않음")
+                    return result.onNext("비밀번호 설정 실패")
                 }
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        return output(result: result.asSignal(onErrorJustReturn: "프로필 설정 실패"), isEnable: isEnable.asDriver())
+        return output(result: result.asSignal(onErrorJustReturn: "비밀번호 재등록 실패"), isEnable: isEnable.asDriver())
     }
 }
