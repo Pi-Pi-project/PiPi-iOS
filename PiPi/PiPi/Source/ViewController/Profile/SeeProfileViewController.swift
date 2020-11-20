@@ -60,7 +60,6 @@ class SeeProfileViewController: UIViewController {
                 cell.projectNameLabel.text = item.title
                 cell.moreLabel.text = item.introduce
             }.disposed(by: self.rx.disposeBag)
-            
         }).disposed(by: rx.disposeBag)
     }
     

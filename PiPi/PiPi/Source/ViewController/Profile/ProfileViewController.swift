@@ -74,7 +74,7 @@ class ProfileViewController: UIViewController {
             guard let rvc = self.storyboard?.instantiateViewController(withIdentifier: "editProfileVC") as? EditProfileViewController else { return }
             rvc.giturl = self.userGitLabel.text ?? ""
             rvc.skills = self.userSkillLabel.text ?? ""
-            rvc.imageview = self.userImageView.image ?? UIImage(named: "") as! UIImage
+            rvc.imageview = self.userImageView.image ?? UIImage(named: "")!
 
             self.navigationController?.pushViewController(rvc, animated: true)
         }).disposed(by: rx.disposeBag)
