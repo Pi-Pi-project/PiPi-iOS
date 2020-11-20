@@ -48,26 +48,14 @@ class PostViewModel: ViewModelType {
         
         input.postTap.withLatestFrom(info).asObservable().subscribe(onNext: {
             title, category, skills, idea, content, max, img in
-            let httpClient = HTTPClient()
-            print("select")
-            httpClient.formDataPost(.wirtePost, param: ["title": title, "category": category, "skills": [skills], "idea": idea, "content": content, "max": Int(max)], img: img ?? nil).responseJSON { (response) in
+            api.formDataPost(.wirtePost, param: ["title": title, "category": category, "skills": [skills], "idea": idea, "content": content, "max": Int(max)], img: img ?? nil).responseJSON { (response) in
                 switch response.response?.statusCode {
                 case 200:
                     print("success")
                 default:
-                    print(response.response?.statusCode)
+                    print(response.response?.statusCode ?? "fault")
                 }
             }
-//            api.wirtePost(title, category, skills, idea, content, intMax!).subscribe(onNext: { response in
-//                    switch response {
-//                    case .ok:
-//                        result.onCompleted()
-//                    case .noToken:
-//                        result.onNext("이메일 인증 실패")
-//                    default:
-//                        result.onNext("인증번호가 맞지 않습니다.")
-//                    }
-//            }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
 
         

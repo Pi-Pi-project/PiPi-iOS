@@ -9,11 +9,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 import NSObject_Rx
+import TKFormTextField
 
 class SIgnInViewController: UIViewController {
 
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var pwTextField: UITextField!
+    @IBOutlet weak var emailTextField: TKFormTextField!
+    @IBOutlet weak var pwTextField: TKFormTextField!
     @IBOutlet weak var signInBtn: UIButton!
     @IBOutlet weak var findPwBtn: UIButton!
     
@@ -55,6 +56,6 @@ class SIgnInViewController: UIViewController {
         
         output.result.emit(
             onNext: { self.setUpErrorMessage(self.errorLabel, title: $0, superTextField: self.pwTextField )},
-            onCompleted: { print("signIn!") }).disposed(by: rx.disposeBag)
+            onCompleted: { self.moveReference() }).disposed(by: rx.disposeBag)
     }
 }
