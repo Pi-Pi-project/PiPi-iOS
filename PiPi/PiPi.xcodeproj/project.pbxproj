@@ -28,11 +28,25 @@
 		EB0BF42A25519ADB00317097 /* MyPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF42925519ADB00317097 /* MyPostViewController.swift */; };
 		EB0BF43B2552B10C00317097 /* ApplyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF43A2552B10B00317097 /* ApplyListViewController.swift */; };
 		EB0BF43E2552B1A600317097 /* ApplyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF43D2552B1A600317097 /* ApplyListViewModel.swift */; };
+		EB0BF4512553BF5800317097 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF4502553BF5800317097 /* PostViewController.swift */; };
 		EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */; };
 		EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */; };
 		EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */; };
 		EB129FDE254EFE8A009D5151 /* ChangePwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FDD254EFE8A009D5151 /* ChangePwViewController.swift */; };
 		EB129FE1254EFFE0009D5151 /* ChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB129FE0254EFFE0009D5151 /* ChangeViewModel.swift */; };
+		EB25267C2560F1F100908A05 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB25267B2560F1F100908A05 /* Profile.storyboard */; };
+		EB25267F2560F25500908A05 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25267E2560F25500908A05 /* ProfileViewController.swift */; };
+		EB2526822560F7C000908A05 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2526812560F7C000908A05 /* EditProfileViewController.swift */; };
+		EB2526852561080000908A05 /* PorfolioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2526842561080000908A05 /* PorfolioViewController.swift */; };
+		EB252688256108AC00908A05 /* PorfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB252687256108AC00908A05 /* PorfolioViewModel.swift */; };
+		EB55D52325640B7D00A5A84D /* AddPortFolioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55D52225640B7D00A5A84D /* AddPortFolioViewController.swift */; };
+		EB55D52625640CBC00A5A84D /* AddPortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55D52525640CBC00A5A84D /* AddPortfolioViewModel.swift */; };
+		EB6AC6FE255400760010172E /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6AC6FD255400760010172E /* PostViewModel.swift */; };
+		EB6B6C21255E45DB00288DC6 /* FloatingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B6C20255E45DB00288DC6 /* FloatingBtn.swift */; };
+		EB6B6C24255E516C00288DC6 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B6C23255E516B00288DC6 /* ProfileModel.swift */; };
+		EB6B6C27255E525100288DC6 /* SeeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B6C26255E525100288DC6 /* SeeProfileViewController.swift */; };
+		EB6B6C2E255E531300288DC6 /* SeeProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B6C2D255E531300288DC6 /* SeeProfileViewModel.swift */; };
+		EB6B6C31255E533A00288DC6 /* ProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B6C30255E533A00288DC6 /* ProfileAPI.swift */; };
 		EB8C8B98254003A800ACA865 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B97254003A800ACA865 /* Provider.swift */; };
 		EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9C2540051800ACA865 /* AuthAPI.swift */; };
 		EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9F254009C200ACA865 /* SplashViewController.swift */; };
@@ -42,6 +56,18 @@
 		EBAC810B2539690100DAD71B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBAC81092539690100DAD71B /* Main.storyboard */; };
 		EBAC810D2539690400DAD71B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBAC810C2539690400DAD71B /* Assets.xcassets */; };
 		EBAC81102539690400DAD71B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBAC810E2539690400DAD71B /* LaunchScreen.storyboard */; };
+		EBADE0D62565F7CC006DCDA0 /* Project.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBADE0D52565F7CC006DCDA0 /* Project.storyboard */; };
+		EBADE0DF2566065A006DCDA0 /* PortfolioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE0DD2566065A006DCDA0 /* PortfolioTableViewCell.swift */; };
+		EBADE0E02566065A006DCDA0 /* PortfolioTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBADE0DE2566065A006DCDA0 /* PortfolioTableViewCell.xib */; };
+		EBADE0E525660BBD006DCDA0 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE0E425660BBD006DCDA0 /* CalendarViewController.swift */; };
+		EBADE0E9256617CE006DCDA0 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE0E8256617CE006DCDA0 /* ProjectViewModel.swift */; };
+		EBADE0EC256617D9006DCDA0 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE0EB256617D9006DCDA0 /* ProjectViewController.swift */; };
+		EBADE0F02566186D006DCDA0 /* ProjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE0EF2566186D006DCDA0 /* ProjectModel.swift */; };
+		EBADE0F325661961006DCDA0 /* ProjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE0F225661961006DCDA0 /* ProjectAPI.swift */; };
+		EBADE0F625664AEC006DCDA0 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE0F525664AEC006DCDA0 /* CalendarViewModel.swift */; };
+		EBADE0FA2566DBE8006DCDA0 /* TodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE0F82566DBE8006DCDA0 /* TodoTableViewCell.swift */; };
+		EBADE0FB2566DBE8006DCDA0 /* TodoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBADE0F92566DBE8006DCDA0 /* TodoTableViewCell.xib */; };
+		EBADE10D2566F18D006DCDA0 /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE10C2566F18D006DCDA0 /* FinishViewController.swift */; };
 		EBEBE4EF253D64A500C7E100 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4EE253D64A500C7E100 /* Extension.swift */; };
 		EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */; };
 		EBEBE4F8253D64F300C7E100 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4F7253D64F300C7E100 /* Token.swift */; };
@@ -78,11 +104,25 @@
 		EB0BF42925519ADB00317097 /* MyPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostViewController.swift; sourceTree = "<group>"; };
 		EB0BF43A2552B10B00317097 /* ApplyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyListViewController.swift; sourceTree = "<group>"; };
 		EB0BF43D2552B1A600317097 /* ApplyListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyListViewModel.swift; sourceTree = "<group>"; };
+		EB0BF4502553BF5800317097 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewModel.swift; sourceTree = "<group>"; };
 		EB129FD7254EFE6B009D5151 /* PwCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCodeViewController.swift; sourceTree = "<group>"; };
 		EB129FDA254EFE7A009D5151 /* PwCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCheckViewController.swift; sourceTree = "<group>"; };
 		EB129FDD254EFE8A009D5151 /* ChangePwViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePwViewController.swift; sourceTree = "<group>"; };
 		EB129FE0254EFFE0009D5151 /* ChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeViewModel.swift; sourceTree = "<group>"; };
+		EB25267B2560F1F100908A05 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		EB25267E2560F25500908A05 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		EB2526812560F7C000908A05 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		EB2526842561080000908A05 /* PorfolioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PorfolioViewController.swift; sourceTree = "<group>"; };
+		EB252687256108AC00908A05 /* PorfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PorfolioViewModel.swift; sourceTree = "<group>"; };
+		EB55D52225640B7D00A5A84D /* AddPortFolioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPortFolioViewController.swift; sourceTree = "<group>"; };
+		EB55D52525640CBC00A5A84D /* AddPortfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPortfolioViewModel.swift; sourceTree = "<group>"; };
+		EB6AC6FD255400760010172E /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
+		EB6B6C20255E45DB00288DC6 /* FloatingBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingBtn.swift; sourceTree = "<group>"; };
+		EB6B6C23255E516B00288DC6 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		EB6B6C26255E525100288DC6 /* SeeProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeProfileViewController.swift; sourceTree = "<group>"; };
+		EB6B6C2D255E531300288DC6 /* SeeProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeProfileViewModel.swift; sourceTree = "<group>"; };
+		EB6B6C30255E533A00288DC6 /* ProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAPI.swift; sourceTree = "<group>"; };
 		EB8C8B97254003A800ACA865 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		EB8C8B9C2540051800ACA865 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		EB8C8B9F254009C200ACA865 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +134,18 @@
 		EBAC810C2539690400DAD71B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBAC810F2539690400DAD71B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EBAC81112539690400DAD71B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBADE0D52565F7CC006DCDA0 /* Project.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Project.storyboard; sourceTree = "<group>"; };
+		EBADE0DD2566065A006DCDA0 /* PortfolioTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioTableViewCell.swift; sourceTree = "<group>"; };
+		EBADE0DE2566065A006DCDA0 /* PortfolioTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PortfolioTableViewCell.xib; sourceTree = "<group>"; };
+		EBADE0E425660BBD006DCDA0 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		EBADE0E8256617CE006DCDA0 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
+		EBADE0EB256617D9006DCDA0 /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
+		EBADE0EF2566186D006DCDA0 /* ProjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectModel.swift; sourceTree = "<group>"; };
+		EBADE0F225661961006DCDA0 /* ProjectAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectAPI.swift; sourceTree = "<group>"; };
+		EBADE0F525664AEC006DCDA0 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		EBADE0F82566DBE8006DCDA0 /* TodoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableViewCell.swift; sourceTree = "<group>"; };
+		EBADE0F92566DBE8006DCDA0 /* TodoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoTableViewCell.xib; sourceTree = "<group>"; };
+		EBADE10C2566F18D006DCDA0 /* FinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishViewController.swift; sourceTree = "<group>"; };
 		EBEBE4EE253D64A500C7E100 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		EBEBE4F7253D64F300C7E100 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -126,6 +178,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		EB0BF44E2553B6E300317097 /* Apply */ = {
+			isa = PBXGroup;
+			children = (
+				EB0BF40D254FBDC600317097 /* JoinViewController.swift */,
+				EB6B6C20255E45DB00288DC6 /* FloatingBtn.swift */,
+				EB0BF4162550224B00317097 /* DetailViewController.swift */,
+				EB0BF41F25518E5000317097 /* ApplyViewController.swift */,
+				EB0BF42925519ADB00317097 /* MyPostViewController.swift */,
+				EB0BF43A2552B10B00317097 /* ApplyListViewController.swift */,
+			);
+			path = Apply;
+			sourceTree = "<group>";
+		};
 		EB129FD4254EFD57009D5151 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,11 +220,25 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		EB6B6C29255E52FB00288DC6 /* Apply */ = {
+			isa = PBXGroup;
+			children = (
+				EB0BF413254FC11A00317097 /* MainViewModel.swift */,
+				EB0BF4192550E99B00317097 /* DetailViewModel.swift */,
+				EB0BF42225518F6000317097 /* ApplyViewModel.swift */,
+				EB0BF4252551916500317097 /* MyPostViewModel.swift */,
+				EB0BF43D2552B1A600317097 /* ApplyListViewModel.swift */,
+			);
+			path = Apply;
+			sourceTree = "<group>";
+		};
 		EB8C8B9A2540050B00ACA865 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				EB8C8B9C2540051800ACA865 /* AuthAPI.swift */,
 				EB0BF409254F12AC00317097 /* PostAPI.swift */,
+				EB6B6C30255E533A00288DC6 /* ProfileAPI.swift */,
+				EBADE0F225661961006DCDA0 /* ProjectAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -223,6 +302,28 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		EBADE0E225660B94006DCDA0 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				EB6B6C26255E525100288DC6 /* SeeProfileViewController.swift */,
+				EB25267E2560F25500908A05 /* ProfileViewController.swift */,
+				EB2526812560F7C000908A05 /* EditProfileViewController.swift */,
+				EB2526842561080000908A05 /* PorfolioViewController.swift */,
+				EB55D52225640B7D00A5A84D /* AddPortFolioViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		EBADE0E325660BA3006DCDA0 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				EB6B6C2D255E531300288DC6 /* SeeProfileViewModel.swift */,
+				EB252687256108AC00908A05 /* PorfolioViewModel.swift */,
+				EB55D52525640CBC00A5A84D /* AddPortfolioViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		EBEBE4E8253D642600C7E100 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,13 +338,14 @@
 		EBEBE4E9253D642C00C7E100 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				EBADE0E225660B94006DCDA0 /* Profile */,
+				EB0BF44E2553B6E300317097 /* Apply */,
 				EB129FD4254EFD57009D5151 /* Auth */,
 				EBAC81072539690100DAD71B /* ViewController.swift */,
-				EB0BF40D254FBDC600317097 /* JoinViewController.swift */,
-				EB0BF4162550224B00317097 /* DetailViewController.swift */,
-				EB0BF41F25518E5000317097 /* ApplyViewController.swift */,
-				EB0BF42925519ADB00317097 /* MyPostViewController.swift */,
-				EB0BF43A2552B10B00317097 /* ApplyListViewController.swift */,
+				EB0BF4502553BF5800317097 /* PostViewController.swift */,
+				EBADE0E425660BBD006DCDA0 /* CalendarViewController.swift */,
+				EBADE10C2566F18D006DCDA0 /* FinishViewController.swift */,
+				EBADE0EB256617D9006DCDA0 /* ProjectViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -251,13 +353,13 @@
 		EBEBE4EA253D643100C7E100 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				EBADE0E325660BA3006DCDA0 /* Profile */,
+				EB6B6C29255E52FB00288DC6 /* Apply */,
 				EB129FD5254EFD61009D5151 /* Auth */,
 				EBEBE50D253D709E00C7E100 /* ViewModelType.swift */,
-				EB0BF413254FC11A00317097 /* MainViewModel.swift */,
-				EB0BF4192550E99B00317097 /* DetailViewModel.swift */,
-				EB0BF42225518F6000317097 /* ApplyViewModel.swift */,
-				EB0BF4252551916500317097 /* MyPostViewModel.swift */,
-				EB0BF43D2552B1A600317097 /* ApplyListViewModel.swift */,
+				EB6AC6FD255400760010172E /* PostViewModel.swift */,
+				EBADE0E8256617CE006DCDA0 /* ProjectViewModel.swift */,
+				EBADE0F525664AEC006DCDA0 /* CalendarViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -270,6 +372,10 @@
 				EB0BF400254F0EA700317097 /* MainTableViewCell.xib */,
 				EB0BF404254F117900317097 /* ListTableViewCell.swift */,
 				EB0BF405254F117900317097 /* ListTableViewCell.xib */,
+				EBADE0DD2566065A006DCDA0 /* PortfolioTableViewCell.swift */,
+				EBADE0DE2566065A006DCDA0 /* PortfolioTableViewCell.xib */,
+				EBADE0F82566DBE8006DCDA0 /* TodoTableViewCell.swift */,
+				EBADE0F92566DBE8006DCDA0 /* TodoTableViewCell.xib */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -279,6 +385,8 @@
 			children = (
 				EBAC81092539690100DAD71B /* Main.storyboard */,
 				EBEBE4FA253D650000C7E100 /* Auth.storyboard */,
+				EB25267B2560F1F100908A05 /* Profile.storyboard */,
+				EBADE0D52565F7CC006DCDA0 /* Project.storyboard */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -288,6 +396,8 @@
 			children = (
 				EBEBE4F7253D64F300C7E100 /* Token.swift */,
 				EB0BF410254FC08300317097 /* MainModel.swift */,
+				EB6B6C23255E516B00288DC6 /* ProfileModel.swift */,
+				EBADE0EF2566186D006DCDA0 /* ProjectModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -360,12 +470,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBADE0D62565F7CC006DCDA0 /* Project.storyboard in Resources */,
 				EBEBE4FB253D650000C7E100 /* Auth.storyboard in Resources */,
 				EB0BF407254F117900317097 /* ListTableViewCell.xib in Resources */,
+				EBADE0FB2566DBE8006DCDA0 /* TodoTableViewCell.xib in Resources */,
+				EB25267C2560F1F100908A05 /* Profile.storyboard in Resources */,
 				EBAC81102539690400DAD71B /* LaunchScreen.storyboard in Resources */,
 				EBAC810D2539690400DAD71B /* Assets.xcassets in Resources */,
 				EBAC810B2539690100DAD71B /* Main.storyboard in Resources */,
 				EB0BF402254F0EA700317097 /* MainTableViewCell.xib in Resources */,
+				EBADE0E02566065A006DCDA0 /* PortfolioTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,21 +532,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB6AC6FE255400760010172E /* PostViewModel.swift in Sources */,
 				EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */,
 				EB0BF43E2552B1A600317097 /* ApplyListViewModel.swift in Sources */,
 				EBEBE507253D6A9A00C7E100 /* SignInViewModel.swift in Sources */,
+				EB252688256108AC00908A05 /* PorfolioViewModel.swift in Sources */,
+				EBADE10D2566F18D006DCDA0 /* FinishViewController.swift in Sources */,
+				EB0BF4512553BF5800317097 /* PostViewController.swift in Sources */,
+				EBADE0E525660BBD006DCDA0 /* CalendarViewController.swift in Sources */,
 				EB129FE1254EFFE0009D5151 /* ChangeViewModel.swift in Sources */,
+				EB6B6C2E255E531300288DC6 /* SeeProfileViewModel.swift in Sources */,
+				EB25267F2560F25500908A05 /* ProfileViewController.swift in Sources */,
 				EB0BF4262551916500317097 /* MyPostViewModel.swift in Sources */,
 				EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */,
 				EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */,
+				EBADE0DF2566065A006DCDA0 /* PortfolioTableViewCell.swift in Sources */,
+				EB55D52625640CBC00A5A84D /* AddPortfolioViewModel.swift in Sources */,
 				EB0BF414254FC11A00317097 /* MainViewModel.swift in Sources */,
+				EBADE0FA2566DBE8006DCDA0 /* TodoTableViewCell.swift in Sources */,
+				EB6B6C21255E45DB00288DC6 /* FloatingBtn.swift in Sources */,
 				EBEBE4EF253D64A500C7E100 /* Extension.swift in Sources */,
 				EB0BF40E254FBDC600317097 /* JoinViewController.swift in Sources */,
 				EBEBE4F8253D64F300C7E100 /* Token.swift in Sources */,
 				EB046F3A2545663600340F12 /* CodeCheckViewController.swift in Sources */,
+				EB6B6C24255E516C00288DC6 /* ProfileModel.swift in Sources */,
+				EB6B6C31255E533A00288DC6 /* ProfileAPI.swift in Sources */,
 				EBF85A9825494A53008F4302 /* SetProfileViewController.swift in Sources */,
+				EBADE0F325661961006DCDA0 /* ProjectAPI.swift in Sources */,
 				EB0BF401254F0EA700317097 /* MainTableViewCell.swift in Sources */,
 				EBF85A9B25494A60008F4302 /* RegisterViewModel.swift in Sources */,
+				EB55D52325640B7D00A5A84D /* AddPortFolioViewController.swift in Sources */,
 				EB0BF411254FC08300317097 /* MainModel.swift in Sources */,
 				EB0BF42025518E5000317097 /* ApplyViewController.swift in Sources */,
 				EB0BF42A25519ADB00317097 /* MyPostViewController.swift in Sources */,
@@ -440,8 +569,11 @@
 				EB0BF41A2550E99B00317097 /* DetailViewModel.swift in Sources */,
 				EB0BF42325518F6000317097 /* ApplyViewModel.swift in Sources */,
 				EBAC81082539690100DAD71B /* ViewController.swift in Sources */,
+				EB2526852561080000908A05 /* PorfolioViewController.swift in Sources */,
 				EB046F4F254667C900340F12 /* CodeCheckViewModel.swift in Sources */,
 				EB046F372545646F00340F12 /* SendCodeViewModel.swift in Sources */,
+				EBADE0F02566186D006DCDA0 /* ProjectModel.swift in Sources */,
+				EB2526822560F7C000908A05 /* EditProfileViewController.swift in Sources */,
 				EBEBE504253D6A8D00C7E100 /* SIgnInViewController.swift in Sources */,
 				EB0BF4172550224B00317097 /* DetailViewController.swift in Sources */,
 				EB129FD2254EF823009D5151 /* SetProfileViewModel.swift in Sources */,
@@ -449,12 +581,16 @@
 				EBEBE50A253D706F00C7E100 /* PiPiAPI.swift in Sources */,
 				EB0BF43B2552B10C00317097 /* ApplyListViewController.swift in Sources */,
 				EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */,
+				EBADE0EC256617D9006DCDA0 /* ProjectViewController.swift in Sources */,
 				EB129FDE254EFE8A009D5151 /* ChangePwViewController.swift in Sources */,
+				EBADE0E9256617CE006DCDA0 /* ProjectViewModel.swift in Sources */,
+				EB6B6C27255E525100288DC6 /* SeeProfileViewController.swift in Sources */,
 				EB0BF40A254F12AC00317097 /* PostAPI.swift in Sources */,
 				EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */,
 				EB8C8B98254003A800ACA865 /* Provider.swift in Sources */,
 				EBEBE50E253D709E00C7E100 /* ViewModelType.swift in Sources */,
 				EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */,
+				EBADE0F625664AEC006DCDA0 /* CalendarViewModel.swift in Sources */,
 				EB8C8BA32540140000ACA865 /* SendCodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -604,6 +740,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "PiPi/Supporting Files/info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -623,6 +760,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "PiPi/Supporting Files/info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
