@@ -73,7 +73,7 @@ class JoinViewController: UIViewController {
                     skillSet.append(" " + repository.postSkillsets[i].skill)
                 }
                 
-                let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/{파일명}\(repository.img ?? "")")
+                let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
                 let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg ?? "")")
                 
                 cell.backImageView.kf.setImage(with: backimg)

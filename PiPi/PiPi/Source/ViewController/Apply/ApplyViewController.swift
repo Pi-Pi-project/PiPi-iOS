@@ -75,8 +75,8 @@ class ApplyViewController: UIViewController {
                 for i in 0..<repository.postSkillsets.count {
                     skillSet = repository.postSkillsets[i].skill
                 }
-                let backimg = URL(string: "http://10.156.145.141:8080/image/\(repository.img ?? "")/")
-                let userimg = URL(string: "http://10.156.145.141:8080/image/\(repository.userImg ?? "")/")
+                let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
+                let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg ?? "")")
                 
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title

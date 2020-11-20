@@ -42,9 +42,9 @@ class DetailViewController: UIViewController {
         let output = viewModel.transform(input)
         
         DetailViewModel.loadDetail.asObservable().subscribe(onNext: { result in
-            let backimg = URL(string: "http://10.156.145.141:8080/image/\(result.img)/")
+            let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.img)")
             self.backImageView.kf.setImage(with: backimg)
-            let userimg = URL(string: "http://10.156.145.141:8080/image/\(result.User?.img ?? "")/")
+            let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.User?.img ?? "")")
             self.userImg.load(url: userimg!)
             self.userImg.rx.tap.subscribe(onNext: { _ in
                 self.moveScene("profileVC")

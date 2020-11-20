@@ -41,7 +41,7 @@ class ApplyListViewController: UIViewController {
         ApplyListViewModel.loadApplyList
             .bind(to: tableView.rx.items(cellIdentifier: "applylistCell", cellType: ListTableViewCell.self)) { (row, repository, cell) in
                 
-                let url = URL(string: "http://10.156.145.141:8080/image/\(repository.userImg)/")
+                let url = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg)")
                 
                 cell.userImageView.kf.setImage(with: url)
                 cell.userName.text = repository.userNickname
