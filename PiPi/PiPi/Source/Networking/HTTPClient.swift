@@ -11,7 +11,8 @@ import RxSwift
 import Alamofire
 
 class HTTPClient {
-    let baseURL = "http://10.156.145.141:8080"
+    
+    let baseURL = "http://15.164.245.146"
     
     typealias httpResult = Observable<(HTTPURLResponse, Data)>
     
@@ -22,10 +23,10 @@ class HTTPClient {
                            headers: api.header())
     }
     
-    func post(_ api: PiPiAPI, param: Parameters?) -> httpResult {
+    func post(_ api: PiPiAPI, param: Parameters?, encoding: ParameterEncoding = JSONEncoding.default) -> httpResult {
         return requestData(.post, baseURL + api.path(),
                            parameters: param,
-                           encoding: JSONEncoding.prettyPrinted,
+                           encoding: encoding,
                            headers: api.header())
     }
     
@@ -43,6 +44,17 @@ class HTTPClient {
                            headers: api.header())
     }
     
+    func formDataPost(_ api: PiPiAPI, param: Parameters, img: Data?) -> DataRequest {
+        return AF.upload(multipartFormData: { (multipartFormData) in
+            
+            if img != nil {
+                multipartFormData.append(img!, withName: "img", mimeType: "image/jpg")
+            }
+            
+            for (key, value) in param { multipartFormData.append("\(value)".data(using: .utf8)!, withName: key, mimeType: "text/plain")
+            }
+        }, to: baseURL + api.path(), method: .post, headers: api.header())
+    }
 }
 
 

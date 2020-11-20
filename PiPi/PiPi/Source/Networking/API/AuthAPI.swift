@@ -7,13 +7,15 @@
 
 import Foundation
 import RxSwift
+import Alamofire
 
-let httpClient = HTTPClient()
-let baseURL = "http://10.156.145.141:8080"
 
-class AuthAPI: AuthProvider {
+
+
+class AuthAPI {
     
-    
+    let baseURL = "http://15.164.245.146"
+    let httpClient = HTTPClient()
     
     func sendAuthCode(_ email: String) -> Observable<networkingResult> {
         httpClient.post(.postAuthCode, param: ["email": email])
@@ -50,6 +52,21 @@ class AuthAPI: AuthProvider {
     
     func checkAuthCode(_ email: String, _ code: String) -> Observable<networkingResult> {
         httpClient.post(.checkAuthCode, param: ["email":email, "code":code])
+            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://10.156.145.141:8080")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }
             .map { response, data -> networkingResult in
             print(response.statusCode)
             switch response.statusCode {
@@ -65,32 +82,36 @@ class AuthAPI: AuthProvider {
     
     func register(_ email: String, _ pw: String, _ nickName: String) -> Observable<networkingResult> {
         httpClient.post(.register, param: ["email": email, "password": pw, "nickname": nickName]).map { response, data -> networkingResult in
+            print(response.statusCode)
             switch response.statusCode {
-            case 201:
-                return .ok1
+            case 200:
+                return .ok
             default:
                 return .fault
             }
         }
     }
     
-    //수정
-    func setProfile(_ email: String, skils: [String?], gitURL: String, userImg: String) -> Observable<networkingResult> {
-        httpClient.post(.setProfile,
-                        param: ["email": email, "password": gitURL])
-            .map{ response, data -> networkingResult in
-                switch response.statusCode {
-                case 200:
-//                    guard let data = try? JSONDecoder().decode(Token.self, from: data) else { return .fault }
-//                    print(data)
-                    return .ok
-                case 404:
-                    return .notFound
-                default:
-                    print(response.statusCode)
-                    return .fault
+    func setProfile(_ api: PiPiAPI, param: Parameters, img: Data?) -> DataRequest {
+        return AF.upload(multipartFormData: { (multipartFormData) in
+            print(self.baseURL + api.path())
+            if img != nil {
+                multipartFormData.append(img!, withName: "profileImg", mimeType: "image/jpg")
+            }
+            
+            for (key, value) in param {
+                if key == "skills" {
+                    let arrayObj = value as! Array<Any>
+                    for i in 0..<arrayObj.count {
+                        let value = arrayObj[i] as! String
+                        print("\(key) \(value)")
+                        multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+                    }
+                }else {
+                multipartFormData.append("\(value)".data(using: .utf8)!, withName: key, mimeType: "text/plain")
                 }
             }
+        }, to: baseURL + api.path(), method: .post, headers: api.header())
     }
     
     func changePassword(_ email: String, _ pw: String) -> Observable<networkingResult> {
@@ -118,8 +139,9 @@ class AuthAPI: AuthProvider {
                 print(response.statusCode)
                 switch response.statusCode {
                 case 200:
-//                    guard let data = try? JSONDecoder().decode(Token.self, from: data) else { return .fault }
-//                    print(data)
+                    guard let data = try? JSONDecoder().decode(TokenModel.self, from: data) else { return .fault }
+                    Token.token = data.accessToken
+                    print(data)
                     return .ok
                 case 404:
                     return .notFound

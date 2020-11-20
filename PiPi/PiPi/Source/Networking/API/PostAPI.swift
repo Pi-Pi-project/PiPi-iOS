@@ -7,22 +7,27 @@
 
 import Foundation
 import RxSwift
+import Alamofire
 
 class PostAPI{
-    func wirtePost(_ title: String, _ category: String, _ skills: [String], _ idea: String, _ content: String,_ max: Int) -> Observable<networkingResult> {
-        httpClient.post(.wirtePost, param: ["title": title, "category": category, "skills": skills, "idea": idea, "content": content, "max": max]).map { response, data -> networkingResult in
-            switch response.statusCode {
-            case 200:
-                return .ok
-            default:
-                return .fault
-            }
-        }
+    
+    let httpClient = HTTPClient()
+    
+    func wirtePost(_ title: String, _ category: String, _ skills: [String], _ idea: String, _ content: String,_ max: Int,_ img: Data) -> DataRequest {
+        httpClient.formDataPost(.wirtePost, param: ["title": title, "category": category, "skills": skills, "idea": idea, "content": content, "max": max], img: img)
     }
+            
+//            .post(.wirtePost, param: ["title": title, "category": category, "skills": skills, "idea": idea, "content": content, "max": max]).map { response, data -> networkingResult in
+//            switch response.statusCode {
+//            case 200:
+//                return .ok
+//            default:
+//                return .fault
+//            }
     
     func getPosts() -> Observable<([postModel]?, networkingResult)> {
-        httpClient.get(.getPost(7), param: nil).map { response, data -> ([postModel]?, networkingResult) in
-            print(response.statusCode)
+        httpClient.get(.getPost(1), param: nil).map { response, data -> ([postModel]?, networkingResult) in
+            print("get post \(response.statusCode)")
             switch response.statusCode {
             case 200:
                 guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault)}
@@ -121,16 +126,8 @@ class PostAPI{
             switch response.statusCode {
             case 200:
                 print(response.statusCode)
-//                guard let data = try? JSONDecoder().decode(Applies.self, from: data) else { return (nil, .fault)}
-                do {
-                    let data = try? JSONDecoder().decode([ApplyList].self, from: data)
-                    print(data)
-                    return (data, .ok)
-                } catch {
-                    print(" error \(error)")
-                    return (nil, .ok)
-                }
-                
+                guard let data = try? JSONDecoder().decode([ApplyList].self, from: data) else { return (nil, .fault)}
+                return (data, .ok)
             default:
                 return (nil, .fault)
             }
@@ -138,7 +135,22 @@ class PostAPI{
     }
 
     func deleteRejectApply(_ userEmail: String, _ postID: String) -> Observable<networkingResult> {
-        httpClient.delete(.rejectApply, param: ["userEmail": userEmail, "postId": postID]).map { response, data -> networkingResult in
+        httpClient.put(.rejectApply, param: ["userEmail": userEmail, "postId": postID])
+            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://10.156.145.141:8080")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }.map { response, data -> networkingResult in
             switch response.statusCode {
             case 200:
                 return .ok
@@ -149,7 +161,22 @@ class PostAPI{
     }
 
     func postAcceptApply(_ userEmail: String, _ postID: String) -> Observable<networkingResult> {
-        httpClient.post(.acceptApply, param: ["userEmail": userEmail, "postId":postID]).map { response, data -> networkingResult in
+        httpClient.put(.acceptApply, param: ["userEmail": userEmail, "postId":postID])
+            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://10.156.145.141:8080")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }.map { response, data -> networkingResult in
             switch response.statusCode {
             case 200:
                 return .ok
@@ -172,6 +199,17 @@ class PostAPI{
         }
     }
     
+    func searchPost(_ category: String,_ page: Int) -> Observable<([postModel]?, networkingResult)> {
+        httpClient.get(.searchPost(category, page), param: nil).map{ response,data -> ([postModel]?, networkingResult) in
+            switch response.statusCode {
+            case 200:
+                guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault) }
+                return (data, .ok)
+            default:
+                return (nil, .fault)
+            }
+        }
+    }
 
     
 }
