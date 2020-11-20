@@ -21,6 +21,7 @@ class CalendarViewController: UIViewController {
     private var todoDate = BehaviorRelay<String>(value: "")
     private var alertDone = BehaviorRelay<Void>(value: ())
     private var todoText = BehaviorRelay<String>(value: "")
+    private var successTodo = BehaviorRelay<Int>(value: 0)
     
     lazy var addBtn: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "Add", style: .plain, target: self, action: nil)
@@ -52,15 +53,23 @@ class CalendarViewController: UIViewController {
         todoView.layer.borderColor = UIColor.black.cgColor
         
         CalendarViewModel.loadTodo.bind(to: todoTableView.rx.items(cellIdentifier: "todoCell", cellType: TodoTableViewCell.self)) { row, item, cell in
-            print(item)
             cell.nameLabel.text = item.nickname
             cell.dataLabel.text = item.date
             cell.todoLabel.text = item.todo
+            
+            cell.checkBtn.rx.tap.subscribe(onNext: { _ in
+                self.successTodo.accept(row)
+            }).disposed(by: self.rx.disposeBag)
         }.disposed(by: rx.disposeBag)
-        
         
         addBtn.rx.tap.subscribe(onNext: { _ in
             self.todoAlert()
+        }).disposed(by: rx.disposeBag)
+        
+        doneBtn.rx.tap.subscribe(onNext: { _ in
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "finishVC") as? FinishViewController else { return }
+            vc.selectIndexPath = self.selectIndexPath
+            self.navigationController?.pushViewController(vc, animated: true)
         }).disposed(by: rx.disposeBag)
     }
 
@@ -69,15 +78,37 @@ class CalendarViewController: UIViewController {
             selectIndexPath: Driver.just(selectIndexPath),
             selectDate: todoDate.asDriver(onErrorJustReturn: ""),
             todoText: todoText.asDriver(onErrorJustReturn: ""),
-            alertTap: alertDone.asDriver())
+            alertTap: alertDone.asDriver(),
+            successTodo: successTodo.asDriver())
         let output = viewModel.transform(input)
         
+        output.success.emit(onCompleted: {
+            //해당 인덱스 삭제
+            self.todoTableView.reloadData()
+        }).disposed(by: rx.disposeBag)
     }
     
     func registerCell() {
        let nib = UINib(nibName: "TodoTableViewCell", bundle: nil)
         todoTableView.register(nib, forCellReuseIdentifier: "todoCell")
         todoTableView.rowHeight = 96
+    }
+    
+    func todoAlert() {
+        let alert = UIAlertController(title: "Add TodoList", message: "할 일을 적어주세요", preferredStyle: .alert)
+        let doneAction = UIAlertAction(title: "Done", style: .default) { (action) in
+            print(alert.textFields![0].text!)
+            self.todoText.accept(alert.textFields![0].text!)
+            self.alertDone.accept(())
+        }
+        let backAction = UIAlertAction(title: "Back", style: .cancel, handler: nil)
+        
+        alert.addAction(doneAction)
+        alert.addAction(backAction)
+        alert.addTextField { (textField) in
+            textField.placeholder = "ex) 로그인 UI 짜기"
+        }
+        self.present(alert, animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation
@@ -106,26 +137,16 @@ extension CalendarViewController: FSCalendarDelegateAppearance, FSCalendarDataSo
         self.todoDate.accept(nameOfDate)
         print("nameOfDate",nameOfDate)
     }
-
-    func todoAlert() {
-        let alert = UIAlertController(title: "Add TodoList", message: "할 일을 적어주세요", preferredStyle: .alert)
-        let doneAction = UIAlertAction(title: "Done", style: .default) { (action) in
-            
-            self.alertDone.accept(())
-            self.todoText.accept(alert.textFields![0].text!)
-        }
-        let backAction = UIAlertAction(title: "Back", style: .cancel, handler: nil)
-        
-        alert.addAction(doneAction)
-        alert.addAction(backAction)
-        alert.addTextField { (textField) in
-            textField.placeholder = "ex) 로그인 UI 짜기"
-//            if textField.rx.text.orEmpty {
-//                doneAction.isEnabled = false
-//            }
-        }
-        
-        self.present(alert, animated: true, completion: nil)
-    }
 }
 
+extension CalendarViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
+        if editingStyle == .delete {
+            // remove the item from the data model
+            
+            // delete the table view row
+            todoTableView.deleteRows(at: [indexPath], with: .fade)
+            todoTableView.reloadData()
+        }
+    }
+}

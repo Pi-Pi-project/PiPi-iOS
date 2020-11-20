@@ -123,13 +123,13 @@
         <!--Finish View Controller-->
         <scene sceneID="XW7-sh-xzk">
             <objects>
-                <viewController id="4kA-kY-eeg" customClass="FinishViewController" customModule="PiPi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="finishVC" id="4kA-kY-eeg" customClass="FinishViewController" customModule="PiPi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cwb-Me-DO9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lNC-gD-gfb">
-                                <rect key="frame" x="64" y="150" width="286" height="477"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lNC-gD-gfb">
+                                <rect key="frame" x="64" y="96" width="286" height="413"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <attributedString key="attributedText">
                                     <fragment>
@@ -144,7 +144,7 @@
 
 승인이 되면 
 프로필 - 프로젝트 목록에
-완료한 프로젝트가 추가됩니다!</string>
+완료한 프로젝트가 추가됩니다!           확인을 위해서 해당 프로젝트의 url과 프로젝트 소개를 적어주세요</string>
                                         <attributes>
                                             <color key="NSColor" systemColor="labelColor"/>
                                             <font key="NSFont" size="20" name="NanumSquareOTFB"/>
@@ -161,14 +161,37 @@
                                 </constraints>
                                 <state key="normal" title="프로젝트 완료"/>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="giturl" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r9X-jt-vxL" customClass="TKFormTextField" customModule="TKFormTextField">
+                                <rect key="frame" x="47" y="529" width="320" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7WE-aU-9Qr">
+                                <rect key="frame" x="47" y="583" width="320" height="80"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="Ln1-Jy-2uB"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0Ai-5A-aFB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="0Ai-5A-aFB" firstAttribute="bottom" secondItem="fVj-3h-w7v" secondAttribute="bottom" constant="100" id="4Nw-KJ-hfU"/>
-                            <constraint firstItem="fVj-3h-w7v" firstAttribute="top" secondItem="lNC-gD-gfb" secondAttribute="bottom" constant="83" id="Ldi-qw-SWQ"/>
+                            <constraint firstItem="0Ai-5A-aFB" firstAttribute="trailing" secondItem="r9X-jt-vxL" secondAttribute="trailing" constant="47" id="4QD-Jh-cz1"/>
+                            <constraint firstItem="7WE-aU-9Qr" firstAttribute="top" secondItem="r9X-jt-vxL" secondAttribute="bottom" constant="20" id="Aly-Gp-jA2"/>
+                            <constraint firstItem="lNC-gD-gfb" firstAttribute="top" secondItem="0Ai-5A-aFB" secondAttribute="top" constant="52" id="Baj-AB-0SH"/>
+                            <constraint firstItem="0Ai-5A-aFB" firstAttribute="trailing" secondItem="7WE-aU-9Qr" secondAttribute="trailing" constant="47" id="DIN-g8-Cbj"/>
+                            <constraint firstItem="0Ai-5A-aFB" firstAttribute="trailing" secondItem="lNC-gD-gfb" secondAttribute="trailing" constant="64" id="Fqq-x4-973"/>
+                            <constraint firstItem="lNC-gD-gfb" firstAttribute="leading" secondItem="0Ai-5A-aFB" secondAttribute="leading" constant="64" id="GuP-Jn-fo3"/>
+                            <constraint firstItem="r9X-jt-vxL" firstAttribute="top" secondItem="lNC-gD-gfb" secondAttribute="bottom" constant="20" id="IOi-EO-eiN"/>
+                            <constraint firstItem="r9X-jt-vxL" firstAttribute="leading" secondItem="0Ai-5A-aFB" secondAttribute="leading" constant="47" id="Oux-pV-SNi"/>
+                            <constraint firstItem="7WE-aU-9Qr" firstAttribute="leading" secondItem="0Ai-5A-aFB" secondAttribute="leading" constant="47" id="TkG-1H-Exc"/>
                             <constraint firstItem="fVj-3h-w7v" firstAttribute="centerX" secondItem="cwb-Me-DO9" secondAttribute="centerX" id="VR4-Gk-8hZ"/>
-                            <constraint firstItem="lNC-gD-gfb" firstAttribute="top" secondItem="0Ai-5A-aFB" secondAttribute="top" constant="106" id="h6F-fF-25D"/>
+                            <constraint firstItem="fVj-3h-w7v" firstAttribute="top" secondItem="7WE-aU-9Qr" secondAttribute="bottom" constant="47" id="qOh-ZN-NkN"/>
                             <constraint firstItem="fVj-3h-w7v" firstAttribute="leading" secondItem="0Ai-5A-aFB" secondAttribute="leading" constant="15" id="sRx-Ld-OaE"/>
                             <constraint firstItem="lNC-gD-gfb" firstAttribute="centerX" secondItem="cwb-Me-DO9" secondAttribute="centerX" id="si0-Wx-wht"/>
                             <constraint firstItem="0Ai-5A-aFB" firstAttribute="trailing" secondItem="fVj-3h-w7v" secondAttribute="trailing" constant="15" id="xmL-HI-sGK"/>
@@ -177,6 +200,8 @@
                     <connections>
                         <outlet property="completeBtn" destination="fVj-3h-w7v" id="I6p-AY-ACS"/>
                         <outlet property="contentView" destination="lNC-gD-gfb" id="z8I-cZ-AOB"/>
+                        <outlet property="giturlTextField" destination="r9X-jt-vxL" id="fTu-3W-Dp3"/>
+                        <outlet property="introTextView" destination="7WE-aU-9Qr" id="T4V-2o-XXy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m8t-mE-nWy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -199,7 +224,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3mU-Ev-4Zb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4.3478260869565224" y="124.55357142857142"/>
+            <point key="canvasLocation" x="152" y="125"/>
         </scene>
     </scenes>
     <resources>

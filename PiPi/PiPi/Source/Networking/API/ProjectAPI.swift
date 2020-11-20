@@ -72,7 +72,6 @@ class ProjectAPI {
             switch response.statusCode {
             case 200:
                 guard let data = try? JSONDecoder().decode([todo].self, from: data) else { return (nil, .fault)}
-                
                 return (data, .ok)
             default:
                 return (nil, .fault)
