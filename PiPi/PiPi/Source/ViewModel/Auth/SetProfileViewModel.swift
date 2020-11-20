@@ -13,9 +13,9 @@ class SetProfileViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     
     struct input {
-        let userImage: Driver<String?>
-        let userSkill: Driver<[String]>
-        let userGit: Driver<String>
+        let userImage: Driver<Data?>
+        let userSkill: Driver<[String]?>
+        let userGit: Driver<String?>
         let userEmail: Driver<String>
         let doneTap: Signal<Void>
     }
@@ -29,17 +29,18 @@ class SetProfileViewModel: ViewModelType {
         let api = AuthAPI()
         let result = PublishSubject<String>()
         let info = Driver.combineLatest(input.userSkill, input.userGit, input.userEmail, input.userImage)
-        let isEnable = info.map { !$0.0.isEmpty && !$0.1.isEmpty }
+        let isEnable = info.map { !$0.0!.isEmpty }
         
         input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { userS, userG, userE, userI in
-            api.setProfile(userE, skils: userS, gitURL: userG, userImg: userI!).subscribe(onNext: { response in
-                switch response {
-                case .ok1:
-                    return result.onCompleted()
+            api.setProfile(.setProfile, param: ["email": userE, "skills": userS ?? [],"giturl": userG ?? ""], img: userI).responseJSON { (response) in
+                print(userS)
+                switch response.response?.statusCode {
+                case 200:
+                    result.onCompleted()
                 default:
-                    return result.onNext("가입이 되지 않음")
+                    result.onNext("프로필 수정 실패")
                 }
-            }).disposed(by: self.disposeBag)
+            }
         }).disposed(by: disposeBag)
         
         return output(result: result.asSignal(onErrorJustReturn: "프로필 설정 실패"), isEnable: isEnable.asDriver())

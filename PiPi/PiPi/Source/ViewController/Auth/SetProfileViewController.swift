@@ -9,20 +9,30 @@ import UIKit
 import RxSwift
 import RxCocoa
 import NSObject_Rx
+import ResizingTokenField
 
 class SetProfileViewController: UIViewController {
 
     @IBOutlet weak var userImageView: UIImageView!
-    @IBOutlet weak var skillTextField: UITextField!
+    @IBOutlet weak var skillsTextField: ResizingTokenField!
     @IBOutlet weak var gitTextField: UITextField!
     @IBOutlet weak var completeBtn: UIButton!
+    @IBOutlet weak var pickerBtn: UIButton!
     
     private let viewModel = SetProfileViewModel()
     private let errorLabel = UILabel()
-    let imagePicker = UIImagePickerController()
+    
     var email = String()
     let imageString = String()
-    let skillSet = [String]()
+    private var skillSet = [String]()
+    private var imageData = BehaviorRelay<Data?>(value: nil)
+    
+    lazy var imagePicker: UIImagePickerController = {
+        let picker: UIImagePickerController = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        return picker
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +44,12 @@ class SetProfileViewController: UIViewController {
     }
     
     func bindViewModel() {
-        let input = SetProfileViewModel.input(userImage: Driver.just(imageString),
-                                              userSkill: Driver.just(skillSet),
-                                              userGit: gitTextField.rx.text.orEmpty.asDriver(),
-                                              userEmail: Driver.just(email),
-                                              doneTap: completeBtn.rx.tap.asSignal())
+        let input = SetProfileViewModel.input(
+            userImage: imageData.asDriver(),
+            userSkill: Driver.just(skillSet),
+            userGit: gitTextField.rx.text.asDriver(),
+            userEmail: Driver.just(email),
+            doneTap: completeBtn.rx.tap.asSignal())
         
         let output = viewModel.transform(input)
         
@@ -66,5 +77,39 @@ class SetProfileViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    class Skills: ResizingTokenFieldToken, Equatable {
+        static func == (lhs: SetProfileViewController.Skills, rhs: SetProfileViewController.Skills) -> Bool {
+            return lhs === rhs
+        }
+        
+        var title: String
+        
+        init(title: String) {
+            self.title = title
+        }
+    }
 
+
+}
+
+extension SetProfileViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard textField == skillsTextField.textField else { return true }
+        guard let text = skillsTextField.text, !text.isEmpty else { return true }
+        skillsTextField.append(tokens: [Skills(title: text.stringUpper(text))], animated: true)
+        skillSet.append(skillsTextField.text!)
+        skillsTextField.text = nil
+        return false
+    }
+}
+
+extension SetProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let originalImage: UIImage = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as? UIImage {
+            self.userImageView.image = originalImage
+            imageData.accept(originalImage.jpegData(compressionQuality: 0.3))
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
 }
