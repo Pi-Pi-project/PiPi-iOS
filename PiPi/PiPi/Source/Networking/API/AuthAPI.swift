@@ -115,13 +115,25 @@ class AuthAPI {
     }
     
     func changePassword(_ email: String, _ pw: String) -> Observable<networkingResult> {
-        httpClient.post(.changePw,
+        httpClient.put(.changePw,
                         param: ["email": email, "password": pw])
-            .map{ response, data -> networkingResult in
+            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+                guard let afError = error.asAFError else { return .error(error) }
+                switch afError {
+                case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+                  let response = HTTPURLResponse(
+                    url: URL(string: "http://10.156.145.141:8080")!,
+                    statusCode: 200,
+                    httpVersion: nil,
+                    headerFields: nil
+                  )
+                    return .just((response!, Data(base64Encoded: "")!))
+                default:
+                  return .error(error)
+                }
+              }.map{ response, data -> networkingResult in
                 switch response.statusCode {
                 case 200:
-//                    guard let data = try? JSONDecoder().decode(Token.self, from: data) else { return .fault }
-//                    print(data)
                     return .ok
                 case 404:
                     return .notFound
@@ -150,6 +162,33 @@ class AuthAPI {
                     return .fault
                 }
             }
+    }
+    
+    func changPwSendEmail(_ email: String) -> Observable<networkingResult> {
+        httpClient.post(.changePwSendEmail, param: ["email":email]).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://10.156.145.141:8080")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }.map { resposne, data -> networkingResult in
+            switch resposne.statusCode {
+            case 200:
+                return .ok
+            case 409:
+                return .notFound
+            default:
+                return .fault
+            }
+        }
     }
     
 }

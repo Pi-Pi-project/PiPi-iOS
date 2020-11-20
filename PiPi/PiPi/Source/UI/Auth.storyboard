@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6la-GH-fia">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6la-GH-fia">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,7 +17,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="StartView" translatesAutoresizingMaskIntoConstraints="NO" id="P9m-BC-3NY">
-                                <rect key="frame" x="87" y="208" width="240" height="200"/>
+                                <rect key="frame" x="87" y="208" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="P9m-BC-3NY" secondAttribute="height" multiplier="1:1" id="6gb-jV-jQm"/>
+                                </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EGz-uk-yKf">
                                 <rect key="frame" x="47" y="528" width="320" height="52"/>
@@ -40,7 +43,6 @@
                             <constraint firstItem="P9m-BC-3NY" firstAttribute="centerX" secondItem="e5V-eq-RS0" secondAttribute="centerX" id="69S-Th-8TI"/>
                             <constraint firstItem="NT0-OW-QtG" firstAttribute="trailing" secondItem="EGz-uk-yKf" secondAttribute="trailing" constant="47" id="EQ8-mp-jFv"/>
                             <constraint firstItem="EGz-uk-yKf" firstAttribute="leading" secondItem="NT0-OW-QtG" secondAttribute="leading" constant="47" id="HPP-QK-npX"/>
-                            <constraint firstItem="EGz-uk-yKf" firstAttribute="top" secondItem="P9m-BC-3NY" secondAttribute="bottom" constant="120" id="IYi-BH-8RL"/>
                             <constraint firstItem="NT0-OW-QtG" firstAttribute="trailing" secondItem="P9m-BC-3NY" secondAttribute="trailing" constant="87" id="Iaq-Q2-WZ1"/>
                             <constraint firstItem="P9m-BC-3NY" firstAttribute="leading" secondItem="NT0-OW-QtG" secondAttribute="leading" constant="87" id="OCT-XV-NO3"/>
                             <constraint firstItem="NT0-OW-QtG" firstAttribute="trailing" secondItem="QNf-yW-5rT" secondAttribute="trailing" constant="47" id="Pv4-ER-ax9"/>
@@ -84,12 +86,12 @@ back!</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GAW-2o-dfa">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GAW-2o-dfa" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="291" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fpx-A4-81t">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fpx-A4-81t" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="365" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -129,11 +131,22 @@ back!</string>
                         <outlet property="findPwBtn" destination="rAV-9X-igD" id="Gbb-CK-JDn"/>
                         <outlet property="pwTextField" destination="Fpx-A4-81t" id="RPi-v3-fSr"/>
                         <outlet property="signInBtn" destination="ChJ-kD-FxV" id="dC4-pS-gLT"/>
+                        <segue destination="dvs-QS-tv6" kind="show" id="0uk-hf-Cl9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ud-oc-EoQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1604" y="-674"/>
+        </scene>
+        <!--main-->
+        <scene sceneID="IYR-N1-Msq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="main" id="dvs-QS-tv6" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="LQn-XV-Ltc"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="43y-TV-9l8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2278" y="-674"/>
         </scene>
         <!--Send Code View Controller-->
         <scene sceneID="HS7-Gm-GcC">
@@ -162,7 +175,7 @@ back!</string>
                                 </constraints>
                                 <state key="normal" title="인증번호 보내기"/>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iv5-vn-w1S">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iv5-vn-w1S" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="331" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -236,7 +249,7 @@ back!</string>
                                 </constraints>
                                 <state key="normal" title="확인"/>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uvl-j3-Qe3">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="auth code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uvl-j3-Qe3" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="331" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -291,17 +304,17 @@ back!</string>
                                 </constraints>
                                 <state key="normal" title="회원가입"/>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hsc-is-cqb">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="nickname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hsc-is-cqb" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="271" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6UI-J8-Bx1">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6UI-J8-Bx1" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="335" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X97-Gm-1Mn">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="re-password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X97-Gm-1Mn" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="399" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -364,7 +377,7 @@ back!</string>
                                     <constraint firstAttribute="height" constant="100" id="BLX-hB-wWr"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bCh-9u-Qxj">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="introduce" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bCh-9u-Qxj" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="558" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -377,15 +390,18 @@ back!</string>
                                 <state key="normal" title="회원가입"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MGy-CZ-B9d" customClass="ResizingTokenField" customModule="ResizingTokenField">
-                                <rect key="frame" x="47" y="381" width="320" height="103"/>
+                                <rect key="frame" x="47" y="381" width="320" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="RCE-I7-yg8"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W94-XM-h3G">
                                 <rect key="frame" x="265" y="329" width="26" height="22"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" image="photo.on.rectangle.fill" catalog="system"/>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Org-Ua-uVX">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="giturl" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Org-Ua-uVX" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="504" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -398,9 +414,9 @@ back!</string>
                             <constraint firstItem="4Hc-bs-tLg" firstAttribute="top" secondItem="ZwZ-lz-bPh" secondAttribute="top" constant="70" id="383-HP-f4E"/>
                             <constraint firstItem="Org-Ua-uVX" firstAttribute="leading" secondItem="ZwZ-lz-bPh" secondAttribute="leading" constant="47" id="3S9-Lc-N2C"/>
                             <constraint firstItem="506-te-46P" firstAttribute="leading" secondItem="ZwZ-lz-bPh" secondAttribute="leading" constant="47" id="3vh-iQ-4AP"/>
-                            <constraint firstItem="Org-Ua-uVX" firstAttribute="top" secondItem="MGy-CZ-B9d" secondAttribute="bottom" constant="20" id="50w-Gv-xIF"/>
                             <constraint firstItem="W94-XM-h3G" firstAttribute="bottom" secondItem="hYN-d9-mpi" secondAttribute="bottom" id="5VM-2u-MyB"/>
                             <constraint firstItem="ZwZ-lz-bPh" firstAttribute="trailing" secondItem="bCh-9u-Qxj" secondAttribute="trailing" constant="47" id="8JG-0l-iG2"/>
+                            <constraint firstItem="Org-Ua-uVX" firstAttribute="top" secondItem="MGy-CZ-B9d" secondAttribute="bottom" constant="23" id="9Jq-C0-Jdb"/>
                             <constraint firstItem="MGy-CZ-B9d" firstAttribute="leading" secondItem="ZwZ-lz-bPh" secondAttribute="leading" constant="47" id="BsO-gw-yE3"/>
                             <constraint firstItem="hYN-d9-mpi" firstAttribute="top" secondItem="4Hc-bs-tLg" secondAttribute="bottom" constant="60" id="EbZ-Pj-4lR"/>
                             <constraint firstItem="506-te-46P" firstAttribute="top" secondItem="ZwZ-lz-bPh" secondAttribute="top" constant="581" id="IOW-xV-kgo"/>
@@ -418,14 +434,26 @@ back!</string>
                     <connections>
                         <outlet property="completeBtn" destination="506-te-46P" id="NzU-g2-HT3"/>
                         <outlet property="gitTextField" destination="Org-Ua-uVX" id="IpH-wl-j8c"/>
+                        <outlet property="introTextField" destination="bCh-9u-Qxj" id="8zq-ma-NKH"/>
                         <outlet property="pickerBtn" destination="W94-XM-h3G" id="Uag-zJ-t3f"/>
                         <outlet property="skillsTextField" destination="MGy-CZ-B9d" id="OFm-3M-w1Y"/>
                         <outlet property="userImageView" destination="hYN-d9-mpi" id="kQB-GJ-oJ5"/>
+                        <segue destination="ukr-TJ-ff3" kind="show" identifier="gotomain" id="vDq-iI-uTu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U29-Jo-NxJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4002.898550724638" y="-3.3482142857142856"/>
+        </scene>
+        <!--main-->
+        <scene sceneID="sfE-ZM-llv">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="main" id="ukr-TJ-ff3" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="f0s-DF-ilA"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8vE-rJ-x2v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4592" y="-3"/>
         </scene>
         <!--Change Pw View Controller-->
         <scene sceneID="qjm-Mh-Gcn">
@@ -454,12 +482,12 @@ back!</string>
                                 </constraints>
                                 <state key="normal" title="비밀번호 변경"/>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eeP-A0-Mmi">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="passwrod" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eeP-A0-Mmi" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="261" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NX6-nC-REU">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="re-password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NX6-nC-REU" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="371" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -494,7 +522,7 @@ back!</string>
         <!--Pw Code View Controller-->
         <scene sceneID="uTz-Ii-dYp">
             <objects>
-                <viewController storyboardIdentifier="findPw" id="dsj-07-OjX" customClass="PwCodeViewController" customModule="PiPi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="findVC" id="dsj-07-OjX" customClass="PwCodeViewController" customModule="PiPi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PI0-hy-A4M">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -506,7 +534,7 @@ back!</string>
                                 </constraints>
                                 <state key="normal" title="인증번호 보내기"/>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NeO-3G-f8P">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NeO-3G-f8P" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="331" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -561,7 +589,7 @@ back!</string>
                                 </constraints>
                                 <state key="normal" title="확인"/>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tfb-Xg-DcL">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="auth code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tfb-Xg-DcL" customClass="TKFormTextField" customModule="TKFormTextField">
                                 <rect key="frame" x="47" y="331" width="320" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
