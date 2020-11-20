@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 extension UIColor {
     func hexUIColor(hex: String) -> UIColor {
@@ -36,9 +37,10 @@ extension UIButton {
 }
 
 extension UIViewController {
+        
     func moveScene(_ identifier: String) {
-        let viewController = self.storyboard?.instantiateViewController(withIdentifier: identifier)
-        navigationController?.pushViewController(viewController!, animated: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: identifier)
+        navigationController?.pushViewController(vc!, animated: true)
     }
     
     func setUpErrorMessage(_ sender: UILabel, title: String, superTextField: UITextField) {
@@ -63,11 +65,11 @@ extension UIViewController {
     func setButton(_ button: UIButton) {
         if button.isEnabled {
             button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
-            button.layer.cornerRadius = 20
+            button.layer.cornerRadius = 10
             button.tintColor = .white
         } else {
             button.backgroundColor = .clear
-            button.layer.cornerRadius = 20
+            button.layer.cornerRadius = 10
             button.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
             button.layer.borderWidth = 1
         }
@@ -100,14 +102,26 @@ extension UIViewController {
     
     func setListBtn(_ access: UIButton, _ reject: UIButton, _ status: String){
         if status == "WAITING"{
+            reject.backgroundColor = .clear
+            reject.layer.cornerRadius = 10
+            reject.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
+            reject.layer.borderWidth = 1
+            
+            access.backgroundColor = .clear
+            access.layer.cornerRadius = 10
+            access.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
+            access.layer.borderWidth = 1
+        } else if status == "ACCEPTED" {
+            reject.backgroundColor = .clear
+            reject.layer.cornerRadius = 10
+            reject.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
+            reject.layer.borderWidth = 1
+            
             access.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
             access.layer.cornerRadius = 10
             access.tintColor = .white
+        }else {
             
-            reject.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
-            reject.layer.cornerRadius = 10
-            reject.tintColor = .white
-        } else if status == "ACCEPTED" {
             access.backgroundColor = .clear
             access.layer.cornerRadius = 10
             access.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
@@ -117,20 +131,31 @@ extension UIViewController {
             reject.layer.cornerRadius = 10
             reject.tintColor = .white
             reject.layer.borderWidth = 1
-        }else {
-            reject.backgroundColor = .clear
-            reject.layer.cornerRadius = 10
-            reject.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
-            reject.layer.borderWidth = 1
-            
-            access.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
-            access.layer.cornerRadius = 10
-            access.tintColor = .white
         }
     }
     
     func circleOfImageView(_ imageView: UIImageView) {
         imageView.layer.cornerRadius = imageView.layer.borderWidth/2
+    }
+    
+    func setBorder(_ textfield: UILabel) {
+        textfield.layer.cornerRadius = 10
+        textfield.layer.borderColor = UIColor.gray.cgColor
+        textfield.layer.borderWidth = 1
+    }
+}
+
+extension UIButton {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.setBackgroundImage(image, for: .normal)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -147,5 +172,30 @@ struct PiPiFilter {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,50}"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: email)
+    }
+}
+
+extension String {
+    func stringUpper(_ text: String) -> String {
+        let replace = text.replacingOccurrences(of: "(\\p{UppercaseLetter}\\p{LowercaseLetter}|\\p{UppercaseLetter}+(?=\\p{UppercaseLetter}))",
+                                            with: " $1",
+                                            options: .regularExpression,
+                                            range: range(of: self)
+        )
+        .capitalized
+        return replace.replacingOccurrences(of: " ", with: "")
+    }
+    
+    func spaceArray() -> [String] {
+        let arr = self.components(separatedBy: " ")
+        return arr
+    }
+    
+}
+
+extension UIImage {
+    func toString() -> String? {
+        let data: Data? = self.pngData()
+        return data?.base64EncodedString(options: .endLineWithLineFeed)
     }
 }
