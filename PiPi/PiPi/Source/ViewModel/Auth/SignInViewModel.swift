@@ -17,6 +17,7 @@ class SignInViewModel: ViewModelType {
         let userEmail: Driver<String>
         let userPw: Driver<String>
         let doneTap: Signal<Void>
+        let isAuto: Bool
     }
     
     struct output {
@@ -31,6 +32,10 @@ class SignInViewModel: ViewModelType {
         let result = PublishSubject<String>()
         
         input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { userE, userP in
+            if input.isAuto {
+                UserDefaults.standard.set(userE, forKey: "id")
+                UserDefaults.standard.set(userP, forKey: "pw")
+            }
             api.signIn(userE, userP).subscribe(onNext: { response in
                 switch response {
                 case .ok:
@@ -42,7 +47,6 @@ class SignInViewModel: ViewModelType {
                 }
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
-        
         return output(isEnable: isEnable.asDriver(), result: result.asSignal(onErrorJustReturn: "로그인 실패"))
     }
 }

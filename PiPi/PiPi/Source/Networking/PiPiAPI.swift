@@ -108,29 +108,24 @@ enum PiPiAPI {
     }
     
     func header() -> HTTPHeaders? {
-//        case .signIn, .postAuthCode, .checkAuthCode, .register, .setProfile, .changePw:
-//            return nil
+        switch self {
+        case .signIn, .postAuthCode, .checkAuthCode, .register, .setProfile, .changePw:
+            return nil
             
-//        case .refreshToken:
-//            let renewalToken: String = "tokenValue"
-//            let userDefault = UserDefaults.standard
-//            userDefault.set(renewalToken, forKey: "refreshToken")
-//            userDefault.synchronize(  )
-//            guard let token = userDefault.string(forKey: "refreshToken") else { return nil }
-//            return ["Authorization" : "Bearer" + token]
-//
-            return ["Authorization" : "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDU5MDAxOTksImV4cCI6MzAwMDAxNjA1OTAwMTk5LCJzdWIiOiIzOTgxMjg4QGdtYWlsLmNvbSIsInR5cGUiOiJhY2Nlc3NUb2tlbiJ9.i5ZHlcmszCC-j2QGV3ijHc9NDK_y1oE5wIM1vCUEkLs"]
-//            let defaultToken: String = "accessToken"
-//            let userDefault = UserDefaults.standard
-//            userDefault.set(defaultToken, forKey: "accessToken")
-//            userDefault.synchronize()
-//            guard let token = userDefault.string(forKey: "accessToken") else { return nil }
+        case .refreshToken:
+            let renewalToken: String = "tokenValue"
+            let userDefault = UserDefaults.standard
+            userDefault.set(renewalToken, forKey: "refreshToken")
+            userDefault.synchronize(  )
+            guard let token = userDefault.string(forKey: "refreshToken") else { return nil }
+            return ["Authorization" : "Bearer" + token]
             
+        default:
+            guard let token = Token.token else { return [:] }
+            print(["Authorization" : "Bearer" + token])
+            return ["Authorization" : "Bearer " + token]
+        }
     }
-    
-//    func header() -> HTTPHeaders? {
-//        return ["Authorization" : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MDQ0Njk5MzQsImV4cCI6MzAwMDAxNjA0NDY5OTM0LCJzdWIiOiJzZXVuZ2Jpbjk4NTBAZHNtbS5ocy5rciIsInR5cGUiOiJhY2Nlc3NUb2tlbiJ9.toaYfawuHvEFFh8MHltGvz-hF_8vWClxL6YDW1UCvoc"]
-//    }
     
 //    var param: Parameters? {
 //        switch self {
