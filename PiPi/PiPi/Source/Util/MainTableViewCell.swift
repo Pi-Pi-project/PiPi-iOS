@@ -13,7 +13,7 @@ class MainTableViewCell: UITableViewCell {
     @IBOutlet weak var projectLabel: UILabel!
     @IBOutlet weak var skilsLabel: UILabel!
     @IBOutlet weak var coverView: UIView!
-    @IBOutlet weak var userImgBtn: UIButton!
+    @IBOutlet weak var userImgView: UIImageView!
     @IBOutlet weak var applyListBtn: UIButton!
     
     override func awakeFromNib() {
@@ -36,8 +36,8 @@ class MainTableViewCell: UITableViewCell {
         applyListBtn.backgroundColor = .white
         applyListBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
         applyListBtn.layer.cornerRadius = 10
-        
         applyListBtn.isHidden = true
+        circleOfImageView(userImgView)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -49,5 +49,5 @@ class MainTableViewCell: UITableViewCell {
 
 
 func circleOfImageView(_ imageView: UIImageView) {
-    imageView.layer.cornerRadius = imageView.layer.borderWidth/2
+    imageView.layer.cornerRadius = 30
 }

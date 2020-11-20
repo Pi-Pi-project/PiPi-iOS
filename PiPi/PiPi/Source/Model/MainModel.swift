@@ -7,23 +7,6 @@
 
 import Foundation
 
-//        "id": project id,
-//        "title": "project title",
-//        "img": "project cover img",
-//        "category": "project category",
-//        "idea": "project idea",
-//        "postSkillsets": [
-//            {
-//                "postId": post id,
-//                "skill": "project skills"
-//            }
-//        ],
-//        "max": max member,
-//        "userEmail": "post writer email",
-//        "userImg": "post writer img",
-//        "userNickname": "post writer nickname",
-//        "createdAt": "post created at"
-
 struct postSkillsets: Codable {
     let postId: Int
     let skill: String
@@ -64,6 +47,7 @@ struct User: Codable {
     let nickname: String
     let img: String
 }
+
 struct ApplyList: Codable{
     let userEmail: String
     let userNickname: String
