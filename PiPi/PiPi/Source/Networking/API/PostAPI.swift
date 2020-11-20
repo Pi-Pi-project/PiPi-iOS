@@ -12,18 +12,19 @@ import Alamofire
 class PostAPI{
     
     let httpClient = HTTPClient()
+    let baseURL = "http://15.164.245.146"
     
-    func wirtePost(_ title: String, _ category: String, _ skills: [String], _ idea: String, _ content: String,_ max: Int,_ img: Data) -> DataRequest {
-        httpClient.formDataPost(.wirtePost, param: ["title": title, "category": category, "skills": skills, "idea": idea, "content": content, "max": max], img: img)
-    }
+    func formDataPost(_ api: PiPiAPI, param: Parameters, img: Data?) -> DataRequest {
+        return AF.upload(multipartFormData: { (multipartFormData) in
             
-//            .post(.wirtePost, param: ["title": title, "category": category, "skills": skills, "idea": idea, "content": content, "max": max]).map { response, data -> networkingResult in
-//            switch response.statusCode {
-//            case 200:
-//                return .ok
-//            default:
-//                return .fault
-//            }
+            if img != nil {
+                multipartFormData.append(img!, withName: "img", mimeType: "image/jpg")
+            }
+            
+            for (key, value) in param { multipartFormData.append("\(value)".data(using: .utf8)!, withName: key, mimeType: "text/plain")
+            }
+        }, to: baseURL + api.path(), method: .post, headers: api.header())
+    }
     
     func getPosts() -> Observable<([postModel]?, networkingResult)> {
         httpClient.get(.getPost(1), param: nil).map { response, data -> ([postModel]?, networkingResult) in

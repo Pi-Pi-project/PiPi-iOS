@@ -43,18 +43,6 @@ class HTTPClient {
                            encoding: JSONEncoding.prettyPrinted,
                            headers: api.header())
     }
-    
-    func formDataPost(_ api: PiPiAPI, param: Parameters, img: Data?) -> DataRequest {
-        return AF.upload(multipartFormData: { (multipartFormData) in
-            
-            if img != nil {
-                multipartFormData.append(img!, withName: "img", mimeType: "image/jpg")
-            }
-            
-            for (key, value) in param { multipartFormData.append("\(value)".data(using: .utf8)!, withName: key, mimeType: "text/plain")
-            }
-        }, to: baseURL + api.path(), method: .post, headers: api.header())
-    }
 }
 
 
