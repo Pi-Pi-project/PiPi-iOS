@@ -43,7 +43,7 @@ class CodeCheckViewController: UIViewController {
     }
 
     func nextWithData() {
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "register") as? CodeCheckViewController else { return }
+        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "register") as? RegisterViewController else { return }
         vc.email = email
         self.navigationController?.pushViewController(vc, animated: true)
     }

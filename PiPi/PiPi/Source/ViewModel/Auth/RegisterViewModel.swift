@@ -35,7 +35,7 @@ class RegisterViewModel: ViewModelType {
         input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { email, nickname, userRepw in
             api.register(email, userRepw, nickname).subscribe(onNext: { response in
                 switch response {
-                case .ok1:
+                case .ok:
                     return result.onCompleted()
                 default:
                     return result.onNext("가입이 되지 않음")

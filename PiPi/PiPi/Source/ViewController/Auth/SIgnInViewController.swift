@@ -36,8 +36,8 @@ class SIgnInViewController: UIViewController {
         }).disposed(by: rx.disposeBag)
         
         findPwBtn.rx.tap.subscribe(onNext: { _ in
-            
-        })
+            self.moveScene("findVC")
+        }).disposed(by: rx.disposeBag)
     }
     
     func bindViewModel() {
@@ -55,6 +55,6 @@ class SIgnInViewController: UIViewController {
         
         output.result.emit(
             onNext: { self.setUpErrorMessage(self.errorLabel, title: $0, superTextField: self.pwTextField )},
-            onCompleted: { self.moveScene("signUp") }).disposed(by: rx.disposeBag)
+            onCompleted: { print("signIn!") }).disposed(by: rx.disposeBag)
     }
 }

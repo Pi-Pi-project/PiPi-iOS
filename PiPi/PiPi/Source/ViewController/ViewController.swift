@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupUI()
+        
         joinBtn.rx.tap.subscribe(onNext: {
             self.moveScene("joinVC")
         }).disposed(by: rx.disposeBag)
@@ -35,6 +37,9 @@ class ViewController: UIViewController {
         }).disposed(by: rx.disposeBag)
         // Do any additional setup after loading the view.
     }
-
+    
+    func setupUI(){
+        view.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
+    }
 }
 
