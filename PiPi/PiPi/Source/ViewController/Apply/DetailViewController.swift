@@ -13,7 +13,7 @@ import NSObject_Rx
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var backImageView: UIImageView!
-    @IBOutlet weak var userImg: UIImageView!
+    @IBOutlet weak var userImg: UIButton!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var ppNameLabel: UILabel!
     @IBOutlet weak var ppSkillLabel: UILabel!
@@ -44,18 +44,27 @@ class DetailViewController: UIViewController {
         DetailViewModel.loadDetail.asObservable().subscribe(onNext: { result in
             let backimg = URL(string: "http://10.156.145.141:8080/image/\(result.img)/")
             self.backImageView.kf.setImage(with: backimg)
-            
             let userimg = URL(string: "http://10.156.145.141:8080/image/\(result.User?.img ?? "")/")
-            self.userImg.kf.setImage(with: userimg)
-            self.circleOfImageView(self.userImg)
-            self.userImg.image = UIImage(named: result.User?.img ?? "")
+            self.userImg.load(url: userimg!)
+            self.userImg.rx.tap.subscribe(onNext: { _ in
+                self.moveScene("profileVC")
+            }).disposed(by: self.rx.disposeBag)
+            
             self.userName.text = result.User?.nickname
             self.ppNameLabel.text = result.title
             
+            var skillSet = String()
             for i in 0..<result.postSkillsets.count {
-                print(result.postSkillsets[i].skill)
+                skillSet.append(" " + result.postSkillsets[i].skill)
             }
             
+            self.ppSkillLabel.layer.borderColor = UIColor.gray.cgColor
+            self.ppSkillLabel.layer.borderWidth = 1
+            
+            self.setBorder(self.ppIntroLabel)
+            
+            self.ppIntroLabel.text = result.idea
+            self.ppSkillLabel.text = skillSet
             self.ppDetailTextView.text = result.content
             self.ppMaxLabel.text = String(format: "0", result.max ?? "0")
             self.setButton(self.applyBtn, result.applied)

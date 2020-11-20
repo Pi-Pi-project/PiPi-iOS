@@ -1,5 +1,5 @@
 //
-//  MyPostViewController.swift
+//  ApplyViewController.swift
 //  PiPi
 //
 //  Created by 이가영 on 2020/11/03.
@@ -8,20 +8,22 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import NSObject_Rx
+import Kingfisher
 
-class MyPostViewController: UIViewController {
+class ApplyViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    private let viewModel = MyPostViewModel()
+    private let viewModel = ApplyViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
-    private var selectIndexPath = BehaviorRelay<Int>(value: 0)
+
     
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .magenta
+        button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
         button.addTarget(self, action: #selector(floatingBtn), for: .touchUpInside)
         return button
     }()
@@ -50,6 +52,10 @@ class MyPostViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     func registerCell() {
         let nib = UINib(nibName: "MainTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "joinCell")
@@ -58,10 +64,10 @@ class MyPostViewController: UIViewController {
     }
     
     func bindViewModel() {
-        let input = MyPostViewModel.input(loadMyPost: loadData.asSignal(onErrorJustReturn: ()), selectMyPostRow: selectIndexPath.asSignal(onErrorJustReturn: 0))
+        let input = ApplyViewModel.input(loadData: loadData.asSignal(onErrorJustReturn: ()), selectApplyRow: tableView.rx.itemSelected.asSignal())
         let output = viewModel.transform(input)
         
-        MyPostViewModel.loadMyPost
+        ApplyViewModel.loadApplyData
             .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
                 
                 var skillSet = String()
@@ -70,23 +76,23 @@ class MyPostViewController: UIViewController {
                     skillSet = repository.postSkillsets[i].skill
                 }
                 let backimg = URL(string: "http://10.156.145.141:8080/image/\(repository.img ?? "")/")
+                let userimg = URL(string: "http://10.156.145.141:8080/image/\(repository.userImg ?? "")/")
                 
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet
-                cell.userImgBtn.isHidden = true
-                cell.applyListBtn.isHidden = false
-                cell.applyListBtn.rx.tap.subscribe(onNext: { _ in
-                    self.selectIndexPath.accept(row)
-                }).disposed(by: self.rx.disposeBag)
-                
+                cell.userImgView.kf.setImage(with: userimg)
             }.disposed(by: rx.disposeBag)
-
+        
+        
         output.detailView.asObservable().subscribe(onNext: { id in
-            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "applylistVC") as? ApplyListViewController else { return }
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
             vc.selectIndexPath = id
+            print(id)
             self.navigationController?.pushViewController(vc, animated: true)
         }).disposed(by: rx.disposeBag)
+        
+        output.result.emit(onCompleted : { self.tableView.reloadData() }).disposed(by: rx.disposeBag)
     }
     
     func setupUI(){
@@ -98,12 +104,13 @@ class MyPostViewController: UIViewController {
         ])
         floatingButton.layer.cornerRadius = 40
         floatingButton.layer.masksToBounds = true
-        floatingButton.layer.borderColor = UIColor.systemPink.cgColor
+        floatingButton.layer.borderColor = UIColor.clear.cgColor
         floatingButton.layer.borderWidth = 4
     }
     
     @objc func floatingBtn(){
-        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "") as! ViewController
-        self.navigationController?.pushViewController(pushVC, animated: true)
+        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "postVC") as! PostViewController
+        present(pushVC, animated: true, completion: nil)
     }
+
 }

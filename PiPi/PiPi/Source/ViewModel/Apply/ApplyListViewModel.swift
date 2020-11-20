@@ -37,7 +37,7 @@ class ApplyListViewModel: ViewModelType {
         
         input.loadApplyData.asObservable().subscribe(onNext: { _ in
             print(input.selectApplyList)
-            api.getApplyList("20").subscribe(onNext: { response, statusCode in
+            api.getApplyList(input.selectApplyList).subscribe(onNext: { response, statusCode in
                 switch statusCode {
                 case .ok:
                     ApplyListViewModel.loadApplyList.accept(response!)
@@ -48,15 +48,26 @@ class ApplyListViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.selectAccept.asObservable().withLatestFrom(info).subscribe(onNext: { row, data in
-            api.postAcceptApply(data[row].userEmail, input.selectApplyList).subscribe(onNext: { statusCode in
-                switch statusCode {
-                case .ok:
-                    return isAccept.onCompleted()
-                default:
-                    return isAccept.onNext(false)
-                }
-            }).disposed(by: self.disposeBag)
+        input.selectIndexPath.asObservable().withLatestFrom(info).subscribe(onNext: { row, data in
+            if data[row].status != "ACCEPTED"{
+                api.postAcceptApply(data[row].userEmail, input.selectApplyList).subscribe(onNext: { statusCode in
+                    switch statusCode {
+                    case .ok:
+                        return isAccept.onCompleted()
+                    default:
+                        return isAccept.onNext(false)
+                    }
+                }).disposed(by: self.disposeBag)
+            }else {
+                api.deleteRejectApply(data[row].userEmail, input.selectApplyList).subscribe(onNext: { statusCode in
+                    switch statusCode {
+                    case .ok:
+                        return isReject.onCompleted()
+                    default:
+                        return isReject.onNext(false)
+                    }
+                }).disposed(by: self.disposeBag)
+            }
         }).disposed(by: disposeBag)
         
         input.selectReject.asObservable().withLatestFrom(info).subscribe(onNext: { row, data in

@@ -16,6 +16,7 @@ class ApplyListViewController: UIViewController {
     
     private let viewModel = ApplyListViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
+    private var selectApply = BehaviorRelay<Int>(value: 0)
     private let access = BehaviorRelay<Void>(value: ())
     private let reject = BehaviorRelay<Void>(value: ())
     private var index = Int()
@@ -23,8 +24,7 @@ class ApplyListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        print("select \(selectIndexPath)")
+        
         bindViewModel()
         registerCell()
     }
@@ -33,7 +33,7 @@ class ApplyListViewController: UIViewController {
         let input = ApplyListViewModel.input(
             loadApplyData: loadData.asSignal(onErrorJustReturn: ()),
             selectApplyList: selectIndexPath,
-            selectIndexPath: Signal.just(index),
+            selectIndexPath: selectApply.asSignal(onErrorJustReturn: 0),
             selectAccept: access.asSignal(onErrorJustReturn: ()),
             selectReject: reject.asSignal(onErrorJustReturn: ()))
         let output = viewModel.transform(input)
@@ -42,12 +42,30 @@ class ApplyListViewController: UIViewController {
             .bind(to: tableView.rx.items(cellIdentifier: "applylistCell", cellType: ListTableViewCell.self)) { (row, repository, cell) in
                 
                 let url = URL(string: "http://10.156.145.141:8080/image/\(repository.userImg)/")
+                
                 cell.userImageView.kf.setImage(with: url)
                 cell.userName.text = repository.userNickname
+                
+                cell.accessBtn.rx.tap.subscribe(onNext: { _ in
+                    self.selectApply.accept(row)
+                }).disposed(by: self.rx.disposeBag)
+                
+                cell.rejectBtn.rx.tap.subscribe(onNext: { _ in
+                    self.selectApply.accept(row)
+                }).disposed(by: self.rx.disposeBag)
+                
                 self.setListBtn(cell.accessBtn, cell.rejectBtn, repository.status)
                 self.setButton(cell.chatBtn, false)
-                cell.index = row
             }.disposed(by: rx.disposeBag)
+        
+        output.accept.emit(
+            onNext: { print($0) },
+            onCompleted: { self.tableView.reloadData()
+            }).disposed(by: rx.disposeBag)
+        output.reject.emit(
+            onNext: { print($0) },
+            onCompleted: { self.tableView.reloadData()
+            }).disposed(by: rx.disposeBag)
     }
     
     func registerCell() {

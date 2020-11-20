@@ -1,28 +1,27 @@
 //
-//  JoinViewController.swift
+//  MyPostViewController.swift
 //  PiPi
 //
-//  Created by 이가영 on 2020/11/02.
+//  Created by 이가영 on 2020/11/03.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
-import Kingfisher
 
-class JoinViewController: UIViewController {
+class MyPostViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    private let viewModel = MainViewModel()
+    private let viewModel = MyPostViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
-
+    private var selectIndexPath = BehaviorRelay<Int>(value: 0)
     
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .magenta
+        button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
         button.addTarget(self, action: #selector(floatingBtn), for: .touchUpInside)
         return button
     }()
@@ -59,31 +58,34 @@ class JoinViewController: UIViewController {
     }
     
     func bindViewModel() {
-        let input = MainViewModel.input(loadData: loadData.asSignal(onErrorJustReturn: ()), selectPostRow: tableView.rx.itemSelected.asSignal())
+        let input = MyPostViewModel.input(
+            loadMyPost: loadData.asSignal(onErrorJustReturn: ()),
+            selectMyPostRow: selectIndexPath.asSignal(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
-        MainViewModel.loadData
+        MyPostViewModel.loadMyPost
             .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
                 
                 var skillSet = String()
-                
                 for i in 0..<repository.postSkillsets.count {
-                    skillSet = repository.postSkillsets[i].skill
+                    skillSet.append(" " + repository.postSkillsets[i].skill)
                 }
                 
                 let backimg = URL(string: "http://10.156.145.141:8080/image/\(repository.img ?? "")/")
-                let userimg = URL(string: "http://10.156.145.141:8080/image/\(repository.userImg ?? "")/")
-    
+                
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet
-                cell.userImgBtn.imageView?.kf.setImage(with: userimg)
+                cell.userImgView.isHidden = true
+                cell.applyListBtn.isHidden = false
+                cell.applyListBtn.rx.tap.subscribe(onNext: { _ in
+                    self.selectIndexPath.accept(row)
+                }).disposed(by: self.rx.disposeBag)
             }.disposed(by: rx.disposeBag)
 
-        output.data.drive().disposed(by: rx.disposeBag)
-        output.data.drive(onNext: { _ in self.tableView.reloadData()}).disposed(by: rx.disposeBag)
-        output.nextView.asObservable().subscribe(onNext: { id in
-            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
+        output.detailView.asObservable().subscribe(onNext: { id in
+            print("di")
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "applylistVC") as? ApplyListViewController else { return }
             vc.selectIndexPath = id
             self.navigationController?.pushViewController(vc, animated: true)
         }).disposed(by: rx.disposeBag)
@@ -98,12 +100,12 @@ class JoinViewController: UIViewController {
         ])
         floatingButton.layer.cornerRadius = 40
         floatingButton.layer.masksToBounds = true
-        floatingButton.layer.borderColor = UIColor.systemPink.cgColor
+        floatingButton.layer.borderColor = UIColor.clear.cgColor
         floatingButton.layer.borderWidth = 4
     }
     
     @objc func floatingBtn(){
-        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "") as! ViewController
-        self.navigationController?.pushViewController(pushVC, animated: true)
+        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "postVC") as! PostViewController
+        present(pushVC, animated: true, completion: nil)
     }
 }

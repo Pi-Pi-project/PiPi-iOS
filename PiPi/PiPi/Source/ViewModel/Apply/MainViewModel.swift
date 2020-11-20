@@ -16,6 +16,7 @@ class MainViewModel: ViewModelType {
     struct input {
         let loadData: Signal<Void>
         let selectPostRow: Signal<IndexPath>
+        let searchText: Driver<String>
     }
     
     struct output {
@@ -31,7 +32,6 @@ class MainViewModel: ViewModelType {
         let nextView = PublishSubject<String>()
         let info = Signal.combineLatest(input.selectPostRow, MainViewModel.loadData.asSignal()).asObservable()
         var select = String()
-        
         input.loadData.asObservable().subscribe(onNext: { _ in
             api.getPosts().subscribe(onNext: { response, statusCode in
                 print(statusCode)
@@ -48,6 +48,18 @@ class MainViewModel: ViewModelType {
         input.selectPostRow.asObservable().withLatestFrom(info).subscribe(onNext: { indexPath, data in
             select = String(data[indexPath.row].id)
             nextView.onNext(select)
+        }).disposed(by: disposeBag)
+        
+        input.searchText.asObservable().subscribe(onNext: { searchText in
+            api.searchPost(searchText, 1).subscribe(onNext: { response, statusCode in
+                switch statusCode {
+                case .ok:
+                    MainViewModel.loadData.accept(response!)
+                    result.onCompleted()
+                default:
+                    result.onNext("검색 실패")
+                }
+            }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
     
         return output(result: result.asSignal(onErrorJustReturn: "get post 실패"),
