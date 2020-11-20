@@ -8,11 +8,16 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import TKFormTextField
 
 class FinishViewController: UIViewController {
 
     @IBOutlet weak var contentView: UITextView!
     @IBOutlet weak var completeBtn: UIButton!
+    @IBOutlet weak var giturlTextField: TKFormTextField!
+    @IBOutlet weak var introTextView: UITextView!
+    
+    var selectIndexPath = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +27,7 @@ class FinishViewController: UIViewController {
     
     func setupUI() {
         completeBtn.layer.borderWidth = 0.5
+        completeBtn.layer.cornerRadius = 10
         completeBtn.layer.borderColor = UIColor.red.cgColor
         completeBtn.tintColor = .black
     }
@@ -44,6 +50,9 @@ class FinishViewModel: ViewModelType {
     
     struct input{
         let completedTap: Driver<Void>
+        let projectUrl: Driver<String>
+        let projectIntro: Driver<String>
+        let selectIndexPath: Driver<Int>
     }
     
     struct output{
@@ -53,11 +62,19 @@ class FinishViewModel: ViewModelType {
     func transform(_ input: input) -> output {
         let api = ProjectAPI()
         let result = PublishSubject<String>()
+        let info = Driver.combineLatest(input.selectIndexPath, input.projectUrl, input.projectIntro)
         
-        input.completedTap.asObservable().subscribe(onNext: { _ in
-            api.finishProject(0, "giturl", "introduce")
+        input.completedTap.asObservable().withLatestFrom(info).subscribe(onNext: { id ,url, intro in
+            api.finishProject(id, url, intro).subscribe(onNext: { response in
+                switch response {
+                case .ok:
+                    result.onCompleted()
+                default:
+                    result.onNext("프로젝트 완료하는 중에 예상치 못한 오류")
+                }
+            }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        return output(result: result.asSignal(onErrorJustReturn: ""))
+        return output(result: result.asSignal(onErrorJustReturn: "프로젝트 완료 실패"))
     }
 }
