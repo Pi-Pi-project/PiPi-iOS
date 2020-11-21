@@ -22,6 +22,8 @@ class SIgnInViewController: UIViewController {
     private let viewModel = SignInViewModel()
     private let emailLabel = UILabel()
     private let errorLabel = UILabel()
+    private var autoLogin = BehaviorRelay<Bool>(value: false)
+    private let loadAuto = BehaviorRelay<Void>(value: ())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,11 @@ class SIgnInViewController: UIViewController {
         findPwBtn.rx.tap.subscribe(onNext: { _ in
             self.moveScene("findVC")
         }).disposed(by: rx.disposeBag)
+        
+        autoAuthBtn.rx.tap.subscribe(onNext: { _ in
+            self.autoAuthBtn.isSelected = !self.autoAuthBtn.isSelected
+            self.autoLogin.accept(self.autoAuthBtn.isSelected)
+        }).disposed(by: rx.disposeBag)
     }
     
     func bindViewModel() {
@@ -41,7 +48,8 @@ class SIgnInViewController: UIViewController {
             userEmail: emailTextField.rx.text.orEmpty.asDriver(),
             userPw: pwTextField.rx.text.orEmpty.asDriver(),
             doneTap: signInBtn.rx.tap.asSignal(),
-            isAuto: autoAuthBtn.isSelected
+            isAuto: autoLogin.asDriver(onErrorJustReturn: false),
+            loadAutoLogin: loadAuto.asSignal(onErrorJustReturn: ())
         )
         let output = viewModel.transform(input)
         

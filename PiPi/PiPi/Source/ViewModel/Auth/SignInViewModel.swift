@@ -17,7 +17,8 @@ class SignInViewModel: ViewModelType {
         let userEmail: Driver<String>
         let userPw: Driver<String>
         let doneTap: Signal<Void>
-        let isAuto: Bool
+        let isAuto: Driver<Bool>
+        let loadAutoLogin: Signal<Void>
     }
     
     struct output {
@@ -27,12 +28,32 @@ class SignInViewModel: ViewModelType {
     
     func transform(_ input: input) -> output {
         let api = AuthAPI()
-        let info = Driver.combineLatest(input.userEmail, input.userPw)
+        let info = Driver.combineLatest(input.userEmail, input.userPw, input.isAuto)
         let isEnable = info.map { PiPiFilter.isEmpty($0.0) && PiPiFilter.isEmpty($0.1)}
         let result = PublishSubject<String>()
         
-        input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { userE, userP in
-            if input.isAuto {
+        input.loadAutoLogin.asObservable().subscribe(onNext: { _ in
+            if let userId = UserDefaults.standard.string(forKey: "id"){
+                let userPw = UserDefaults.standard.string(forKey: "pw")!
+                print("userdefault")
+                api.signIn(userId, userPw).subscribe(onNext: { response in
+                    switch response {
+                    case .ok:
+                        result.onCompleted()
+                    case .notFound:
+                        result.onNext("이메일 또는 비밀번호가 틀렸습니다")
+                    default:
+                        result.onNext("로그인 실패")
+                    }
+                }).disposed(by: self.disposeBag)
+            }
+        }).disposed(by: disposeBag)
+        
+        input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { userE, userP, isAuto in
+            if isAuto {
+                print("save")
+                print(userE)
+                print(userP)
                 UserDefaults.standard.set(userE, forKey: "id")
                 UserDefaults.standard.set(userP, forKey: "pw")
             }
@@ -47,6 +68,7 @@ class SignInViewModel: ViewModelType {
                 }
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
+        
         return output(isEnable: isEnable.asDriver(), result: result.asSignal(onErrorJustReturn: "로그인 실패"))
     }
 }
