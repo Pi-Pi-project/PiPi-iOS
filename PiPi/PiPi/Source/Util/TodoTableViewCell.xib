@@ -39,8 +39,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5UA-U4-Dvx">
-                        <rect key="frame" x="285" y="37" width="19" height="22"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5UA-U4-Dvx">
+                        <rect key="frame" x="285" y="37.5" width="19" height="22"/>
                         <state key="normal" image="checkmark" catalog="system"/>
                     </button>
                 </subviews>
@@ -56,6 +56,7 @@
                     <constraint firstItem="t0l-cf-J13" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="e2t-BM-hnL"/>
                     <constraint firstItem="5UA-U4-Dvx" firstAttribute="leading" secondItem="x9T-4a-3t0" secondAttribute="trailing" constant="162" id="ekq-Bu-NVq"/>
                     <constraint firstItem="fL6-NS-q2w" firstAttribute="top" secondItem="cXo-GU-mhc" secondAttribute="bottom" constant="14" id="fRQ-1A-haj"/>
+                    <constraint firstItem="5UA-U4-Dvx" firstAttribute="top" secondItem="x9T-4a-3t0" secondAttribute="top" id="rDb-Me-VAZ"/>
                     <constraint firstItem="cXo-GU-mhc" firstAttribute="centerX" secondItem="fL6-NS-q2w" secondAttribute="centerX" id="tVj-II-pVt"/>
                     <constraint firstItem="t0l-cf-J13" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="21" id="tfw-wG-cnM"/>
                 </constraints>
