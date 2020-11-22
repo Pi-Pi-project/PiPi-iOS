@@ -30,15 +30,35 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mainIcon" translatesAutoresizingMaskIntoConstraints="NO" id="5rU-XP-FKa">
+                                <rect key="frame" x="-86" y="88" width="280" height="280"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="280" id="2YO-gB-Evs"/>
+                                    <constraint firstAttribute="width" constant="280" id="rED-rU-vL7"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mainIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0zg-cP-S7t">
+                                <rect key="frame" x="218" y="574" width="280" height="280"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="280" id="6PL-bI-E6Y"/>
+                                    <constraint firstAttribute="width" secondItem="0zg-cP-S7t" secondAttribute="height" multiplier="1:1" id="R7k-GN-NAl"/>
+                                    <constraint firstAttribute="width" constant="280" id="b2M-Og-bi4"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nzJ-0L-eDA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="nzJ-0L-eDA" firstAttribute="trailing" secondItem="5rU-XP-FKa" secondAttribute="trailing" constant="220" id="9Pg-aI-dts"/>
                             <constraint firstItem="nzJ-0L-eDA" firstAttribute="trailing" secondItem="dEb-FP-jW3" secondAttribute="trailing" constant="51" id="AHf-me-Prh"/>
+                            <constraint firstItem="5rU-XP-FKa" firstAttribute="width" secondItem="5rU-XP-FKa" secondAttribute="height" multiplier="1:1" id="CRQ-1O-b5S"/>
                             <constraint firstItem="dEb-FP-jW3" firstAttribute="centerY" secondItem="m67-cB-dfS" secondAttribute="centerY" id="IXn-fY-QHz"/>
                             <constraint firstItem="dEb-FP-jW3" firstAttribute="centerX" secondItem="m67-cB-dfS" secondAttribute="centerX" id="KBw-5t-Izv"/>
                             <constraint firstItem="dEb-FP-jW3" firstAttribute="leading" secondItem="nzJ-0L-eDA" secondAttribute="leading" constant="51" id="LlT-Ll-qMa"/>
                             <constraint firstItem="dEb-FP-jW3" firstAttribute="top" secondItem="nzJ-0L-eDA" secondAttribute="top" constant="261" id="U4t-HE-JLy"/>
+                            <constraint firstItem="0zg-cP-S7t" firstAttribute="leading" secondItem="nzJ-0L-eDA" secondAttribute="leading" constant="218" id="WkB-k0-LLf"/>
+                            <constraint firstItem="5rU-XP-FKa" firstAttribute="top" secondItem="nzJ-0L-eDA" secondAttribute="top" id="dGj-M5-GIK"/>
+                            <constraint firstItem="0zg-cP-S7t" firstAttribute="top" secondItem="nzJ-0L-eDA" secondAttribute="top" constant="486" id="gl7-16-ffc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="OUs-wO-QKz"/>
@@ -231,6 +251,7 @@
     </scenes>
     <resources>
         <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="mainIcon" width="256.5" height="295"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

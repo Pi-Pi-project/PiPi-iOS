@@ -16,7 +16,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uIs-IV-3WY">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mainIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Vp2-gq-X4o">
+                                <rect key="frame" x="-86" y="88" width="280" height="280"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="280" id="6UM-tx-wcp"/>
+                                    <constraint firstAttribute="width" secondItem="Vp2-gq-X4o" secondAttribute="height" multiplier="1:1" id="78q-Je-z8j"/>
+                                    <constraint firstAttribute="width" constant="280" id="Ozw-S7-4FR"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mainIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QfH-7h-qF5">
+                                <rect key="frame" x="218" y="574" width="280" height="280"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="280" id="BYH-lf-m63"/>
+                                    <constraint firstAttribute="width" constant="280" id="Cl1-cl-hIB"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uIs-IV-3WY">
                                 <rect key="frame" x="157" y="178" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="5OS-TT-cse"/>
@@ -48,14 +63,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DvN-sg-FM2">
-                                <rect key="frame" x="0.0" y="472" width="414" height="241"/>
+                                <rect key="frame" x="20" y="472" width="374" height="241"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="portfolioCell" rowHeight="46" id="WwN-F0-enp">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="46"/>
+                                        <rect key="frame" x="0.0" y="28" width="374" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WwN-F0-enp" id="WBa-UV-1gv">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="46"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -63,11 +78,15 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FNZ-SF-VQS">
                                 <rect key="frame" x="166" y="733" width="82" height="30"/>
-                                <state key="normal" title="비밀번호 수정"/>
+                                <state key="normal" title="비밀번호 수정">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U8a-WL-guD">
                                 <rect key="frame" x="172.5" y="771" width="69" height="30"/>
-                                <state key="normal" title="프로필 수정"/>
+                                <state key="normal" title="프로필 수정">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0xJ-mw-BR4"/>
@@ -77,17 +96,21 @@
                             <constraint firstItem="FNZ-SF-VQS" firstAttribute="centerX" secondItem="N1P-vP-Swl" secondAttribute="centerX" id="BSW-4v-AWu"/>
                             <constraint firstItem="jnP-4x-RKH" firstAttribute="top" secondItem="gmm-hL-xJo" secondAttribute="bottom" constant="16" id="Dfh-Dk-nXP"/>
                             <constraint firstItem="FNZ-SF-VQS" firstAttribute="top" secondItem="DvN-sg-FM2" secondAttribute="bottom" constant="20" id="EDb-XN-lsi"/>
+                            <constraint firstItem="0xJ-mw-BR4" firstAttribute="trailing" secondItem="Vp2-gq-X4o" secondAttribute="trailing" constant="220" id="JJe-2Q-7As"/>
                             <constraint firstItem="gmm-hL-xJo" firstAttribute="centerX" secondItem="N1P-vP-Swl" secondAttribute="centerX" id="Ju8-eo-O5Z"/>
                             <constraint firstItem="F03-6q-Zt7" firstAttribute="top" secondItem="teV-wd-6wP" secondAttribute="bottom" constant="12" id="LAB-cq-CfY"/>
                             <constraint firstItem="DvN-sg-FM2" firstAttribute="top" secondItem="F03-6q-Zt7" secondAttribute="bottom" constant="40" id="O0m-eA-0aa"/>
                             <constraint firstItem="0xJ-mw-BR4" firstAttribute="bottom" secondItem="DvN-sg-FM2" secondAttribute="bottom" constant="100" id="PzP-R7-U1f"/>
                             <constraint firstItem="uIs-IV-3WY" firstAttribute="top" secondItem="0xJ-mw-BR4" secondAttribute="top" constant="90" id="U7G-j2-83M"/>
-                            <constraint firstItem="DvN-sg-FM2" firstAttribute="leading" secondItem="0xJ-mw-BR4" secondAttribute="leading" id="WMf-68-35C"/>
+                            <constraint firstItem="DvN-sg-FM2" firstAttribute="leading" secondItem="0xJ-mw-BR4" secondAttribute="leading" constant="20" id="WMf-68-35C"/>
+                            <constraint firstItem="QfH-7h-qF5" firstAttribute="leading" secondItem="0xJ-mw-BR4" secondAttribute="leading" constant="218" id="WnO-Go-D7C"/>
+                            <constraint firstItem="QfH-7h-qF5" firstAttribute="top" secondItem="0xJ-mw-BR4" secondAttribute="top" constant="486" id="an7-V2-y8C"/>
                             <constraint firstItem="gmm-hL-xJo" firstAttribute="top" secondItem="uIs-IV-3WY" secondAttribute="bottom" constant="30" id="az3-Qi-jcc"/>
                             <constraint firstItem="U8a-WL-guD" firstAttribute="top" secondItem="FNZ-SF-VQS" secondAttribute="bottom" constant="8" symbolic="YES" id="dbv-NQ-e0n"/>
                             <constraint firstItem="U8a-WL-guD" firstAttribute="centerX" secondItem="N1P-vP-Swl" secondAttribute="centerX" id="ftu-U4-VN2"/>
                             <constraint firstItem="uIs-IV-3WY" firstAttribute="centerX" secondItem="N1P-vP-Swl" secondAttribute="centerX" id="grm-S4-HJY"/>
-                            <constraint firstItem="DvN-sg-FM2" firstAttribute="trailing" secondItem="0xJ-mw-BR4" secondAttribute="trailing" id="sLd-7q-4bX"/>
+                            <constraint firstItem="Vp2-gq-X4o" firstAttribute="top" secondItem="0xJ-mw-BR4" secondAttribute="top" id="pOE-wx-86T"/>
+                            <constraint firstItem="DvN-sg-FM2" firstAttribute="trailing" secondItem="0xJ-mw-BR4" secondAttribute="trailing" constant="-20" id="sLd-7q-4bX"/>
                             <constraint firstItem="teV-wd-6wP" firstAttribute="top" secondItem="jnP-4x-RKH" secondAttribute="bottom" constant="12" id="yf4-Ts-7Fu"/>
                             <constraint firstItem="jnP-4x-RKH" firstAttribute="centerX" secondItem="N1P-vP-Swl" secondAttribute="centerX" id="z7e-9V-Rws"/>
                             <constraint firstItem="teV-wd-6wP" firstAttribute="centerX" secondItem="N1P-vP-Swl" secondAttribute="centerX" id="zJo-jB-htY"/>
@@ -305,6 +328,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="mainIcon" width="256.5" height="295"/>
         <image name="person.crop.square" catalog="system" width="128" height="114"/>
         <image name="photo.fill" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
