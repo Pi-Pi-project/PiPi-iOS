@@ -13,6 +13,7 @@ import Kingfisher
 class ApplyListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var createProjectBtn: UIButton!
     
     private let viewModel = ApplyListViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
@@ -35,12 +36,13 @@ class ApplyListViewController: UIViewController {
             selectApplyList: selectIndexPath,
             selectIndexPath: selectApply.asSignal(onErrorJustReturn: 0),
             selectAccept: access.asSignal(onErrorJustReturn: ()),
-            selectReject: reject.asSignal(onErrorJustReturn: ()))
+            selectReject: reject.asSignal(onErrorJustReturn: ()),
+            createProject: createProjectBtn.rx.tap.asDriver())
         let output = viewModel.transform(input)
         
         ApplyListViewModel.loadApplyList
             .bind(to: tableView.rx.items(cellIdentifier: "applylistCell", cellType: ListTableViewCell.self)) { (row, repository, cell) in
-                
+                self.setListBtn(cell.accessBtn, cell.rejectBtn, repository.status)
                 let url = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg)")
                 
                 cell.userImageView.kf.setImage(with: url)
@@ -54,18 +56,22 @@ class ApplyListViewController: UIViewController {
                     self.selectApply.accept(row)
                 }).disposed(by: self.rx.disposeBag)
                 
-                self.setListBtn(cell.accessBtn, cell.rejectBtn, repository.status)
                 self.setButton(cell.chatBtn, false)
             }.disposed(by: rx.disposeBag)
         
-        output.accept.emit(
-            onNext: { print($0) },
-            onCompleted: { self.tableView.reloadData()
+        output.accept.emit(onNext: { _ in
+                self.loadData.accept(())
+                self.tableView.reloadData()
             }).disposed(by: rx.disposeBag)
-        output.reject.emit(
-            onNext: { print($0) },
-            onCompleted: { self.tableView.reloadData()
+        output.reject.emit(onNext: { _ in
+                self.loadData.accept(())
+                self.tableView.reloadData()
             }).disposed(by: rx.disposeBag)
+        output.create.emit(onNext: { message in
+            self.showAlert(title: "실패", message: message)
+        },onCompleted: {
+            self.navigationController?.popViewController(animated: true)
+        }).disposed(by: rx.disposeBag)
     }
     
     func registerCell() {

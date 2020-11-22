@@ -69,7 +69,7 @@ class ApplyViewController: UIViewController {
         
         ApplyViewModel.loadApplyData
             .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
-                
+                print(repository.id)
                 var skillSet = String()
                 
                 for i in 0..<repository.postSkillsets.count {

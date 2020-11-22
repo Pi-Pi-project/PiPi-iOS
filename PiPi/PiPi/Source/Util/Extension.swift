@@ -99,10 +99,8 @@ extension UIViewController {
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let Ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(Ok)
-        alert.addAction(cancel)
         
         self.present(alert, animated: true, completion: nil)
     }
@@ -118,21 +116,22 @@ extension UIViewController {
             access.layer.cornerRadius = 10
             access.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
             access.layer.borderWidth = 1
+            access.tintColor = UIColor().hexUIColor(hex: "61BFAD")
         } else if status == "ACCEPTED" {
             reject.backgroundColor = .clear
             reject.layer.cornerRadius = 10
             reject.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
             reject.layer.borderWidth = 1
-            
+            reject.tintColor = UIColor().hexUIColor(hex: "61BFAD")
             access.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
             access.layer.cornerRadius = 10
             access.tintColor = .white
         }else {
-            
             access.backgroundColor = .clear
             access.layer.cornerRadius = 10
             access.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
             access.layer.borderWidth = 1
+            access.tintColor = UIColor().hexUIColor(hex: "61BFAD")
             
             reject.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
             reject.layer.cornerRadius = 10

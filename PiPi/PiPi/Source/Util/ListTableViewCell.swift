@@ -16,17 +16,14 @@ class ListTableViewCell: UITableViewCell {
     @IBOutlet weak var accessBtn: UIButton!
     @IBOutlet weak var rejectBtn: UIButton!
     
-    var cellDelegate: ListTableViewCellDelegate?
-    var index = 0
     private let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        accessBtn.rx.tap.subscribe(onNext: { _ in
-            self.cellDelegate?.selectedInfoBtn(index: self.index)
-            self.cellDelegate?.acceptChanged(self, isAccpet: self.accessBtn.isSelected)
-        }).disposed(by: self.disposeBag)
+        chatBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
+        accessBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
+        rejectBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
         // Initialization code
     }
 
@@ -36,9 +33,4 @@ class ListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-}
-
-protocol ListTableViewCellDelegate {
-    func acceptChanged(_ cell: ListTableViewCell, isAccpet: Bool)
-    func selectedInfoBtn(index: Int)
 }
