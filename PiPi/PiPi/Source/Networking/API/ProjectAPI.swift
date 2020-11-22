@@ -12,19 +12,6 @@ import RxCocoa
 class ProjectAPI {
     let httpClient = HTTPClient()
     
-    func createProject(_ id: String) -> Observable<networkingResult> {
-        httpClient.post(.createProject, param: ["postId": id]).map { response, data -> networkingResult in
-            switch response.statusCode{
-            case 200:
-                return .ok
-            case 409:
-                return .conflict
-            default:
-                return .fault
-            }
-        }
-    }
-    
     func getProject(_ page: String) -> Observable<([ProjectModel]?, networkingResult)> {
         httpClient.get(.getProject(page), param: nil).map { response, data -> ([ProjectModel]?, networkingResult) in
             switch response.statusCode {

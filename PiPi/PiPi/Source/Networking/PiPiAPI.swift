@@ -18,23 +18,22 @@ enum PiPiAPI {
     case setProfile
     case changePw
     case changePwSendEmail
+    case showUserInfo
     
     //Post
     case wirtePost
     case getPost(_ id: Int)
     case getDetailPost(_ id: String)
-    
     case getApplyPosts(_ id: String)
     case projectApply
     case deProjectApply
-    
     case getApplyList(_ id: String)
     case rejectApply
     case acceptApply
-    
     case getMyPost
     case searchPost(_ category: String, _ page: Int)
     
+    //Profile
     case getProfile(_ email: String)
     case getPortfolios(_ email: String)
     case addPorfolios
@@ -104,6 +103,8 @@ enum PiPiAPI {
             return "/project/todo/\(id)"
         case .finishProject:
             return "/project/complete"
+        case .showUserInfo:
+            return  "/user/info"
         }
     }
     
@@ -122,7 +123,6 @@ enum PiPiAPI {
             
         default:
             guard let token = Token.token else { return [:] }
-            print(["Authorization" : "Bearer" + token])
             return ["Authorization" : "Bearer " + token]
         }
     }

@@ -15,8 +15,13 @@ class ProfileAPI {
         httpClient.get(.getProfile(email), param: nil).map { response, data -> (profileModel?, networkingResult) in
             switch response.statusCode {
             case 200:
-                guard let data = try? JSONDecoder().decode(profileModel.self, from: data) else { return (nil, .fault) }
-                return (data, .ok)
+                do {
+                    let data = try JSONDecoder().decode(profileModel.self, from: data)
+                    return (data, .ok)
+                }catch {
+                    print(error)
+                    return (nil, .fault)
+                }
             default:
                 return (nil, .fault)
             }
@@ -83,6 +88,18 @@ class ProfileAPI {
                 return .ok
             default:
                 return .fault
+            }
+        }
+    }
+    
+    func showUserInfo() -> Observable<(User?,networkingResult)> {
+        httpClient.get(.showUserInfo, param: nil).map { response, data -> (User?, networkingResult) in
+            switch response.statusCode {
+            case 200:
+                guard let data = try? JSONDecoder().decode(User.self, from: data) else { return (nil, .fault)}
+                return (data, .ok)
+            default:
+                return (nil, .fault)
             }
         }
     }
