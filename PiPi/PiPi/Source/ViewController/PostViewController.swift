@@ -53,10 +53,12 @@ class PostViewController: UIViewController {
             self.maxLabel.text = String(value)
         }).disposed(by: rx.disposeBag)
         
-        postBtn.rx.tap.subscribe(onNext: { _ in
-            self.skillSet.accept(self.skillArray)
+        postBtn.rx.tap.subscribe(onNext: {  _ in
+            self.showAlert(title: "공고 글 작성시 주의", message: "공고 마감 기한은 2주입니다.공고글 작성부터 2주가 지나면 자동으로 삭제됩니다.")
             self.selectCategory.accept(self.category[self.proCategoryTF.selectedIndex ?? 0])
+            self.skillSet.accept(self.skillArray)
         }).disposed(by: rx.disposeBag)
+        
         
         bindViewModel()
         setupUI()
@@ -75,10 +77,11 @@ class PostViewController: UIViewController {
             postTap: postBtn.rx.tap.asSignal())
         let output = viewModel.transform(input)
         
-//        output.isEnable.drive(postBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-//        output.isEnable.drive(onNext: { _ in
-//            self.setButton(self.postBtn)
-//        }).disposed(by: rx.disposeBag)
+        output.isEnable.drive(postBtn.rx.isEnabled).disposed(by: rx.disposeBag)
+        output.isEnable.drive(onNext: { _ in
+            self.setButton(self.postBtn)
+        }).disposed(by: rx.disposeBag)
+        
         output.result.emit( onNext: { print($0)},
                             onCompleted: { print("성공") }).disposed(by: rx.disposeBag)
     }
@@ -92,7 +95,6 @@ class PostViewController: UIViewController {
         proSkillSetTF.preferredTextFieldEnablesReturnKeyAutomatically = true
         proSkillSetTF.textFieldDelegate = self
         proSkillSetTF.placeholder = "프로젝트 스킬"
-        
         proCategoryTF.optionArray = category
         proCategoryTF.selectedRowColor = UIColor().hexUIColor(hex: "61BFAD")
         
@@ -117,8 +119,8 @@ extension PostViewController: UITextFieldDelegate {
         guard textField == proSkillSetTF.textField else { return true }
         guard let text = proSkillSetTF.text, !text.isEmpty else { return true }
         proSkillSetTF.append(tokens: [Skills(title: text.stringUpper(text))], animated: true)
+        proSkillSetTF.text = text.stringUpper(text)
         skillArray.append(text.stringUpper(text))
-        print(skillSet)
         proSkillSetTF.text = nil
         return false
     }
