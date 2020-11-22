@@ -22,9 +22,13 @@ class ProfileViewController: UIViewController {
     
     private let viewModel = SeeProfileViewModel()
     private let loadProfile = BehaviorRelay<Void>(value: ())
+    private let showInfo = BehaviorRelay<Void>(value: ())
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        userImageView.layer.cornerRadius = 50
+        
         bindViewModel()
         setupUI()
         registerCell()
@@ -35,14 +39,17 @@ class ProfileViewController: UIViewController {
     }
     
     func bindViewModel() {
-        let input = SeeProfileViewModel.input(profileUser: Driver.just(""), loadProfile: loadProfile.asSignal(onErrorJustReturn: ()))
+        let input = SeeProfileViewModel.input(
+            profileUser: SeeProfileViewModel.email.asDriver(onErrorJustReturn: ""),
+            loadProfile: loadProfile.asSignal(onErrorJustReturn: ()),
+            showInfo: showInfo.asSignal(onErrorJustReturn: ()))
+        
         let output = viewModel.transform(input)
         
         SeeProfileViewModel.loadProfile.asObservable().subscribe(onNext: { result in
             let profileImg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.profileImg)")
             self.userNameLabel.text = result.nickname
             self.userImageView.kf.setImage(with: profileImg)
-            self.circleOfImageView(self.userImageView)
             
             var skillSet = String()
             for i in 0..<result.skills.count {
@@ -53,19 +60,21 @@ class ProfileViewController: UIViewController {
             self.userGitLabel.text = result.giturl
             self.userIntroLabel.text = result.introduce
             
-            var portfolioView = [portfolio]()
-            portfolioView.append(result.firstPortfolio)
-            portfolioView.append(result.secondPortfolio)
+            var portfolioView = [portfolio?]()
+            portfolioView.append(result.firstPortfolio ?? nil)
+            portfolioView.append(result.secondPortfolio ?? nil)
 
-            let portfolioSum = PublishRelay<[portfolio]>()
+            let portfolioSum = PublishRelay<[portfolio?]>()
             portfolioSum.bind(to: self.portfolioTableView.rx.items(cellIdentifier: "portfolioCell", cellType: PortfolioTableViewCell.self)) { row, repository, cell in
-                print(repository)
-                cell.projectNameLabel.text = repository.title
-                cell.giturlLabel.text = repository.giturl
-                cell.moreLabel.text = repository.introduce
+                cell.projectNameLabel.text = repository?.title
+                cell.giturlLabel.text = repository?.giturl
+                cell.moreLabel.text = repository?.introduce
             }.disposed(by: self.rx.disposeBag)
             portfolioSum.accept(portfolioView)
-            
+        }).disposed(by: rx.disposeBag)
+        
+        output.result.emit(onCompleted: {
+            self.loadProfile.accept(())
         }).disposed(by: rx.disposeBag)
     }
     

@@ -49,8 +49,8 @@ class PortfolioViewModel: ViewModelType {
         }).disposed(by: dispoeBag)
         
         input.doneTap.asObservable().withLatestFrom(doneInfo).subscribe(onNext: { firstPortfolio, secondPortfolio, data in
-            let firstId = String(data[firstPortfolio ?? 0].id)
-            let secondId = String(data[secondPortfolio ?? 0].id)
+            let firstId = String(data[firstPortfolio ?? 0].id )
+            let secondId = String(data[secondPortfolio ?? 0].id )
             api.selectPortfolio(firstId, secondId).subscribe(onNext: { response in
                 switch response {
                 case .ok:

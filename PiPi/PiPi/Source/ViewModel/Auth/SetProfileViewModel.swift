@@ -32,8 +32,7 @@ class SetProfileViewModel: ViewModelType {
         let isEnable = info.map { !$0.0!.isEmpty }
         
         input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { userS, userG, userE, userI in
-            api.setProfile(.setProfile, param: ["email": "3981288@gmail.com", "skills": userS ?? [],"giturl": userG ?? ""], img: userI).responseJSON { (response) in
-                print(response.response?.statusCode)
+            api.setProfile(.setProfile, param: ["email": userE, "skills": userS ?? [],"giturl": userG ?? ""], img: userI).responseJSON { (response) in
                 switch response.response?.statusCode {
                 case 200:
                     result.onCompleted()
