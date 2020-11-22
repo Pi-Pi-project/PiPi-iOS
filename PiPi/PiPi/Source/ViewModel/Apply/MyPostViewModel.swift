@@ -34,7 +34,6 @@ class MyPostViewModel: ViewModelType {
         
         input.loadMyPost.asObservable().subscribe(onNext: { _ in
             api.getMyPost().subscribe(onNext: { response, statusCode in
-                print(statusCode)
                 switch statusCode {
                 case .ok:
                     MyPostViewModel.loadMyPost.accept(response!)
@@ -46,6 +45,7 @@ class MyPostViewModel: ViewModelType {
         }).disposed(by: disposeBag)
         
         input.selectMyPostRow.asObservable().withLatestFrom(info).subscribe(onNext: { indexPath, data in
+            print(indexPath)
             select = String(data[indexPath].id)
             detailView.onNext(select)
         }).disposed(by: disposeBag)

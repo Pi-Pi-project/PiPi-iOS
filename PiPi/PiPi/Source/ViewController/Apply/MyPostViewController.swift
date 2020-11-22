@@ -40,7 +40,6 @@ class MyPostViewController: UIViewController {
             view.addSubview(floatingButton)
             setupUI()
         }
-        tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,14 +64,14 @@ class MyPostViewController: UIViewController {
         
         MyPostViewModel.loadMyPost
             .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
-                
                 var skillSet = String()
+                
                 for i in 0..<repository.postSkillsets.count {
                     skillSet.append(" " + repository.postSkillsets[i].skill)
                 }
                 
-                let backimg = URL(string: "http://10.156.145.141:8080/image/\(repository.img ?? "")/")
-                
+                let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
+                print(repository.max)
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet
@@ -84,7 +83,6 @@ class MyPostViewController: UIViewController {
             }.disposed(by: rx.disposeBag)
 
         output.detailView.asObservable().subscribe(onNext: { id in
-            print("di")
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "applylistVC") as? ApplyListViewController else { return }
             vc.selectIndexPath = id
             self.navigationController?.pushViewController(vc, animated: true)
