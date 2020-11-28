@@ -30,9 +30,10 @@ struct mainModel: Codable {
     let posts: [postModel]
 }
 
-
 struct detailModel: Codable {
-    let User: User?
+    let userEmail: String
+    let userImg: String?
+    let userNickname: String
     let title: String
     let img: String
     let category: String
@@ -44,8 +45,8 @@ struct detailModel: Codable {
 }
 
 struct User: Codable {
-    let nickname: String
-    let img: String
+    let email: String
+    let profileImg: String
 }
 
 struct ApplyList: Codable{

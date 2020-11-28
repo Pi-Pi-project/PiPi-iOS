@@ -9,15 +9,19 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Kingfisher
+import iOSDropDown
 
 class JoinViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: DropDown!
+    @IBOutlet weak var searchBtn: UIButton!
     
     private let viewModel = MainViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
-
+    private let selectSearch = PublishRelay<String>()
+    let startingPoint = Date()
+    
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -26,14 +30,27 @@ class JoinViewController: UIViewController {
         return button
     }()
     
+    let category = ["Web", "MoblieApp", "DataScience", "System", "Network", "MachineLearning", "Security", "Embedded", "VR", "Game" ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.navigationController?.isNavigationBarHidden = false
+        print(startingPoint)
+        searchBar.placeholder = "카테고리로 검색하기"
+        searchBar.optionArray = category
+        searchBar.selectedRowColor = UIColor().hexUIColor(hex: "61BFAD")
+    
+        searchBtn.rx.tap.subscribe(onNext: { _ in
+            self.selectSearch.accept(self.category[self.searchBar.selectedIndex ?? 0])
+        }).disposed(by: rx.disposeBag)
         
         bindViewModel()
         registerCell()
         // Do any additional setup after loading the view.
     }
 
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let view = UIApplication.shared.windows.filter({$0.isKeyWindow}
@@ -43,7 +60,12 @@ class JoinViewController: UIViewController {
         }
         tableView.reloadData()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let view = UIApplication.shared.windows.filter({$0.isKeyWindow}).first, floatingButton.isDescendant(of: view) {
@@ -62,12 +84,11 @@ class JoinViewController: UIViewController {
         let input = MainViewModel.input(
             loadData: loadData.asSignal(onErrorJustReturn: ()),
             selectPostRow: tableView.rx.itemSelected.asSignal(),
-            searchText: searchBar.rx.text.orEmpty.asDriver())
+            searchText: selectSearch.asDriver(onErrorJustReturn: ""))
         let output = viewModel.transform(input)
         
-        MainViewModel.loadData
+        output.loadData
             .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
-                
                 var skillSet = String()
                 for i in 0..<repository.postSkillsets.count {
                     skillSet.append(" " + repository.postSkillsets[i].skill)
@@ -75,15 +96,21 @@ class JoinViewController: UIViewController {
                 
                 let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
                 let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg ?? "")")
-                
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet
                 cell.userImgView.kf.setImage(with: userimg)
+                
+                if row == 9 {
+                    print("수행 시간 =  \(self.startingPoint.timeIntervalSinceNow * -1) seconds elapsed")
+                }
             }.disposed(by: rx.disposeBag)
 
         output.data.drive().disposed(by: rx.disposeBag)
         output.data.drive(onNext: { _ in self.tableView.reloadData()}).disposed(by: rx.disposeBag)
+        output.searchResult.emit(onCompleted : {
+            self.tableView.reloadData()
+        }).disposed(by: rx.disposeBag)
         output.nextView.asObservable().subscribe(onNext: { id in
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
             vc.selectIndexPath = id

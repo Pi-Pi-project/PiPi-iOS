@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 
 class DetailViewModel: ViewModelType {
-    static var loadDetail = PublishRelay<detailModel>()
     private let disposeBag = DisposeBag()
     
     struct input {
@@ -20,6 +19,7 @@ class DetailViewModel: ViewModelType {
     }
     
     struct output {
+        let loadDetail: PublishRelay<detailModel>
         let resultLoad: Signal<String>
         let resultApplyT: Driver<String>
         let resultApplyF: Driver<String>
@@ -28,16 +28,17 @@ class DetailViewModel: ViewModelType {
     func transform(_ input: input) -> output {
         let api = PostAPI()
         let result = PublishSubject<String>()
+        let loadDetail = PublishRelay<detailModel>()
         let resultApplyT = PublishSubject<String>()
         let resultApplyF = PublishSubject<String>()
-        let info = Signal.combineLatest(input.selectApply.asSignal(onErrorJustReturn: ()), DetailViewModel.loadDetail.asSignal())
+        let info = Signal.combineLatest(input.selectApply.asSignal(onErrorJustReturn: ()), loadDetail.asSignal())
         
         input.loadDetail.asObservable().subscribe(onNext: { id in
             api.getDetailPost(input.selectIndexPath).subscribe(onNext: { response,statusCode in
                 print(statusCode)
                 switch statusCode {
                 case .ok:
-                    DetailViewModel.loadDetail.accept(response!)
+                    loadDetail.accept(response!)
                     result.onCompleted()
                 default:
                     result.onNext("디테일 포스트 로드 실패")
@@ -71,6 +72,6 @@ class DetailViewModel: ViewModelType {
             }
         }).disposed(by: disposeBag)
         
-        return output(resultLoad: result.asSignal(onErrorJustReturn: "get detail 실패"), resultApplyT: resultApplyT.asDriver(onErrorJustReturn: "post apply 실패"), resultApplyF: resultApplyF.asDriver(onErrorJustReturn: "delete apply 실패"))
+        return output(loadDetail: loadDetail, resultLoad: result.asSignal(onErrorJustReturn: "get detail 실패"), resultApplyT: resultApplyT.asDriver(onErrorJustReturn: "post apply 실패"), resultApplyF: resultApplyF.asDriver(onErrorJustReturn: "delete apply 실패"))
     }
 }

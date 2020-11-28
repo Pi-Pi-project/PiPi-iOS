@@ -29,9 +29,23 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+            
+        setupUI()
         bindViewModel()
         // Do any additional setup after loading the view.
+    }
+    
+    func setupUI() {
+        ppDetailTextView.layer.borderWidth = 0.5
+        ppDetailTextView.layer.borderColor = UIColor.gray.cgColor
+        ppDetailTextView.layer.cornerRadius = 10
+        userImg.clipsToBounds = true
+        userImg.layer.cornerRadius = 30
+        
+        applyBtn.rx.tap.subscribe(onNext: { _ in
+            self.showAlert(title: "신청", message: "신청하시겠습니까?")
+            self.navigationController?.popViewController(animated: true)
+        }).disposed(by: rx.disposeBag)
     }
     
     func bindViewModel() {
@@ -41,42 +55,42 @@ class DetailViewController: UIViewController {
             selectApply: applyBtn.rx.tap.asDriver())
         let output = viewModel.transform(input)
         
-        DetailViewModel.loadDetail.asObservable().subscribe(onNext: { result in
+        output.loadDetail.asObservable().subscribe(onNext: { result in
             let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.img)")
             self.backImageView.kf.setImage(with: backimg)
-            let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.User?.img ?? "")")
+            let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.userImg ?? "")")
             self.userImg.load(url: userimg!)
-            self.userImg.rx.tap.subscribe(onNext: { _ in
-                self.moveScene("profileVC")
-            }).disposed(by: self.rx.disposeBag)
             
-            self.userName.text = result.User?.nickname
-            self.ppNameLabel.text = result.title
+            self.userImg.rx.tap.subscribe(onNext: { _ in
+                guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "profileVC") as? SeeProfileViewController else { return }
+                print(result.userEmail)
+                vc.email = result.userEmail
+                self.navigationController?.pushViewController(vc, animated: true)
+            }).disposed(by: self.rx.disposeBag)
             
             var skillSet = String()
             for i in 0..<result.postSkillsets.count {
-                skillSet.append(" " + result.postSkillsets[i].skill)
+                skillSet.append("  " + result.postSkillsets[i].skill)
             }
-            
-            self.ppSkillLabel.layer.borderColor = UIColor.gray.cgColor
-            self.ppSkillLabel.layer.borderWidth = 1
-            
-            self.setBorder(self.ppIntroLabel)
-            
-            self.ppIntroLabel.text = result.idea
+            skillSet.append("  ")
+            self.userName.text = result.userNickname
+            self.ppNameLabel.text = result.title
+            self.ppIntroLabel.text = "  " + result.idea + "  "
             self.ppSkillLabel.text = skillSet
             self.ppDetailTextView.text = result.content
-            self.ppMaxLabel.text = String(format: "0", result.max ?? "0")
+            self.ppMaxLabel.text = "\(result.max ?? 0)"
             self.setButton(self.applyBtn, result.applied)
+            self.ppSkillLabel.layer.borderColor = UIColor.lightGray.cgColor
+            self.ppSkillLabel.layer.borderWidth = 1
+            self.setBorder(self.ppIntroLabel)
+            self.setBorder(self.ppSkillLabel)
         }).disposed(by: rx.disposeBag)
         
         output.resultApplyT.asObservable().subscribe(onCompleted: {
-            print("ddffdfs")
             self.setButton(self.applyBtn, true)
         }).disposed(by: rx.disposeBag)
         
         output.resultApplyF.asObservable().subscribe(onCompleted: {
-            print("adfasfaasdf")
             self.setButton(self.applyBtn, false)
         }).disposed(by: rx.disposeBag)
     }
