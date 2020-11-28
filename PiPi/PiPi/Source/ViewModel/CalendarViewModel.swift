@@ -37,6 +37,7 @@ class CalendarViewModel: ViewModelType {
             api.getTodo(id, date).subscribe(onNext: { data, response in
                 switch response {
                 case .ok:
+                    print(data)
                     CalendarViewModel.loadTodo.accept(data!)
                     result.onCompleted()
                 default:

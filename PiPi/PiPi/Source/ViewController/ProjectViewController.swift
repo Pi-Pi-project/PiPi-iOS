@@ -20,6 +20,8 @@ class ProjectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        projectTableView.layer.cornerRadius = 20
+        view.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
         setupUI()
         bindViewModel()
     }
@@ -53,4 +55,3 @@ class ProjectViewController: UIViewController {
     }
     */
 }
-

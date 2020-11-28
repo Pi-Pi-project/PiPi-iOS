@@ -19,9 +19,12 @@ class FinishViewController: UIViewController {
     
     var selectIndexPath = Int()
     
+    private let viewModel = FinishViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        bindViewModel()
         setupUI()
     }
     
@@ -32,7 +35,14 @@ class FinishViewController: UIViewController {
         completeBtn.tintColor = .black
     }
 
-    
+    func bindViewModel() {
+        let input = FinishViewModel.input(completedTap: completeBtn.rx.tap.asDriver(), projectUrl: giturlTextField.rx.text.orEmpty.asDriver(), projectIntro: introTextView.rx.text.orEmpty.asDriver(), selectIndexPath: Driver.just(selectIndexPath))
+        let output = viewModel.transform(input)
+        
+        output.result.emit(onCompleted: {
+            self.dismiss(animated: true, completion: nil)
+        }).disposed(by: rx.disposeBag)
+    }
     /*
     // MARK: - Navigation
 
@@ -66,6 +76,7 @@ class FinishViewModel: ViewModelType {
         
         input.completedTap.asObservable().withLatestFrom(info).subscribe(onNext: { id ,url, intro in
             api.finishProject(id, url, intro).subscribe(onNext: { response in
+                print(response)
                 switch response {
                 case .ok:
                     result.onCompleted()

@@ -22,7 +22,8 @@ class CalendarViewController: UIViewController {
     private var alertDone = BehaviorRelay<Void>(value: ())
     private var todoText = BehaviorRelay<String>(value: "")
     private var successTodo = BehaviorRelay<Int>(value: 0)
-    
+    private var deleteTodo = BehaviorRelay<Int>(value: 0)
+
     lazy var addBtn: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "Add", style: .plain, target: self, action: nil)
     return button
@@ -33,8 +34,17 @@ class CalendarViewController: UIViewController {
     return button
     }()
     
+    fileprivate lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yy-MM-dd"
+        return formatter
+    }()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        calendar.appearance.headerDateFormat = "YYYY년 M월"
 
         self.navigationController?.navigationBar.topItem?.title = "관리"
         self.navigationItem.rightBarButtonItems = [addBtn, doneBtn]
@@ -60,6 +70,7 @@ class CalendarViewController: UIViewController {
             cell.checkBtn.rx.tap.subscribe(onNext: { _ in
                 self.successTodo.accept(row)
             }).disposed(by: self.rx.disposeBag)
+            
         }.disposed(by: rx.disposeBag)
         
         addBtn.rx.tap.subscribe(onNext: { _ in
@@ -69,7 +80,7 @@ class CalendarViewController: UIViewController {
         doneBtn.rx.tap.subscribe(onNext: { _ in
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "finishVC") as? FinishViewController else { return }
             vc.selectIndexPath = self.selectIndexPath
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.present(vc, animated: true, completion: nil)
         }).disposed(by: rx.disposeBag)
     }
 
@@ -83,7 +94,6 @@ class CalendarViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.success.emit(onCompleted: {
-            //해당 인덱스 삭제
             self.todoTableView.reloadData()
         }).disposed(by: rx.disposeBag)
     }
@@ -131,20 +141,15 @@ extension CalendarViewController: FSCalendarDelegateAppearance, FSCalendarDataSo
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        calendar.formatter.locale = Locale(identifier: "ko_KR")
-        calendar.formatter.dateFormat = "yy-mm-dd"
-        let nameOfDate = calendar.formatter.string(from: date as Date)
-        self.todoDate.accept(nameOfDate)
-        print("nameOfDate",nameOfDate)
+        let date_string = self.dateFormatter.string(from: date)
+        self.todoDate.accept(date_string)
+        print("nameOfDate",date_string)
     }
 }
 
 extension CalendarViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
         if editingStyle == .delete {
-            // remove the item from the data model
-            
-            // delete the table view row
             todoTableView.deleteRows(at: [indexPath], with: .fade)
             todoTableView.reloadData()
         }
