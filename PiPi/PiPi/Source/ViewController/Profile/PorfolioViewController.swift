@@ -17,6 +17,7 @@ class PorfolioViewController: UIViewController {
     private let viewModel = PortfolioViewModel()
     private let firstPortfolio = BehaviorRelay<Int?>(value: nil)
     private let secondPortfolio = BehaviorRelay<Int?>(value: nil)
+    private let showEmail = BehaviorRelay<Void>(value: ())
     private var countCheck: Int = 0
     
     lazy var rightButton: UIBarButtonItem = {
@@ -32,6 +33,7 @@ class PorfolioViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("in")
         rightButton.rx.tap.subscribe(onNext: { _ in
             let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "addPortfolio") as! AddPortFolioViewController
             let navController = UINavigationController(rootViewController: VC1)
@@ -47,9 +49,15 @@ class PorfolioViewController: UIViewController {
         registerCell()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        portfolioTableView.reloadData()
+        loadPortfolio.accept(())
+    }
+    
     func bindViewModel() {
         let input = PortfolioViewModel.input(
-            loadPortfolio: loadPortfolio.asSignal(onErrorJustReturn: ()),
+            showEmail: showEmail.asSignal(onErrorJustReturn: ()),
+            loadPortfolio: loadPortfolio.asDriver(onErrorJustReturn: ()),
             firstPortfolio: firstPortfolio.asDriver(onErrorJustReturn: nil),
             secondPortfolio: secondPortfolio.asDriver(onErrorJustReturn: nil),
             doneTap: leftButton.rx.tap.asDriver(),
@@ -75,6 +83,10 @@ class PorfolioViewController: UIViewController {
             self.portfolioTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }).disposed(by: rx.disposeBag)
         
+        output.result.emit(onCompleted: {
+            self.loadPortfolio.accept(())
+            self.portfolioTableView.reloadData()
+        }).disposed(by: rx.disposeBag)
         output.doneResult.emit(onCompleted: { self.dismiss(animated: true, completion: nil)}).disposed(by: self.rx.disposeBag)
     }
     

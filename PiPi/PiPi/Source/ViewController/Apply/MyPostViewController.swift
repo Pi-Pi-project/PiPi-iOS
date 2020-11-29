@@ -8,11 +8,13 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import iOSDropDown
 
 class MyPostViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: DropDown!
+    @IBOutlet weak var searchBtn: UIButton!
     
     private let viewModel = MyPostViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
@@ -28,7 +30,8 @@ class MyPostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.isNavigationBarHidden = false
+
         bindViewModel()
         registerCell()
         // Do any additional setup after loading the view.
@@ -52,7 +55,6 @@ class MyPostViewController: UIViewController {
     func registerCell() {
         let nib = UINib(nibName: "MainTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "joinCell")
-        
         tableView.rowHeight = 200
     }
     
@@ -71,7 +73,6 @@ class MyPostViewController: UIViewController {
                 }
                 
                 let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
-                print(repository.max)
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet

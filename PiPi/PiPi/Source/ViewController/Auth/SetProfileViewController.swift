@@ -95,7 +95,6 @@ class SetProfileViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("Segue")
         if segue.identifier == "gotomain"{
             let destinationNavigationController = segue.destination as! UINavigationController
             let destinationTopViewController = destinationNavigationController.topViewController as! JoinViewController

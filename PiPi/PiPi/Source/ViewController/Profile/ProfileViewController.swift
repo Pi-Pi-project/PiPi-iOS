@@ -26,16 +26,16 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.isNavigationBarHidden = true
+
         userImageView.layer.cornerRadius = 50
+        portfolioTableView.layer.cornerRadius = 20
+    
         
         bindViewModel()
         setupUI()
         registerCell()
         view.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
     }
     
     func bindViewModel() {

@@ -45,7 +45,6 @@ class SeeProfileViewModel: ViewModelType {
         }).disposed(by: disposeBag)
         
         input.loadProfile.withLatestFrom(info).asObservable().subscribe(onNext: { email in
-
             api.getProfile(email).subscribe(onNext: { data, response in
                 switch response {
                 case .ok:

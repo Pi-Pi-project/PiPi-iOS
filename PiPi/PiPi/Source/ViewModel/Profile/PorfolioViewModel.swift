@@ -15,7 +15,8 @@ class PortfolioViewModel: ViewModelType {
     static var loadPortfolio = PublishRelay<[portfolio]>()
     
     struct input {
-        let loadPortfolio: Signal<Void>
+        let showEmail: Signal<Void>
+        let loadPortfolio: Driver<Void>
         let firstPortfolio: Driver<Int?>
         let secondPortfolio: Driver<Int?>
         let doneTap: Driver<Void>
@@ -32,11 +33,21 @@ class PortfolioViewModel: ViewModelType {
         let result = PublishSubject<String>()
         let doneInfo = Driver.combineLatest(input.firstPortfolio, input.secondPortfolio, PortfolioViewModel.loadPortfolio.asDriver(onErrorJustReturn: []))
         let doneResult = PublishSubject<String>()
+        var email = String()
         
-        //folio indexpath.row 받아서 그거 first랑 second 보내기
+        input.showEmail.asObservable().subscribe(onNext: { _ in
+            api.showUserInfo().subscribe(onNext: { data, response in
+                switch response  {
+                case .ok:
+                    email = data!.email
+                default:
+                    print("none")
+                }
+            }).disposed(by: self.dispoeBag)
+        }).disposed(by: dispoeBag)
         
         input.loadPortfolio.asObservable().subscribe(onNext: { _ in
-            api.getPortfolios("a@gmail.com").subscribe(onNext: { data, response in
+            api.getPortfolios(email).subscribe(onNext: { data, response in
                 print(response)
                 switch response {
                 case .ok:
