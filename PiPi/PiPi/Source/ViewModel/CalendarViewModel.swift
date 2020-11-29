@@ -24,12 +24,14 @@ class CalendarViewModel: ViewModelType {
     struct output{
         let result: Signal<String>
         let success: Signal<String>
+        let todo: Signal<String>
     }
     
     func transform(_ input : input) -> output {
         let api = ProjectAPI()
         let result = PublishSubject<String>()
         let success = PublishSubject<String>()
+        let enter = PublishSubject<String>()
         let info = Driver.combineLatest(input.selectIndexPath, input.selectDate)
         let todoInfo = Driver.combineLatest(input.selectIndexPath, input.todoText, input.selectDate)
             
@@ -37,7 +39,6 @@ class CalendarViewModel: ViewModelType {
             api.getTodo(id, date).subscribe(onNext: { data, response in
                 switch response {
                 case .ok:
-                    print(data)
                     CalendarViewModel.loadTodo.accept(data!)
                     result.onCompleted()
                 default:
@@ -50,7 +51,7 @@ class CalendarViewModel: ViewModelType {
             api.createTodo(todo, date, id).subscribe(onNext: { response in
                 switch response {
                 case .ok:
-                    print("todo success")
+                    enter.onCompleted()
                 default:
                     print("todo fault")
                 }
@@ -69,6 +70,6 @@ class CalendarViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        return output(result: result.asSignal(onErrorJustReturn: "todolist 가져오기 실패"), success: success.asSignal(onErrorJustReturn: "todo 완료 실패"))
+        return output(result: result.asSignal(onErrorJustReturn: "todolist 가져오기 실패"), success: success.asSignal(onErrorJustReturn: "todo 완료 실패"), todo: enter.asSignal(onErrorJustReturn: "todo load 실패"))
     }
 }

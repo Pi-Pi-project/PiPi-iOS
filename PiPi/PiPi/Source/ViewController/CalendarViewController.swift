@@ -40,7 +40,6 @@ class CalendarViewController: UIViewController {
         return formatter
     }()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,7 +47,8 @@ class CalendarViewController: UIViewController {
 
         self.navigationController?.navigationBar.topItem?.title = "관리"
         self.navigationItem.rightBarButtonItems = [addBtn, doneBtn]
-        
+        self.navigationController?.isNavigationBarHidden = false
+
         bindViewModel()
         registerCell()
         setupUI()
@@ -93,7 +93,11 @@ class CalendarViewController: UIViewController {
             successTodo: successTodo.asDriver())
         let output = viewModel.transform(input)
         
-        output.success.emit(onCompleted: {
+        output.result.emit(onCompleted: {
+            self.todoTableView.reloadData()
+        }).disposed(by: rx.disposeBag)
+        
+        output.todo.emit(onCompleted: {
             self.todoTableView.reloadData()
         }).disposed(by: rx.disposeBag)
     }

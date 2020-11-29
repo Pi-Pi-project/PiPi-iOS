@@ -12,7 +12,6 @@ class TodoTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dataLabel: UILabel!
     @IBOutlet weak var todoLabel: UILabel!
-    @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var checkBtn: UIButton!
     @IBOutlet weak var lineView: UIView!
     

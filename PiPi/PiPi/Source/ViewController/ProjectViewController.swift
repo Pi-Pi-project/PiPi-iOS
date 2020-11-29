@@ -19,11 +19,17 @@ class ProjectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
 
         projectTableView.layer.cornerRadius = 20
         view.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
         setupUI()
         bindViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     func bindViewModel() {

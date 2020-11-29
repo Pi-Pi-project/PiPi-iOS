@@ -30,7 +30,7 @@ class ProjectAPI {
     }
     
     func createTodo(_ todo: String, _ date: String, _ id: Int) -> Observable<networkingResult> {
-        httpClient.post(.createTodo, param: ["todo": todo, "data": date, "projectId": id]).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+        httpClient.post(.createTodo, param: ["todo": todo, "date": date, "projectId": id]).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
             guard let afError = error.asAFError else { return .error(error) }
             switch afError {
             case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
@@ -55,7 +55,21 @@ class ProjectAPI {
     }
     
     func getTodo(_ id: Int, _ date: String) -> Observable<([todo]?, networkingResult)> {
-        httpClient.get(.getTodo(id, date), param: nil).map { response, data -> ([todo]?, networkingResult)in
+        httpClient.get(.getTodo(id, date), param: nil).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://10.156.145.141:8080")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }.map { response, data -> ([todo]?, networkingResult)in
             switch response.statusCode {
             case 200:
                 guard let data = try? JSONDecoder().decode([todo].self, from: data) else { return (nil, .fault)}
@@ -67,7 +81,22 @@ class ProjectAPI {
     }
     
     func successTodo(_ id: Int) -> Observable<networkingResult> {
-        httpClient.put(.successTodo(String(id)), param: nil).map { response, data -> networkingResult in
+        httpClient.put(.successTodo(String(id)), param: nil).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://10.156.145.141:8080")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }.map { response, data -> networkingResult in
+            print(response.statusCode)
             switch response.statusCode {
             case 200:
                 return .ok
@@ -82,7 +111,22 @@ class ProjectAPI {
     }
     
     func finishProject(_ id: Int, _ giturl: String, _ introduce: String) -> Observable<networkingResult> {
-        httpClient.put(.finishProject, param: ["id": id, "giturl": giturl, "introduce": introduce]).map { response, data -> networkingResult in
+        httpClient.put(.finishProject, param: ["id": id, "giturl": giturl, "introduce": introduce]).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://10.156.145.141:8080")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }.map { response, data -> networkingResult in
+            print(response.statusCode)
             switch response.statusCode {
             case 200:
                 return .ok
