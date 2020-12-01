@@ -153,6 +153,7 @@ class AuthAPI {
                 case 200:
                     guard let data = try? JSONDecoder().decode(TokenModel.self, from: data) else { return .fault }
                     Token.token = data.accessToken
+                    print(data.accessToken)
                     return .ok
                 case 404:
                     return .notFound

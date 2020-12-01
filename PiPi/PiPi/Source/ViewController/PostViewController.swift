@@ -55,14 +55,13 @@ class PostViewController: UIViewController {
         
         postBtn.rx.tap.subscribe(onNext: {  _ in
             self.showAlert(title: "공고 글 작성시 주의", message: "공고 마감 기한은 2주입니다.공고글 작성부터 2주가 지나면 자동으로 삭제됩니다.")
+            
             self.selectCategory.accept(self.category[self.proCategoryTF.selectedIndex ?? 0])
             self.skillSet.accept(self.skillArray)
         }).disposed(by: rx.disposeBag)
         
-        
         bindViewModel()
         setupUI()
-        // Do any additional setup after loading the view.
     }
     
     func bindViewModel() {
@@ -83,7 +82,8 @@ class PostViewController: UIViewController {
         }).disposed(by: rx.disposeBag)
         
         output.result.emit( onNext: { print($0)},
-                            onCompleted: { print("성공") }).disposed(by: rx.disposeBag)
+                            onCompleted: { print("성공")
+                            }).disposed(by: rx.disposeBag)
     }
     func setupUI() {
         proContentTV.layer.borderColor = UIColor().hexUIColor(hex: "").cgColor
