@@ -139,4 +139,37 @@ class ProjectAPI {
             }
         }
     }
+    
+    func getRoom() -> Observable<([room]?, networkingResult)> {
+        httpClient.get(.getRoom, param: nil).map{ response, data ->  ([room]?, networkingResult) in
+            switch response.statusCode{
+            case 200:
+                guard let data = try? JSONDecoder().decode([room].self, from: data) else { return (nil, .fault) }
+                return (data, .ok)
+            default:
+                return (nil, .fault)
+            }
+        }
+    }
+    
+    func getChats(_ id: Int, _ page: Int) -> Observable<([getChat]?, networkingResult)> {
+        httpClient.get(.getChats(id, page), param: nil).map{ response, data -> ([getChat]?, networkingResult) in
+            print(response.statusCode)
+            switch response.statusCode {
+            case 200:
+                do {
+                    var data = try JSONDecoder().decode([getChat].self, from: data)
+                    data.reverse()
+                    return (data, .ok)
+                }catch{
+                    print(error)
+                    
+                    return (nil, .fault)
+                }
+            default:
+                return (nil, .fault)
+            }
+        }
+    }
+    
 }

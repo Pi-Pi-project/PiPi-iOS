@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SocketIO
 
 struct ProjectModel: Codable {
     let id: Int
@@ -17,9 +18,28 @@ struct Projects: Codable {
 }
 
 struct todo: Codable {
-    let id: String
+    let id: Int
     let nickname: String
     let date: String
     let todo: String
     let todoStatus: String
+}
+
+struct room: Codable {
+    let id: Int
+    let title: String
+    let coverImg: String?
+}
+
+struct chat: SocketData {
+    let roomid: Int
+    let userEmail: String
+    let message: String
+}
+
+struct getChat: Codable {
+    let userNickname: String
+    let message: String
+    let mine: Bool
+    let profileImg: String
 }

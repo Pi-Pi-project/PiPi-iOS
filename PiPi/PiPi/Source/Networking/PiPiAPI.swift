@@ -46,6 +46,9 @@ enum PiPiAPI {
     case getTodo(_ id: Int, _ date: String)
     case successTodo(_ id: String)
     case finishProject
+    case getRoom
+    case getChats(_ id: Int, _ page: Int)
+    case getIndividualCaht(_ email: String)
     
     func path() -> String {
         switch self {
@@ -86,7 +89,7 @@ enum PiPiAPI {
         case .changePwSendEmail:
             return "/user/password/email"
         case .searchPost(let category, let page):
-            return "/post?category=\(category)&page=\(page)"
+            return "/post/search?category=\(category)&page=\(page)"
         case .getProfile(let email):
             return "/profile?email=\(email)"
         case .getPortfolios(let email):
@@ -98,13 +101,19 @@ enum PiPiAPI {
         case .createTodo:
             return "/project/todo"
         case .getTodo(let id, let date):
-            return "/project/todo/?id=\(id)&date=\(date)"
+            return "/project/todo?id=\(id)&date=\(date)"
         case .successTodo(let id):
             return "/project/todo/\(id)"
         case .finishProject:
             return "/project/complete"
         case .showUserInfo:
             return  "/user/info"
+        case .getRoom:
+            return "/room"
+        case .getChats(let id, let page):
+            return "/chat/\(id)?page=\(page)"
+        case .getIndividualCaht(let email):
+            return "/chat?email=\(email)"
         }
     }
     
@@ -119,7 +128,7 @@ enum PiPiAPI {
             userDefault.set(renewalToken, forKey: "refreshToken")
             userDefault.synchronize(  )
             guard let token = userDefault.string(forKey: "refreshToken") else { return nil }
-            return ["Authorization" : "Bearer" + token]
+            return ["Authorization" : "Bearer " + token]
             
         default:
             guard let token = Token.token else { return [:] }
