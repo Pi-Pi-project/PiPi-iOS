@@ -21,6 +21,7 @@ class ChatViewController: UIViewController {
     private let getEmail = BehaviorRelay<Void>(value: ())
     private let viewModel = ChatViewModel()
     private let loadChat = BehaviorRelay<Void>(value: ())
+    private let loadMoreChat = PublishRelay<Int>()
     
     var keyboardShown:Bool = false // 키보드 상태 확인
     var originY:CGFloat? // 오브젝트의 기본 위치
@@ -28,15 +29,25 @@ class ChatViewController: UIViewController {
     var socketClient: SocketIOClient!
     var email = String()
     var roomId = Int()
+    var count: Int = 0
+    
+    let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         self.socketClient = SocketIOManager.shared.socket
         
         SocketIOManager.shared.establishConnection()
         SocketIOManager.shared.socket.emit("join", roomId)
-
+        
+        tableView.refreshControl = refreshControl
+        refreshControl.attributedTitle = NSAttributedString(string: "더 읽어오기")
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        
+        self.navigationController?.isNavigationBarHidden = false
+        
         setupUI()
         bindViewModel()
     }
@@ -56,7 +67,8 @@ class ChatViewController: UIViewController {
         let input = ChatViewModel.input(
             showEmail: getEmail.asSignal(onErrorJustReturn: ()),
             loadChat: loadChat.asSignal(onErrorJustReturn: ()),
-            roomId: roomId)
+            roomId: roomId,
+            loadMoreChat: loadMoreChat.asSignal(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
         output.loadChat.asObservable().bind(to: tableView.rx.items) { tableview, row, item -> UITableViewCell in
@@ -101,8 +113,21 @@ class ChatViewController: UIViewController {
         output.result.emit(onNext: { email in
             self.email = email
         }).disposed(by: rx.disposeBag)
+        
+        output.refresh.subscribe(onNext: { moreChat in
+            for i in  0..<moreChat.count {
+                output.loadChat.insert(element: moreChat[i])
+            }
+            
+            self.tableView.reloadData()
+        }).disposed(by: rx.disposeBag)
     }
     
+    @objc func refresh() {
+        loadMoreChat.accept(count)
+        count += 1
+        refreshControl.endRefreshing()
+    }
     /*
     // MARK: - Navigation
 
@@ -155,7 +180,6 @@ class ChatViewController: UIViewController {
                 self.keyboardShown = false
             })
         }
-        
     }
 }
 
@@ -180,6 +204,12 @@ extension BehaviorRelay where Element: RangeReplaceableCollection {
     func add(element: Element.Element) {
         var array = self.value
         array.append(element)
+        self.accept(array)
+    }
+    
+    func insert(element: Element.Element) {
+        var array = self.value
+        array.insert(element, at: 0 as! Element.Index)
         self.accept(array)
     }
 }
