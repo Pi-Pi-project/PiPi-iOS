@@ -40,6 +40,7 @@ class ApplyListViewModel: ViewModelType {
         let isReject = PublishSubject<Bool>()
         let goChat = PublishSubject<Int>()
         let info = Signal.combineLatest(input.selectIndexPath, ApplyListViewModel.loadApplyList.asSignal())
+        let chatInfo = Signal.combineLatest(input.goToChat, ApplyListViewModel.loadApplyList.asSignal())
         
         input.loadApplyData.asObservable().subscribe(onNext: { _ in
             print(input.selectApplyList)
@@ -89,7 +90,7 @@ class ApplyListViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.goToChat.asObservable().withLatestFrom(info).subscribe(onNext:{ row, data in
+        input.goToChat.asObservable().withLatestFrom(chatInfo).subscribe(onNext:{ row, data in
             api.getIndividualChat(data[row].userEmail).subscribe(onNext: { data, response in
                 switch response {
                 case .ok:
@@ -100,6 +101,6 @@ class ApplyListViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        return output(result: result.asSignal(onErrorJustReturn: "get apply list 실패"), accept: isAccept.asSignal(onErrorJustReturn: false), reject: isReject.asSignal(onErrorJustReturn: false), create: create.asSignal(onErrorJustReturn: "create project 실패"), goChat: goChat.asSignal(onErrorJustReturn: 0))
+        return output(result: result.asSignal(onErrorJustReturn: "get apply list 실패"), accept: isAccept.asSignal(onErrorJustReturn: false), reject: isReject.asSignal(onErrorJustReturn: false), create: create.asSignal(onErrorJustReturn: "create project 실패"), goChat: goChat.asSignal(onErrorJustReturn: 1))
     }
 }
