@@ -35,7 +35,6 @@ class SignInViewModel: ViewModelType {
         input.loadAutoLogin.asObservable().subscribe(onNext: { _ in
             if let userId = UserDefaults.standard.string(forKey: "id"){
                 let userPw = UserDefaults.standard.string(forKey: "pw")!
-                print("userdefault")
                 api.signIn(userId, userPw).subscribe(onNext: { response in
                     switch response {
                     case .ok:
@@ -51,9 +50,6 @@ class SignInViewModel: ViewModelType {
         
         input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { userE, userP, isAuto in
             if isAuto {
-                print("save")
-                print(userE)
-                print(userP)
                 UserDefaults.standard.set(userE, forKey: "id")
                 UserDefaults.standard.set(userP, forKey: "pw")
             }

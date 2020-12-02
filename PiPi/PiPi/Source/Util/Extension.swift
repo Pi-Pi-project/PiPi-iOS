@@ -146,7 +146,7 @@ extension UIViewController {
     
     func setBorder(_ textfield: UILabel) {
         textfield.layer.cornerRadius = 10
-        textfield.layer.borderColor = UIColor.gray.cgColor
+        textfield.layer.borderColor = UIColor.lightGray.cgColor
         textfield.layer.borderWidth = 1
     }
 }
