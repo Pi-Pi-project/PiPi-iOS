@@ -8,6 +8,8 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SocketIO
+import Kingfisher
 
 class ChatViewController: UIViewController {
 
@@ -16,16 +18,27 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var messageTextfield: UITextField!
     @IBOutlet weak var tableView: UITableView!
     
+    private let getEmail = BehaviorRelay<Void>(value: ())
+    private let viewModel = ChatViewModel()
+    private let loadChat = BehaviorRelay<Void>(value: ())
+    
     var keyboardShown:Bool = false // 키보드 상태 확인
     var originY:CGFloat? // 오브젝트의 기본 위치
+    var socket: SocketIOManager!
+    var socketClient: SocketIOClient!
+    var email = String()
+    var roomId = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.delegate = self
-        tableView.dataSource = self
         
+        self.socketClient = SocketIOManager.shared.socket
+        
+        SocketIOManager.shared.establishConnection()
+        SocketIOManager.shared.socket.emit("join", roomId)
+
         setupUI()
+        bindViewModel()
     }
     
     func setupUI() {
@@ -36,6 +49,57 @@ class ChatViewController: UIViewController {
         
         messageTextfield.rx.text.orEmpty.subscribe(onNext: { _ in
             self.addKeyboardNotification()
+        }).disposed(by: rx.disposeBag)
+    }
+    
+    func bindViewModel() {
+        let input = ChatViewModel.input(
+            showEmail: getEmail.asSignal(onErrorJustReturn: ()),
+            loadChat: loadChat.asSignal(onErrorJustReturn: ()),
+            roomId: roomId)
+        let output = viewModel.transform(input)
+        
+        output.loadChat.asObservable().bind(to: tableView.rx.items) { tableview, row, item -> UITableViewCell in
+            if item.mine {
+                let cell: MyChatCell = self.tableView.dequeueReusableCell(withIdentifier: "myCell") as! MyChatCell
+                
+                cell.myMessageLabel.text = item.message
+                
+                return cell
+            }else {
+                let cell: YourChatCell = self.tableView.dequeueReusableCell(withIdentifier: "youCell") as! YourChatCell
+                
+                cell.yourImageView.layer.cornerRadius = 28
+                cell.yourNameLabel.text = item.userNickname
+                cell.yourMessageLabel.text = item.message
+                cell.yourNameLabel.text = item.userNickname
+                cell.yourImageView.kf.setImage(with: URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(item.profileImg)"))
+                
+                return cell
+            }
+        }.disposed(by: rx.disposeBag)
+        
+        sendBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+            self.socketClient.emit("chat", ["roomId": roomId, "userEmail": email, "message": messageTextfield.text ?? ""])
+            
+            let new = getChat(userNickname: email, message: messageTextfield.text!, mine: true, profileImg: "")
+            
+            output.loadChat.add(element: new)
+            messageTextfield.text = ""
+        }).disposed(by: rx.disposeBag)
+        
+        socketClient.on("receive") { (data, ack) in
+            let name = data[2] as! String
+            let message = data[3] as! String
+            let profileImg = data[1] as! String
+    
+            let chat = getChat(userNickname: name, message: message, mine: false, profileImg: profileImg)
+            
+            output.loadChat.add(element: chat)
+        }
+        
+        output.result.emit(onNext: { email in
+            self.email = email
         }).disposed(by: rx.disposeBag)
     }
     
@@ -61,7 +125,7 @@ class ChatViewController: UIViewController {
             object: nil
         )
     }
-    
+
     @objc private func keyboardWillShow(_ notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if keyboardSize.height == 0.0 || keyboardShown == true {
@@ -99,7 +163,6 @@ class ChatViewController: UIViewController {
 
 class MyChatCell: UITableViewCell {
     @IBOutlet weak var myMessageLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
 }
 
 class YourChatCell: UITableViewCell {
@@ -108,39 +171,15 @@ class YourChatCell: UITableViewCell {
     @IBOutlet weak var yourImageView: UIImageView!
 }
 
-extension ChatViewController: UITableViewDelegate
-{
-    //Transparent Cell Background
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.clear
-    }
-}
- 
-extension ChatViewController: UITableViewDataSource
-{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let myCell = tableView.dequeueReusableCell(withIdentifier: "myCell") as! MyChatCell
-//
-//        myCell.myMessageLabel.text = "내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. "
-//        myCell.timeLabel.text = "오후 6:30"
-        
-        let youCell = tableView.dequeueReusableCell(withIdentifier: "youCell") as! YourChatCell
-        
-        youCell.yourImageView.image = UIImage(named: "")
-        youCell.yourMessageLabel.text = "내용입니다."
-        youCell.yourNameLabel.text = "ㅇㅅㅇ"
-        
-        circleOfImageView(youCell.yourImageView)
-        
-        return youCell
-    }
-}
-
 enum CellType {
     case YourMessages
     case MyMessages
+}
+
+extension BehaviorRelay where Element: RangeReplaceableCollection {
+    func add(element: Element.Element) {
+        var array = self.value
+        array.append(element)
+        self.accept(array)
+    }
 }
