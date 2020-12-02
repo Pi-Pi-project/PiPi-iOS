@@ -10,16 +10,18 @@ import RxSwift
 import RxCocoa
 import NSObject_Rx
 import Kingfisher
+import iOSDropDown
 
 class ApplyViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
     
     private let viewModel = ApplyViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
-
+    private let loadMoreData = PublishSubject<Int>()
     
+    var count: Int = 0
+
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -30,10 +32,10 @@ class ApplyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.isNavigationBarHidden = false
+
         bindViewModel()
         registerCell()
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,11 +62,22 @@ class ApplyViewController: UIViewController {
         let nib = UINib(nibName: "MainTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "joinCell")
         
+        tableView.rx.didScroll.asObservable().subscribe(onNext: { _ in
+            if self.tableView.contentOffset.y > self.tableView.contentSize.height - self.tableView.bounds.size.height {
+                self.loadMoreData.onNext(self.count)
+                self.count += 1
+                self.tableView.reloadData()
+            }
+        }).disposed(by: rx.disposeBag)
+        
         tableView.rowHeight = 200
     }
     
     func bindViewModel() {
-        let input = ApplyViewModel.input(loadData: loadData.asSignal(onErrorJustReturn: ()), selectApplyRow: tableView.rx.itemSelected.asSignal())
+        let input = ApplyViewModel.input(
+            loadData: loadData.asSignal(onErrorJustReturn: ()),
+            selectApplyRow: tableView.rx.itemSelected.asSignal(),
+            loadMoreData: loadMoreData.asSignal(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
         ApplyViewModel.loadApplyData
@@ -84,6 +97,12 @@ class ApplyViewController: UIViewController {
                 cell.userImgView.kf.setImage(with: userimg)
             }.disposed(by: rx.disposeBag)
         
+        output.loadMoreData.subscribe(onNext:{ data in
+            for i in 0..<data.count {
+                ApplyViewModel.loadApplyData.add(element: data[i])
+            }
+            self.tableView.reloadData()
+        }).disposed(by: rx.disposeBag)
         
         output.detailView.asObservable().subscribe(onNext: { id in
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
