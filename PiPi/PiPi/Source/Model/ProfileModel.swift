@@ -7,14 +7,16 @@
 
 import Foundation
 
+
 struct profileModel: Codable {
     let profileImg: String
     let nickname: String
     let skills: [skill]
     let giturl: String?
     let introduce: String?
-    let firstPortfolio: portfolio
-    let secondPortfolio: portfolio
+    let firstPortfolio: portfolio?
+    let secondPortfolio: portfolio?
+    let userEmail: String
 }
 
 struct skill: Codable {
