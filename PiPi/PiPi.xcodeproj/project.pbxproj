@@ -51,6 +51,9 @@
 		EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9C2540051800ACA865 /* AuthAPI.swift */; };
 		EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9F254009C200ACA865 /* SplashViewController.swift */; };
 		EB8C8BA32540140000ACA865 /* SendCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8BA22540140000ACA865 /* SendCodeViewController.swift */; };
+		EB918FA02570C2CA0083D870 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB918F9F2570C2CA0083D870 /* ChatViewController.swift */; };
+		EBA03BF1256FBFA400000810 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBA03BF0256FBFA300000810 /* Chat.storyboard */; };
+		EBA03BF4256FC00B00000810 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA03BF3256FC00B00000810 /* ChatListViewController.swift */; };
 		EBAC81042539690100DAD71B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC81032539690100DAD71B /* AppDelegate.swift */; };
 		EBAC81082539690100DAD71B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC81072539690100DAD71B /* ViewController.swift */; };
 		EBAC810B2539690100DAD71B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBAC81092539690100DAD71B /* Main.storyboard */; };
@@ -68,6 +71,8 @@
 		EBADE0FA2566DBE8006DCDA0 /* TodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE0F82566DBE8006DCDA0 /* TodoTableViewCell.swift */; };
 		EBADE0FB2566DBE8006DCDA0 /* TodoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBADE0F92566DBE8006DCDA0 /* TodoTableViewCell.xib */; };
 		EBADE10D2566F18D006DCDA0 /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE10C2566F18D006DCDA0 /* FinishViewController.swift */; };
+		EBADE11E256862AA006DCDA0 /* PwCheckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE11D256862A9006DCDA0 /* PwCheckViewModel.swift */; };
+		EBD6FACF2573E1F7002B1C9B /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD6FACE2573E1F7002B1C9B /* ChatListViewModel.swift */; };
 		EBEBE4EF253D64A500C7E100 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4EE253D64A500C7E100 /* Extension.swift */; };
 		EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */; };
 		EBEBE4F8253D64F300C7E100 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4F7253D64F300C7E100 /* Token.swift */; };
@@ -78,6 +83,8 @@
 		EBEBE50E253D709E00C7E100 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE50D253D709E00C7E100 /* ViewModelType.swift */; };
 		EBF85A9825494A53008F4302 /* SetProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF85A9725494A53008F4302 /* SetProfileViewController.swift */; };
 		EBF85A9B25494A60008F4302 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF85A9A25494A60008F4302 /* RegisterViewModel.swift */; };
+		EBFE09EF2574BC8C0069AFD0 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFE09EE2574BC8C0069AFD0 /* SocketIOManager.swift */; };
+		EBFE09F22574C9750069AFD0 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFE09F12574C9750069AFD0 /* ChatViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -127,6 +134,9 @@
 		EB8C8B9C2540051800ACA865 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		EB8C8B9F254009C200ACA865 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		EB8C8BA22540140000ACA865 /* SendCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCodeViewController.swift; sourceTree = "<group>"; };
+		EB918F9F2570C2CA0083D870 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		EBA03BF0256FBFA300000810 /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
+		EBA03BF3256FC00B00000810 /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		EBAC81002539690100DAD71B /* PiPi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiPi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBAC81032539690100DAD71B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBAC81072539690100DAD71B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +156,8 @@
 		EBADE0F82566DBE8006DCDA0 /* TodoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableViewCell.swift; sourceTree = "<group>"; };
 		EBADE0F92566DBE8006DCDA0 /* TodoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoTableViewCell.xib; sourceTree = "<group>"; };
 		EBADE10C2566F18D006DCDA0 /* FinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishViewController.swift; sourceTree = "<group>"; };
+		EBADE11D256862A9006DCDA0 /* PwCheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCheckViewModel.swift; sourceTree = "<group>"; };
+		EBD6FACE2573E1F7002B1C9B /* ChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
 		EBEBE4EE253D64A500C7E100 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		EBEBE4F7253D64F300C7E100 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -156,6 +168,8 @@
 		EBEBE50D253D709E00C7E100 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		EBF85A9725494A53008F4302 /* SetProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileViewController.swift; sourceTree = "<group>"; };
 		EBF85A9A25494A60008F4302 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		EBFE09EE2574BC8C0069AFD0 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		EBFE09F12574C9750069AFD0 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +230,7 @@
 				EBF85A9A25494A60008F4302 /* RegisterViewModel.swift */,
 				EB129FD1254EF823009D5151 /* SetProfileViewModel.swift */,
 				EB129FE0254EFFE0009D5151 /* ChangeViewModel.swift */,
+				EBADE11D256862A9006DCDA0 /* PwCheckViewModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -331,6 +346,7 @@
 				EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */,
 				EBEBE509253D706F00C7E100 /* PiPiAPI.swift */,
 				EB8C8B97254003A800ACA865 /* Provider.swift */,
+				EBFE09EE2574BC8C0069AFD0 /* SocketIOManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -338,14 +354,12 @@
 		EBEBE4E9253D642C00C7E100 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				EBFE0A0425771DA40069AFD0 /* Project */,
 				EBADE0E225660B94006DCDA0 /* Profile */,
 				EB0BF44E2553B6E300317097 /* Apply */,
 				EB129FD4254EFD57009D5151 /* Auth */,
 				EBAC81072539690100DAD71B /* ViewController.swift */,
 				EB0BF4502553BF5800317097 /* PostViewController.swift */,
-				EBADE0E425660BBD006DCDA0 /* CalendarViewController.swift */,
-				EBADE10C2566F18D006DCDA0 /* FinishViewController.swift */,
-				EBADE0EB256617D9006DCDA0 /* ProjectViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -353,13 +367,12 @@
 		EBEBE4EA253D643100C7E100 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				EBFE0A0525771DB50069AFD0 /* Project */,
 				EBADE0E325660BA3006DCDA0 /* Profile */,
 				EB6B6C29255E52FB00288DC6 /* Apply */,
 				EB129FD5254EFD61009D5151 /* Auth */,
 				EBEBE50D253D709E00C7E100 /* ViewModelType.swift */,
 				EB6AC6FD255400760010172E /* PostViewModel.swift */,
-				EBADE0E8256617CE006DCDA0 /* ProjectViewModel.swift */,
-				EBADE0F525664AEC006DCDA0 /* CalendarViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -387,6 +400,7 @@
 				EBEBE4FA253D650000C7E100 /* Auth.storyboard */,
 				EB25267B2560F1F100908A05 /* Profile.storyboard */,
 				EBADE0D52565F7CC006DCDA0 /* Project.storyboard */,
+				EBA03BF0256FBFA300000810 /* Chat.storyboard */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -400,6 +414,29 @@
 				EBADE0EF2566186D006DCDA0 /* ProjectModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		EBFE0A0425771DA40069AFD0 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				EBA03BF3256FC00B00000810 /* ChatListViewController.swift */,
+				EB918F9F2570C2CA0083D870 /* ChatViewController.swift */,
+				EBADE0E425660BBD006DCDA0 /* CalendarViewController.swift */,
+				EBADE10C2566F18D006DCDA0 /* FinishViewController.swift */,
+				EBADE0EB256617D9006DCDA0 /* ProjectViewController.swift */,
+			);
+			path = Project;
+			sourceTree = "<group>";
+		};
+		EBFE0A0525771DB50069AFD0 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				EBADE0E8256617CE006DCDA0 /* ProjectViewModel.swift */,
+				EBADE0F525664AEC006DCDA0 /* CalendarViewModel.swift */,
+				EBD6FACE2573E1F7002B1C9B /* ChatListViewModel.swift */,
+				EBFE09F12574C9750069AFD0 /* ChatViewModel.swift */,
+			);
+			path = Project;
 			sourceTree = "<group>";
 		};
 		FD71B49A50B8372295497683 /* Pods */ = {
@@ -471,6 +508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBADE0D62565F7CC006DCDA0 /* Project.storyboard in Resources */,
+				EBA03BF1256FBFA400000810 /* Chat.storyboard in Resources */,
 				EBEBE4FB253D650000C7E100 /* Auth.storyboard in Resources */,
 				EB0BF407254F117900317097 /* ListTableViewCell.xib in Resources */,
 				EBADE0FB2566DBE8006DCDA0 /* TodoTableViewCell.xib in Resources */,
@@ -558,6 +596,7 @@
 				EB6B6C24255E516C00288DC6 /* ProfileModel.swift in Sources */,
 				EB6B6C31255E533A00288DC6 /* ProfileAPI.swift in Sources */,
 				EBF85A9825494A53008F4302 /* SetProfileViewController.swift in Sources */,
+				EBD6FACF2573E1F7002B1C9B /* ChatListViewModel.swift in Sources */,
 				EBADE0F325661961006DCDA0 /* ProjectAPI.swift in Sources */,
 				EB0BF401254F0EA700317097 /* MainTableViewCell.swift in Sources */,
 				EBF85A9B25494A60008F4302 /* RegisterViewModel.swift in Sources */,
@@ -566,6 +605,7 @@
 				EB0BF42025518E5000317097 /* ApplyViewController.swift in Sources */,
 				EB0BF42A25519ADB00317097 /* MyPostViewController.swift in Sources */,
 				EB0BF406254F117900317097 /* ListTableViewCell.swift in Sources */,
+				EBADE11E256862AA006DCDA0 /* PwCheckViewModel.swift in Sources */,
 				EB0BF41A2550E99B00317097 /* DetailViewModel.swift in Sources */,
 				EB0BF42325518F6000317097 /* ApplyViewModel.swift in Sources */,
 				EBAC81082539690100DAD71B /* ViewController.swift in Sources */,
@@ -583,14 +623,18 @@
 				EB129FDB254EFE7A009D5151 /* PwCheckViewController.swift in Sources */,
 				EBADE0EC256617D9006DCDA0 /* ProjectViewController.swift in Sources */,
 				EB129FDE254EFE8A009D5151 /* ChangePwViewController.swift in Sources */,
+				EB918FA02570C2CA0083D870 /* ChatViewController.swift in Sources */,
 				EBADE0E9256617CE006DCDA0 /* ProjectViewModel.swift in Sources */,
 				EB6B6C27255E525100288DC6 /* SeeProfileViewController.swift in Sources */,
 				EB0BF40A254F12AC00317097 /* PostAPI.swift in Sources */,
 				EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */,
+				EBA03BF4256FC00B00000810 /* ChatListViewController.swift in Sources */,
 				EB8C8B98254003A800ACA865 /* Provider.swift in Sources */,
 				EBEBE50E253D709E00C7E100 /* ViewModelType.swift in Sources */,
+				EBFE09EF2574BC8C0069AFD0 /* SocketIOManager.swift in Sources */,
 				EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */,
 				EBADE0F625664AEC006DCDA0 /* CalendarViewModel.swift in Sources */,
+				EBFE09F22574C9750069AFD0 /* ChatViewModel.swift in Sources */,
 				EB8C8BA32540140000ACA865 /* SendCodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
