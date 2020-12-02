@@ -20,6 +20,7 @@ class ApplyListViewController: UIViewController {
     private var selectApply = BehaviorRelay<Int>(value: 0)
     private let access = BehaviorRelay<Void>(value: ())
     private let reject = BehaviorRelay<Void>(value: ())
+    private let goToChat = BehaviorRelay<Int>(value: 0)
     private var index = Int()
     var selectIndexPath = String()
     
@@ -37,7 +38,8 @@ class ApplyListViewController: UIViewController {
             selectIndexPath: selectApply.asSignal(onErrorJustReturn: 0),
             selectAccept: access.asSignal(onErrorJustReturn: ()),
             selectReject: reject.asSignal(onErrorJustReturn: ()),
-            createProject: createProjectBtn.rx.tap.asDriver())
+            createProject: createProjectBtn.rx.tap.asDriver(),
+            goToChat: goToChat.asSignal(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
         ApplyListViewModel.loadApplyList
@@ -56,6 +58,10 @@ class ApplyListViewController: UIViewController {
                     self.selectApply.accept(row)
                 }).disposed(by: self.rx.disposeBag)
                 
+                cell.chatBtn.rx.tap.subscribe(onNext: { _ in
+                    self.goToChat.accept(row)
+                }).disposed(by: self.rx.disposeBag)
+                
                 self.setButton(cell.chatBtn, false)
             }.disposed(by: rx.disposeBag)
         
@@ -63,14 +69,23 @@ class ApplyListViewController: UIViewController {
                 self.loadData.accept(())
                 self.tableView.reloadData()
             }).disposed(by: rx.disposeBag)
+        
         output.reject.emit(onNext: { _ in
                 self.loadData.accept(())
                 self.tableView.reloadData()
             }).disposed(by: rx.disposeBag)
+        
         output.create.emit(onNext: { message in
             self.showAlert(title: "실패", message: message)
         },onCompleted: {
             self.navigationController?.popViewController(animated: true)
+        }).disposed(by: rx.disposeBag)
+        
+        output.goChat.emit(onNext: { id in
+            let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "chatVC") as! ChatViewController
+            vc.roomId = id
+            self.navigationController!.pushViewController(vc, animated: true)
         }).disposed(by: rx.disposeBag)
     }
     

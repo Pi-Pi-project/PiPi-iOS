@@ -59,3 +59,7 @@ struct ApplyList: Codable{
 struct Applies: Codable {
     let applies: [ApplyList]
 }
+
+struct roomId: Codable {
+    let roomId: Int
+}

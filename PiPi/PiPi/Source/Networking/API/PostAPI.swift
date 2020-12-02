@@ -32,7 +32,6 @@ class PostAPI{
             if img != nil {
                 multipartFormData.append(img!, withName: "img", fileName: "image.jpg", mimeType: "image/jpg")
             }
-            
             for (key, value) in param {
                 if key == "skills" {
                     let arrayObj = value as! Array<Any>
@@ -48,8 +47,8 @@ class PostAPI{
         }, to: baseURL + api.path(), method: .post, headers: api.header())
     }
     
-    func getPosts() -> Observable<([postModel]?, networkingResult)> {
-        httpClient.get(.getPost(1), param: nil).map { response, data -> ([postModel]?, networkingResult) in
+    func getPosts(_ page: Int) -> Observable<([postModel]?, networkingResult)> {
+        httpClient.get(.getPost(page), param: nil).map { response, data -> ([postModel]?, networkingResult) in
             print("get post \(response.statusCode)")
             switch response.statusCode {
             case 200:
@@ -235,5 +234,17 @@ class PostAPI{
         }
     }
 
+    func getIndividualChat(_ email: String) -> Observable<(roomId?, networkingResult)> {
+        httpClient.get(.getIndividualCaht(email), param: nil).map{ (response, data) -> (roomId?, networkingResult) in
+            switch response.statusCode {
+            case 200:
+                guard let data = try? JSONDecoder().decode(roomId.self, from: data) else { return (nil, .fault)}
+                
+                return (data, .ok)
+            default:
+                return (nil, .fault)
+            }
+        }
+    }
     
 }

@@ -20,19 +20,25 @@ class ApplyListViewModel: ViewModelType {
         let selectIndexPath: Signal<Int>
         let selectAccept: Signal<Void>
         let selectReject: Signal<Void>
+        let createProject: Driver<Void>
+        let goToChat: Signal<Int>
     }
     
     struct output {
         let result: Signal<String>
         let accept: Signal<Bool>
         let reject: Signal<Bool>
+        let create: Signal<String>
+        let goChat: Signal<Int>
     }
     
     func transform(_ input: input) -> output {
         let api = PostAPI()
         let result = PublishSubject<String>()
+        let create = PublishSubject<String>()
         let isAccept = PublishSubject<Bool>()
         let isReject = PublishSubject<Bool>()
+        let goChat = PublishSubject<Int>()
         let info = Signal.combineLatest(input.selectIndexPath, ApplyListViewModel.loadApplyList.asSignal())
         
         input.loadApplyData.asObservable().subscribe(onNext: { _ in
@@ -53,35 +59,47 @@ class ApplyListViewModel: ViewModelType {
                 api.postAcceptApply(data[row].userEmail, input.selectApplyList).subscribe(onNext: { statusCode in
                     switch statusCode {
                     case .ok:
-                        return isAccept.onCompleted()
+                        return isAccept.onNext(true)
                     default:
-                        return isAccept.onNext(false)
+                        return isAccept.onCompleted()
                     }
                 }).disposed(by: self.disposeBag)
             }else {
                 api.deleteRejectApply(data[row].userEmail, input.selectApplyList).subscribe(onNext: { statusCode in
                     switch statusCode {
                     case .ok:
-                        return isReject.onCompleted()
+                        return isReject.onNext(true)
                     default:
-                        return isReject.onNext(false)
+                        return isReject.onCompleted()
                     }
                 }).disposed(by: self.disposeBag)
             }
         }).disposed(by: disposeBag)
         
-        input.selectReject.asObservable().withLatestFrom(info).subscribe(onNext: { row, data in
-            api.deleteRejectApply(data[row].userEmail, input.selectApplyList).subscribe(onNext: { statusCode in
-                switch statusCode {
+        input.createProject.asObservable().withLatestFrom(info).subscribe(onNext: { row, data in
+            api.createProject(input.selectApplyList).subscribe(onNext: { response in
+                switch response {
                 case .ok:
-                    return isReject.onCompleted()
+                    create.onCompleted()
+                case .conflict:
+                    create.onNext("인원을 초과하였습니다.")
                 default:
-                    return isReject.onNext(false)
+                    create.onNext("프로젝트 만들기 실패")
                 }
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        return output(result: result.asSignal(onErrorJustReturn: "get apply list 실패"), accept: isAccept.asSignal(onErrorJustReturn: false), reject: isReject.asSignal(onErrorJustReturn: false))
+        input.goToChat.asObservable().withLatestFrom(info).subscribe(onNext:{ row, data in
+            api.getIndividualChat(data[row].userEmail).subscribe(onNext: { data, response in
+                switch response {
+                case .ok:
+                    goChat.onNext(data!.roomId)
+                default:
+                    goChat.onCompleted()
+                }
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
         
+        return output(result: result.asSignal(onErrorJustReturn: "get apply list 실패"), accept: isAccept.asSignal(onErrorJustReturn: false), reject: isReject.asSignal(onErrorJustReturn: false), create: create.asSignal(onErrorJustReturn: "create project 실패"), goChat: goChat.asSignal(onErrorJustReturn: 0))
     }
 }
