@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aaJ-Q7-Tu3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
@@ -17,10 +17,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NmA-5H-7Z6">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="nD4-1u-mdv">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="listCell" id="nD4-1u-mdv">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nD4-1u-mdv" id="jjp-zH-e61">
@@ -40,18 +40,19 @@
                             <constraint firstItem="NmA-5H-7Z6" firstAttribute="top" secondItem="K4A-Ak-EbA" secondAttribute="top" id="plD-aW-qDT"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="oUe-iZ-Qua"/>
                     <connections>
                         <outlet property="chatListTableView" destination="NmA-5H-7Z6" id="Mgj-ib-bLC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrT-Wl-vX2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-80" y="-48"/>
+            <point key="canvasLocation" x="828.98550724637687" y="-48.214285714285715"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="5n6-CT-9HB">
             <objects>
-                <viewController id="aaJ-Q7-Tu3" customClass="ChatViewController" customModule="PiPi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="chatVC" id="aaJ-Q7-Tu3" customClass="ChatViewController" customModule="PiPi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M6l-Qr-EQz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,7 +61,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="768"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="131" id="KCX-A6-etr" customClass="MyChatCell" customModule="PiPi" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="myCell" rowHeight="131" id="KCX-A6-etr" customClass="MyChatCell" customModule="PiPi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="131"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KCX-A6-etr" id="idd-8Y-ps6">
@@ -72,12 +73,6 @@
                                                     <color key="backgroundColor" red="0.81960784310000001" green="0.81960784310000001" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <rect key="contentStretch" x="0.5" y="0.5" width="0.0" height="0.0"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오후 몇시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qc7-0U-3hA">
-                                                    <rect key="frame" x="71" y="109" width="49" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. 내용입니다. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Lh-cm-dNo">
                                                     <rect key="frame" x="135" y="21" width="254" height="99"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -92,20 +87,15 @@
                                                 <constraint firstItem="2Y3-Z7-6iH" firstAttribute="bottom" secondItem="idd-8Y-ps6" secondAttribute="bottomMargin" constant="5" id="CP9-zt-dxe"/>
                                                 <constraint firstItem="2Y3-Z7-6iH" firstAttribute="leading" secondItem="idd-8Y-ps6" secondAttribute="leadingMargin" constant="105" id="R5h-yM-RhJ"/>
                                                 <constraint firstItem="8Lh-cm-dNo" firstAttribute="trailing" secondItem="2Y3-Z7-6iH" secondAttribute="trailing" constant="-10" id="TEj-cr-0yG"/>
-                                                <constraint firstItem="qc7-0U-3hA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="idd-8Y-ps6" secondAttribute="leading" constant="30" id="Wdx-vp-53h"/>
-                                                <constraint firstItem="qc7-0U-3hA" firstAttribute="bottom" secondItem="2Y3-Z7-6iH" secondAttribute="bottom" id="Yml-j7-kjM"/>
                                                 <constraint firstItem="2Y3-Z7-6iH" firstAttribute="top" secondItem="idd-8Y-ps6" secondAttribute="topMargin" constant="5" id="gQT-2B-cwr"/>
                                                 <constraint firstItem="8Lh-cm-dNo" firstAttribute="top" secondItem="2Y3-Z7-6iH" secondAttribute="top" constant="5" id="hNz-hT-Vtq"/>
-                                                <constraint firstItem="2Y3-Z7-6iH" firstAttribute="leading" secondItem="qc7-0U-3hA" secondAttribute="trailing" constant="5" id="uWu-lb-Nf3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="bubbleImageView" destination="2Y3-Z7-6iH" id="p5v-ES-fuV"/>
                                             <outlet property="myMessageLabel" destination="8Lh-cm-dNo" id="KRm-7n-Tds"/>
-                                            <outlet property="timeLabel" destination="qc7-0U-3hA" id="dsm-pH-9xv"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="youCell" rowHeight="131" id="2lS-DR-ej8" customClass="YourChatCell" customModule="PiPi" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="youCell" rowHeight="131" id="2lS-DR-ej8" customClass="YourChatCell" customModule="PiPi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="159" width="414" height="131"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2lS-DR-ej8" id="ZnL-zd-HM4">
@@ -123,12 +113,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rWb-y3-zxU">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rWb-y3-zxU">
                                                     <rect key="frame" x="5" y="38.5" width="54" height="54"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="54" id="k2c-cl-Gwl"/>
                                                         <constraint firstAttribute="height" constant="54" id="yJ6-CF-gIg"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="rect" keyPath="keyPath">
+                                                            <rect key="value" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hX-KL-qKN">
                                                     <rect key="frame" x="69" y="13" width="42" height="21"/>
@@ -136,27 +131,18 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오후 몇시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhy-oq-hq6">
-                                                    <rect key="frame" x="342" y="109" width="49" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="rWb-y3-zxU" firstAttribute="centerY" secondItem="ZnL-zd-HM4" secondAttribute="centerY" id="0C1-IZ-WtR"/>
                                                 <constraint firstItem="xkO-7f-Vi1" firstAttribute="bottom" secondItem="QNR-nU-zqD" secondAttribute="bottom" constant="-5" id="1ra-Dx-iCk"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rhy-oq-hq6" secondAttribute="trailing" constant="23" id="6TH-JU-0Za"/>
                                                 <constraint firstItem="QNR-nU-zqD" firstAttribute="top" secondItem="4hX-KL-qKN" secondAttribute="bottom" constant="6" id="AW3-Fx-KwV"/>
                                                 <constraint firstItem="QNR-nU-zqD" firstAttribute="bottom" secondItem="ZnL-zd-HM4" secondAttribute="bottomMargin" constant="5" id="BAk-zV-tpD"/>
                                                 <constraint firstItem="xkO-7f-Vi1" firstAttribute="leading" secondItem="QNR-nU-zqD" secondAttribute="leading" constant="10" id="L2M-y2-jmO"/>
                                                 <constraint firstItem="xkO-7f-Vi1" firstAttribute="top" secondItem="QNR-nU-zqD" secondAttribute="top" constant="5" id="N24-JP-g9K"/>
                                                 <constraint firstItem="xkO-7f-Vi1" firstAttribute="trailing" secondItem="QNR-nU-zqD" secondAttribute="trailing" constant="-10" id="ObC-9s-Tli"/>
-                                                <constraint firstItem="rhy-oq-hq6" firstAttribute="leading" secondItem="QNR-nU-zqD" secondAttribute="trailing" constant="8" symbolic="YES" id="VJg-ep-rtR"/>
                                                 <constraint firstItem="rWb-y3-zxU" firstAttribute="leading" secondItem="ZnL-zd-HM4" secondAttribute="leading" constant="5" id="VeD-B7-cpS"/>
                                                 <constraint firstItem="QNR-nU-zqD" firstAttribute="top" secondItem="ZnL-zd-HM4" secondAttribute="top" constant="40" id="ZNw-rw-k2m"/>
                                                 <constraint firstAttribute="trailing" secondItem="QNR-nU-zqD" secondAttribute="trailing" constant="80" id="dPn-Tw-58n"/>
-                                                <constraint firstItem="rhy-oq-hq6" firstAttribute="bottom" secondItem="QNR-nU-zqD" secondAttribute="bottom" id="jQs-Ty-iJc"/>
                                                 <constraint firstItem="4hX-KL-qKN" firstAttribute="leading" secondItem="QNR-nU-zqD" secondAttribute="leading" id="tkp-AP-zlD"/>
                                                 <constraint firstItem="QNR-nU-zqD" firstAttribute="leading" secondItem="rWb-y3-zxU" secondAttribute="trailing" constant="10" id="ysx-uK-hRf"/>
                                             </constraints>
@@ -210,6 +196,7 @@
                             <constraint firstItem="FBj-mR-K4Z" firstAttribute="trailing" secondItem="DVs-kk-rfv" secondAttribute="trailing" id="xkC-Th-zCQ"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="DpL-g4-UvC"/>
                     <connections>
                         <outlet property="messageTextfield" destination="3ut-wy-Oha" id="Wc2-vQ-f6a"/>
                         <outlet property="sendBtn" destination="gg2-oZ-xRI" id="5Ya-qO-hHf"/>
@@ -219,10 +206,31 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XLC-ct-e8G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="785.50724637681162" y="-48.214285714285715"/>
+            <point key="canvasLocation" x="1695.6521739130435" y="-48.214285714285715"/>
+        </scene>
+        <!--채팅-->
+        <scene sceneID="h0n-Xu-OEO">
+            <objects>
+                <navigationController storyboardIdentifier="chat" automaticallyAdjustsScrollViewInsets="NO" id="jTi-Mu-Ee3" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="채팅" image="quote.bubble.fill" catalog="system" id="Iox-QW-1MG"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TfW-FW-ZIu">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bPp-SP-l9r" kind="relationship" relationship="rootViewController" id="gov-Sh-4rF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="N3F-3Q-nLw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-81.159420289855078" y="-48.214285714285715"/>
         </scene>
     </scenes>
     <resources>
+        <image name="quote.bubble.fill" catalog="system" width="128" height="110"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

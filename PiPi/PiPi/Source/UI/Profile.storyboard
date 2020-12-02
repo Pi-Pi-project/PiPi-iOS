@@ -164,6 +164,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9v-P7-jLG" customClass="UITextView">
                                 <rect key="frame" x="30" y="347" width="354" height="108"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="108" id="qka-NK-Gub"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Asw-zS-iiO">
                                 <rect key="frame" x="47" y="703" width="320" height="52"/>
@@ -188,7 +191,6 @@
                             <constraint firstItem="Asw-zS-iiO" firstAttribute="leading" secondItem="Hf1-gB-k8z" secondAttribute="leading" constant="47" id="eK7-hZ-zx9"/>
                             <constraint firstItem="Asw-zS-iiO" firstAttribute="centerX" secondItem="Gqd-pr-7Da" secondAttribute="centerX" id="gXR-z7-2R2"/>
                             <constraint firstItem="zzO-mg-Csu" firstAttribute="leading" secondItem="Z2P-qp-KBT" secondAttribute="trailing" constant="8" symbolic="YES" id="hOy-uG-4Ws"/>
-                            <constraint firstItem="Hf1-gB-k8z" firstAttribute="bottom" secondItem="Asw-zS-iiO" secondAttribute="bottom" constant="107" id="hYW-Cz-UtZ"/>
                             <constraint firstItem="E9v-P7-jLG" firstAttribute="leading" secondItem="Hf1-gB-k8z" secondAttribute="leading" constant="30" id="lmw-7m-Yo9"/>
                             <constraint firstItem="Z2P-qp-KBT" firstAttribute="top" secondItem="Hf1-gB-k8z" secondAttribute="top" constant="147" id="qAh-ez-Tvl"/>
                             <constraint firstItem="X74-bc-rgM" firstAttribute="top" secondItem="lrJ-Om-hyo" secondAttribute="bottom" constant="91" id="wZG-z5-Ztc"/>
