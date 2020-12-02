@@ -12,7 +12,7 @@ import Alamofire
 
 class HTTPClient {
     
-    let baseURL = "http://15.164.245.146"
+    let baseURL = "http://3.35.216.218"
     
     typealias httpResult = Observable<(HTTPURLResponse, Data)>
     
