@@ -1,13 +1,10 @@
 PODS:
   - Alamofire (5.2.1)
   - FSCalendar (2.8.1)
+  - iOSDropDown (0.3.4)
   - Kingfisher (5.15.6):
     - Kingfisher/Core (= 5.15.6)
   - Kingfisher/Core (5.15.6)
-  - Moya (14.0.0):
-    - Moya/Core (= 14.0.0)
-  - Moya/Core (14.0.0):
-    - Alamofire (~> 5.0)
   - "NSObject+Rx (5.1.0)":
     - RxSwift (~> 5.1)
   - ResizingTokenField (0.1.1)
@@ -22,19 +19,23 @@ PODS:
   - RxRelay (5.1.1):
     - RxSwift (~> 5)
   - RxSwift (5.1.1)
+  - Socket.IO-Client-Swift (15.2.0):
+    - Starscream (~> 3.1)
+  - Starscream (3.1.1)
   - SwiftLint (0.39.1)
   - TKFormTextField (0.3.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
   - FSCalendar
+  - iOSDropDown
   - Kingfisher (~> 5.0)
-  - Moya (~> 14.0)
   - "NSObject+Rx"
   - ResizingTokenField
   - RxAlamofire
   - RxCocoa (~> 5)
   - RxSwift (~> 5)
+  - Socket.IO-Client-Swift (~> 15.2.0)
   - SwiftLint
   - TKFormTextField
 
@@ -42,31 +43,35 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - FSCalendar
+    - iOSDropDown
     - Kingfisher
-    - Moya
     - "NSObject+Rx"
     - ResizingTokenField
     - RxAlamofire
     - RxCocoa
     - RxRelay
     - RxSwift
+    - Socket.IO-Client-Swift
+    - Starscream
     - SwiftLint
     - TKFormTextField
 
 SPEC CHECKSUMS:
   Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
   FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
+  iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
   Kingfisher: b3554e7bf6106115b44e8795300bad580ef2fdc7
-  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   "NSObject+Rx": fa6bbcc1ab1faa06b01466bc09b1e0692bbc5946
   ResizingTokenField: 961ea54ab84b755998b5713cf5a87d4bf7a92ff9
   RxAlamofire: aa949d345b1689eae02b7c7a217518878144f6df
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  Socket.IO-Client-Swift: 1e3e3a1f09f3312a167f0d781eb2f383d477357c
+  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
   TKFormTextField: def6294d3d3bd944d864ee48d5cc6e36863d6ade
 
-PODFILE CHECKSUM: 3eee14462dc878eedaf1cb4ccedcc7bb72f65fc8
+PODFILE CHECKSUM: adf2b85980b948da127f57e28801a5b411854f01
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0
