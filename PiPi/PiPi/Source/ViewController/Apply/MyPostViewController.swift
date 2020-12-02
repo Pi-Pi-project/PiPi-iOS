@@ -19,7 +19,10 @@ class MyPostViewController: UIViewController {
     private let viewModel = MyPostViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
     private var selectIndexPath = BehaviorRelay<Int>(value: 0)
+    private let loadMoreData = PublishSubject<Int>()
     
+    var count: Int = 0
+
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +37,6 @@ class MyPostViewController: UIViewController {
 
         bindViewModel()
         registerCell()
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,13 +57,22 @@ class MyPostViewController: UIViewController {
     func registerCell() {
         let nib = UINib(nibName: "MainTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "joinCell")
+        
+        tableView.rx.didScroll.asObservable().subscribe(onNext: { _ in
+            if self.tableView.contentOffset.y > self.tableView.contentSize.height - self.tableView.bounds.size.height {
+                self.loadMoreData.onNext(self.count)
+                self.count += 1
+                self.tableView.reloadData()
+            }
+        }).disposed(by: rx.disposeBag)
+        
         tableView.rowHeight = 200
     }
     
     func bindViewModel() {
         let input = MyPostViewModel.input(
             loadMyPost: loadData.asSignal(onErrorJustReturn: ()),
-            selectMyPostRow: selectIndexPath.asSignal(onErrorJustReturn: 0))
+            selectMyPostRow: selectIndexPath.asSignal(onErrorJustReturn: 0), loadMoreData: loadMoreData.asSignal(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
         MyPostViewModel.loadMyPost
@@ -83,7 +94,15 @@ class MyPostViewController: UIViewController {
                 }).disposed(by: self.rx.disposeBag)
             }.disposed(by: rx.disposeBag)
 
+        output.loadMoreData.subscribe(onNext:{ data in
+            for i in 0..<data.count {
+                MyPostViewModel.loadMyPost.add(element: data[i])
+            }
+            self.tableView.reloadData()
+        }).disposed(by: rx.disposeBag)
+        
         output.detailView.asObservable().subscribe(onNext: { id in
+            print("Asf")
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "applylistVC") as? ApplyListViewController else { return }
             vc.selectIndexPath = id
             self.navigationController?.pushViewController(vc, animated: true)
