@@ -20,13 +20,17 @@ class JoinViewController: UIViewController {
     private let viewModel = MainViewModel()
     private let loadData = BehaviorRelay<Void>(value: ())
     private let selectSearch = PublishRelay<String>()
-    let startingPoint = Date()
+    private let loadMoreData = PublishSubject<Int>()
+    
+    var check = Bool()
+    var count: Int = 0
     
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
         button.addTarget(self, action: #selector(floatingBtn), for: .touchUpInside)
+        button.setImage(UIImage(named: "post.png"), for: .normal)
         return button
     }()
     
@@ -36,7 +40,7 @@ class JoinViewController: UIViewController {
         super.viewDidLoad()
 
         self.navigationController?.isNavigationBarHidden = false
-        print(startingPoint)
+ 
         searchBar.placeholder = "카테고리로 검색하기"
         searchBar.optionArray = category
         searchBar.selectedRowColor = UIColor().hexUIColor(hex: "61BFAD")
@@ -47,7 +51,6 @@ class JoinViewController: UIViewController {
         
         bindViewModel()
         registerCell()
-        // Do any additional setup after loading the view.
     }
 
     
@@ -77,12 +80,21 @@ class JoinViewController: UIViewController {
         let nib = UINib(nibName: "MainTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "joinCell")
         
+        tableView.rx.didScroll.asObservable().subscribe(onNext: { _ in
+            if self.tableView.contentOffset.y > self.tableView.contentSize.height - self.tableView.bounds.size.height {
+                self.loadMoreData.onNext(self.count)
+                self.count += 1
+                self.tableView.reloadData()
+            }
+        }).disposed(by: rx.disposeBag)
+        
         tableView.rowHeight = 200
     }
     
     func bindViewModel() {
         let input = MainViewModel.input(
             loadData: loadData.asSignal(onErrorJustReturn: ()),
+            loadMoreData: loadMoreData.asSignal(onErrorJustReturn: 0),
             selectPostRow: tableView.rx.itemSelected.asSignal(),
             searchText: selectSearch.asDriver(onErrorJustReturn: ""))
         let output = viewModel.transform(input)
@@ -100,12 +112,15 @@ class JoinViewController: UIViewController {
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet
                 cell.userImgView.kf.setImage(with: userimg)
-                
-                if row == 9 {
-                    print("수행 시간 =  \(self.startingPoint.timeIntervalSinceNow * -1) seconds elapsed")
-                }
             }.disposed(by: rx.disposeBag)
 
+        output.loadMoreData.subscribe(onNext:{ data in
+            for i in 0..<data.count {
+                output.loadData.add(element: data[i])
+            }
+            self.tableView.reloadData()
+        }).disposed(by: rx.disposeBag)
+        
         output.data.drive().disposed(by: rx.disposeBag)
         output.data.drive(onNext: { _ in self.tableView.reloadData()}).disposed(by: rx.disposeBag)
         output.searchResult.emit(onCompleted : {
