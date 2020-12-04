@@ -14,7 +14,7 @@ import Alamofire
 
 class AuthAPI {
     
-    let baseURL = "http://15.164.245.146"
+    let baseURL = "http://3.35.216.218"
     let httpClient = HTTPClient()
     
     func sendAuthCode(_ email: String) -> Observable<networkingResult> {

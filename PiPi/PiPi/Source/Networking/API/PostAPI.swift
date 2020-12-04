@@ -12,7 +12,7 @@ import Alamofire
 class PostAPI{
     
     let httpClient = HTTPClient()
-    let baseURL = "http://15.164.245.146"
+    let baseURL = "http://3.35.216.218"
     
     func createProject(_ id: String) -> Observable<networkingResult> {
         httpClient.post(.createProject, param: ["postId": id]).map { response, data -> networkingResult in
