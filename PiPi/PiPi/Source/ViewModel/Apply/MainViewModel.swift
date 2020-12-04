@@ -18,6 +18,7 @@ class MainViewModel: ViewModelType {
         let loadMoreData: Signal<Int>
         let selectPostRow: Signal<IndexPath>
         let searchText: Driver<String>
+        let loadMoreSearch: Driver<Int>
     }
     
     struct output {
@@ -28,6 +29,7 @@ class MainViewModel: ViewModelType {
         let searchResult: Signal<String>
         let loadData: BehaviorRelay<[postModel]>
         let loadMoreData: BehaviorRelay<[postModel]>
+        let loadMoreSearch: BehaviorRelay<[postModel]>
     }
     
     func transform(_ input: input) -> output {
@@ -37,8 +39,10 @@ class MainViewModel: ViewModelType {
         let nextView = PublishSubject<String>()
         let loadData = BehaviorRelay<[postModel]>(value: [])
         let loadMoreData = BehaviorRelay<[postModel]>(value: [])
+        let loadMoreSearch = BehaviorRelay<[postModel]>(value: [])
         let info = Signal.combineLatest(input.selectPostRow, loadData.asSignal(onErrorJustReturn: [])).asObservable()
         var select = String()
+        let categoty = Driver.combineLatest(input.searchText, input.loadMoreSearch)
         
         input.loadData.asObservable().subscribe(onNext: { _ in
             api.getPosts(0).subscribe(onNext: { response, statusCode in
@@ -80,11 +84,23 @@ class MainViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
+        input.loadMoreSearch.withLatestFrom(categoty).asObservable().subscribe(onNext: { cate, page in
+            api.searchPost(cate, page).subscribe(onNext: { response, statusCode in
+                switch statusCode {
+                case .ok:
+                    loadMoreSearch.accept(response!)
+                default:
+                    print(statusCode)
+                }
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+        
         return output(result: result.asSignal(onErrorJustReturn: "get post 실패"),
                       nextView: nextView.asSignal(onErrorJustReturn: "get detail post 실패"),
                       data: loadData.asDriver(onErrorJustReturn: []),
                       indexPath: Signal.just(select),
                       searchResult: searchResult.asSignal(onErrorJustReturn: "search 실패"), loadData: loadData,
-                      loadMoreData: loadMoreData)
+                      loadMoreData: loadMoreData,
+                      loadMoreSearch: loadMoreSearch)
     }
 }

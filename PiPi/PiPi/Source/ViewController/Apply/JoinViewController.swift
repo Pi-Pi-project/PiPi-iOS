@@ -21,6 +21,7 @@ class JoinViewController: UIViewController {
     private let loadData = BehaviorRelay<Void>(value: ())
     private let selectSearch = PublishRelay<String>()
     private let loadMoreData = PublishSubject<Int>()
+    private let loadMoreSearch = PublishSubject<Int>()
     
     var check = Bool()
     var count: Int = 0
@@ -38,7 +39,6 @@ class JoinViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.navigationController?.isNavigationBarHidden = false
  
         searchBar.placeholder = "카테고리로 검색하기"
@@ -47,12 +47,15 @@ class JoinViewController: UIViewController {
     
         searchBtn.rx.tap.subscribe(onNext: { _ in
             self.selectSearch.accept(self.category[self.searchBar.selectedIndex ?? 0])
+            self.check = true
+            self.count = 0
         }).disposed(by: rx.disposeBag)
         
         bindViewModel()
         registerCell()
     }
 
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -82,9 +85,14 @@ class JoinViewController: UIViewController {
         
         tableView.rx.didScroll.asObservable().subscribe(onNext: { _ in
             if self.tableView.contentOffset.y > self.tableView.contentSize.height - self.tableView.bounds.size.height {
-                self.loadMoreData.onNext(self.count)
-                self.count += 1
-                self.tableView.reloadData()
+                if self.check {
+                    self.loadMoreSearch.onNext(self.count)
+                    self.count += 1
+                }else {
+                    self.loadMoreData.onNext(self.count)
+                    self.count += 1
+                    self.tableView.reloadData()
+                }
             }
         }).disposed(by: rx.disposeBag)
         
@@ -96,14 +104,15 @@ class JoinViewController: UIViewController {
             loadData: loadData.asSignal(onErrorJustReturn: ()),
             loadMoreData: loadMoreData.asSignal(onErrorJustReturn: 0),
             selectPostRow: tableView.rx.itemSelected.asSignal(),
-            searchText: selectSearch.asDriver(onErrorJustReturn: ""))
+            searchText: selectSearch.asDriver(onErrorJustReturn: ""),
+            loadMoreSearch: loadMoreSearch.asDriver(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
         output.loadData
             .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
                 var skillSet = String()
                 for i in 0..<repository.postSkillsets.count {
-                    skillSet.append(" " + repository.postSkillsets[i].skill)
+                    skillSet.append(" " + repository.postSkillsets[i].skill + " ")
                 }
                 
                 let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
@@ -115,6 +124,13 @@ class JoinViewController: UIViewController {
             }.disposed(by: rx.disposeBag)
 
         output.loadMoreData.subscribe(onNext:{ data in
+            for i in 0..<data.count {
+                output.loadData.add(element: data[i])
+            }
+            self.tableView.reloadData()
+        }).disposed(by: rx.disposeBag)
+        
+        output.loadMoreSearch.subscribe(onNext:{ data in
             for i in 0..<data.count {
                 output.loadData.add(element: data[i])
             }
