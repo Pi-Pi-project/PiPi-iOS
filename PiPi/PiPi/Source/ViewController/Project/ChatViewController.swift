@@ -43,6 +43,8 @@ class ChatViewController: UIViewController {
         SocketIOManager.shared.socket.emit("join", roomId)
         
         tableView.refreshControl = refreshControl
+        tableView.allowsSelection = false
+        
         refreshControl.attributedTitle = NSAttributedString(string: "더 읽어오기")
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
