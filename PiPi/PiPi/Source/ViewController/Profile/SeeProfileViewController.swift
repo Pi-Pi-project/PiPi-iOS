@@ -55,8 +55,8 @@ class SeeProfileViewController: UIViewController {
             self.userIntroLabel.text = result.introduce
             
             var portfolioView = [portfolio]()
-            portfolioView.append(result.firstPortfolio!)
-            portfolioView.append(result.secondPortfolio!)
+            portfolioView.append(result.firstPortfolio ?? portfolio(id: 0, userEmail: "", title: "", giturl: "", introduce: ""))
+            portfolioView.append(result.secondPortfolio ?? portfolio(id: 0, userEmail: "", title: "", giturl: "", introduce: ""))
             
             let portfolioSum = PublishRelay<[portfolio]>()
             portfolioSum.bind(to: self.portfolioTableView.rx.items(cellIdentifier: "portfolioCell", cellType: PortfolioTableViewCell.self)) { (row, item, cell) in
