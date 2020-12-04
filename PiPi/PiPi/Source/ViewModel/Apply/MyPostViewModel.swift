@@ -36,7 +36,7 @@ class MyPostViewModel: ViewModelType {
         let loadMoreData = BehaviorRelay<[postModel]>(value: [])
 
         input.loadMyPost.asObservable().subscribe(onNext: { _ in
-            api.getMyPost().subscribe(onNext: { response, statusCode in
+            api.getMyPost("0").subscribe(onNext: { response, statusCode in
                 switch statusCode {
                 case .ok:
                     MyPostViewModel.loadMyPost.accept(response!)
@@ -53,7 +53,7 @@ class MyPostViewModel: ViewModelType {
         }).disposed(by: disposeBag)
         
         input.loadMoreData.asObservable().subscribe(onNext: { count in
-            api.getPosts(count).subscribe(onNext: { response, statusCode in
+            api.getMyPost("\(count)").subscribe(onNext: { response, statusCode in
                 switch statusCode {
                 case .ok:
                     loadMoreData.accept(response!)
