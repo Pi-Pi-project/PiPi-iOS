@@ -18,12 +18,14 @@ class EditProfileViewController: UIViewController {
     @IBOutlet weak var selectImageBtn: UIButton!
     @IBOutlet weak var doneTap: UIButton!
     @IBOutlet weak var fixPortfolioBtn: UIButton!
+    @IBOutlet weak var introTextField: UITextField!
     
     var email = String()
     private let viewModel = SetProfileViewModel()
     private var imageData = BehaviorRelay<Data?>(value: nil)
     private var skillSet = BehaviorRelay<[String]?>(value: [])
-    
+    private let getEmail = BehaviorRelay<Void>(value: ())
+
     var giturl = String()
     var skills = String()
     var imageview = UIImage()
@@ -74,10 +76,12 @@ class EditProfileViewController: UIViewController {
     
     func bindViewModel() {
         let input = SetProfileViewModel.input(
+            showEmail: getEmail.asDriver(),
             userImage: imageData.asDriver(),
             userSkill: skillSet.asDriver(onErrorJustReturn: nil),
             userGit: giturlTextField.rx.text.asDriver(onErrorJustReturn: ""),
-            userEmail: Driver.just("a@gmail.com"),
+            userEmail: Driver.just(email),
+            userIntro: introTextField.rx.text.asDriver(onErrorJustReturn: nil),
             doneTap: doneTap.rx.tap.asSignal())
         let output = viewModel.transform(input)
         
@@ -88,7 +92,13 @@ class EditProfileViewController: UIViewController {
             self.skillSet.accept(self.skillArray)
         }).disposed(by: rx.disposeBag)
         
-        output.result.emit(onCompleted: { self.navigationController?.popViewController(animated: true)}).disposed(by: rx.disposeBag)
+        output.result.emit(onCompleted: { self.navigationController?.popViewController(animated: true)}
+        ).disposed(by: rx.disposeBag)
+        
+        output.email.emit(onNext: { email in
+            self.email = email
+        }).disposed(by: rx.disposeBag)
+        
     }
     
     

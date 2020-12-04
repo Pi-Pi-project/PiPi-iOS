@@ -21,9 +21,11 @@ class CalendarViewController: UIViewController {
     private var todoDate = BehaviorRelay<String>(value: "")
     private var alertDone = BehaviorRelay<Void>(value: ())
     private var todoText = BehaviorRelay<String>(value: "")
-    private var successTodo = BehaviorRelay<Int>(value: 0)
+    private var successTodo = PublishRelay<Int>()
     private var deleteTodo = BehaviorRelay<Int>(value: 0)
 
+    var currentDate = String()
+    
     lazy var addBtn: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "Add", style: .plain, target: self, action: nil)
     return button
@@ -67,6 +69,12 @@ class CalendarViewController: UIViewController {
             cell.dataLabel.text = item.date
             cell.todoLabel.text = item.todo
             
+            if item.todoStatus == "CHECK"{
+                cell.checkBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
+            }else{
+                cell.checkBtn.tintColor = UIColor.red
+            }
+            
             cell.checkBtn.rx.tap.subscribe(onNext: { _ in
                 self.successTodo.accept(row)
             }).disposed(by: self.rx.disposeBag)
@@ -90,14 +98,24 @@ class CalendarViewController: UIViewController {
             selectDate: todoDate.asDriver(onErrorJustReturn: ""),
             todoText: todoText.asDriver(onErrorJustReturn: ""),
             alertTap: alertDone.asDriver(),
-            successTodo: successTodo.asDriver())
+            successTodo: successTodo.asDriver(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
         output.result.emit(onCompleted: {
             self.todoTableView.reloadData()
         }).disposed(by: rx.disposeBag)
         
+        output.success.emit(onNext: {_ in 
+            self.todoDate.accept(self.currentDate)
+            self.todoTableView.reloadData()
+        }).disposed(by: rx.disposeBag)
+        
         output.todo.emit(onCompleted: {
+            self.todoTableView.reloadData()
+        }).disposed(by: rx.disposeBag)
+        
+        output.enter.emit(onNext: { _ in
+            self.todoDate.accept(self.currentDate)
             self.todoTableView.reloadData()
         }).disposed(by: rx.disposeBag)
     }
@@ -147,6 +165,7 @@ extension CalendarViewController: FSCalendarDelegateAppearance, FSCalendarDataSo
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let date_string = self.dateFormatter.string(from: date)
         self.todoDate.accept(date_string)
+        currentDate = date_string
         print("nameOfDate",date_string)
     }
 }

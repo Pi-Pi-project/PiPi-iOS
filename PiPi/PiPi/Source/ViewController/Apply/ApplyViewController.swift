@@ -86,7 +86,7 @@ class ApplyViewController: UIViewController {
                 var skillSet = String()
                 
                 for i in 0..<repository.postSkillsets.count {
-                    skillSet = repository.postSkillsets[i].skill
+                    skillSet = " " + repository.postSkillsets[i].skill + " "
                 }
                 let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
                 let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg ?? "")")

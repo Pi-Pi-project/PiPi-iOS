@@ -23,6 +23,7 @@ class SetProfileViewController: UIViewController {
     
     private let viewModel = SetProfileViewModel()
     private let errorLabel = UILabel()
+    private let getEmail = BehaviorRelay<Void>(value: ())
     
     var email = String()
     let imageString = String()
@@ -59,10 +60,12 @@ class SetProfileViewController: UIViewController {
     
     func bindViewModel() {
         let input = SetProfileViewModel.input(
+            showEmail: getEmail.asDriver(),
             userImage: imageData.asDriver(),
             userSkill: skillSet.asDriver(),
             userGit: gitTextField.rx.text.asDriver(),
             userEmail: Driver.just(email),
+            userIntro: introTextField.rx.text.asDriver(onErrorJustReturn: nil),
             doneTap: completeBtn.rx.tap.asSignal())
         
         let output = viewModel.transform(input)
@@ -78,6 +81,10 @@ class SetProfileViewController: UIViewController {
                 self.moveReference()
             }
         ).disposed(by: rx.disposeBag)
+        
+        output.email.emit(onNext: { email in
+            self.email = email
+        }).disposed(by: rx.disposeBag)
     }
     
     class Skills: ResizingTokenFieldToken, Equatable {

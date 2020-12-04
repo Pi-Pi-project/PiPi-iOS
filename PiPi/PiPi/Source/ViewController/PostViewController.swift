@@ -54,8 +54,6 @@ class PostViewController: UIViewController {
         }).disposed(by: rx.disposeBag)
         
         postBtn.rx.tap.subscribe(onNext: {  _ in
-            self.showAlert(title: "공고 글 작성시 주의", message: "공고 마감 기한은 2주입니다.공고글 작성부터 2주가 지나면 자동으로 삭제됩니다.")
-            
             self.selectCategory.accept(self.category[self.proCategoryTF.selectedIndex ?? 0])
             self.skillSet.accept(self.skillArray)
         }).disposed(by: rx.disposeBag)
@@ -81,10 +79,21 @@ class PostViewController: UIViewController {
             self.setButton(self.postBtn)
         }).disposed(by: rx.disposeBag)
         
-        output.result.emit( onNext: { print($0)},
-                            onCompleted: { print("성공")
-                            }).disposed(by: rx.disposeBag)
+        output.result.emit(
+            onNext: { print($0)},
+            onCompleted: {
+                let alert = UIAlertController(title: "공고 글 작성시 주의", message: "공고 마감 기한은 2주입니다.공고글 작성부터 2주가 지나면 자동으로 삭제됩니다.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                    self.dismiss(animated: true, completion: nil)
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+                alert.addAction(action)
+                self.present(alert, animated: true)
+                
+            }).disposed(by: rx.disposeBag)
     }
+    
     func setupUI() {
         proContentTV.layer.borderColor = UIColor().hexUIColor(hex: "").cgColor
         proContentTV.layer.borderWidth = 1

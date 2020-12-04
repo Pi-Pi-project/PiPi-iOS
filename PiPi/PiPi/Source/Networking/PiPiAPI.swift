@@ -30,7 +30,7 @@ enum PiPiAPI {
     case getApplyList(_ id: String)
     case rejectApply
     case acceptApply
-    case getMyPost
+    case getMyPost(_ page: String)
     case searchPost(_ category: String, _ page: Int)
     
     //Profile
@@ -70,8 +70,8 @@ enum PiPiAPI {
             return "/post"
         case .getPost(let page):
             return "/post?page=\(page)"
-        case .getApplyPosts:
-            return "/post/apply?page=0"
+        case .getApplyPosts(let page):
+            return "/post/apply?page=\(page)"
         case .getDetailPost(let id):
             return "/post/\(id)"
         case .projectApply, .deProjectApply:
@@ -82,8 +82,8 @@ enum PiPiAPI {
             return "/post/apply/deny"
         case .acceptApply:
             return "/post/apply/accept"
-        case .getMyPost:
-            return "/post/mine?page=0"
+        case .getMyPost(let page):
+            return "/post/mine?page=\(page)"
         case .createProject:
             return "/project"
         case .changePwSendEmail:
@@ -119,7 +119,7 @@ enum PiPiAPI {
     
     func header() -> HTTPHeaders? {
         switch self {
-        case .signIn, .postAuthCode, .checkAuthCode, .register, .setProfile, .changePw:
+        case .signIn, .postAuthCode, .checkAuthCode, .register, .changePw:
             return nil
             
         case .refreshToken:

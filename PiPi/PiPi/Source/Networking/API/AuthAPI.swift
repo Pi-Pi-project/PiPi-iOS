@@ -14,7 +14,7 @@ import Alamofire
 
 class AuthAPI {
     
-    let baseURL = "http://15.164.245.146"
+    let baseURL = "http://3.35.216.218"
     let httpClient = HTTPClient()
     
     func sendAuthCode(_ email: String) -> Observable<networkingResult> {
@@ -85,6 +85,8 @@ class AuthAPI {
             print(response.statusCode)
             switch response.statusCode {
             case 200:
+                guard let data = try? JSONDecoder().decode(TokenModel.self, from: data) else { return .fault }
+                Token.token = data.accessToken
                 return .ok
             default:
                 return .fault
@@ -94,7 +96,6 @@ class AuthAPI {
     
     func setProfile(_ api: PiPiAPI, param: Parameters, img: Data?) -> DataRequest {
         return AF.upload(multipartFormData: { (multipartFormData) in
-            print(self.baseURL + api.path())
             if img != nil {
                 multipartFormData.append(img!, withName: "profileImg", mimeType: "image/jpg")
             }
@@ -104,34 +105,34 @@ class AuthAPI {
                     let arrayObj = value as! Array<Any>
                     for i in 0..<arrayObj.count {
                         let value = arrayObj[i] as! String
-                        print("\(key) \(value)")
                         multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
                     }
                 }else {
-                multipartFormData.append("\(value)".data(using: .utf8)!, withName: key, mimeType: "text/plain")
+                    print(key)
+                    print(value)
+                    multipartFormData.append("\(value)".data(using: .utf8)!, withName: key, mimeType: "text/plain")
                 }
             }
         }, to: baseURL + api.path(), method: .post, headers: api.header())
     }
     
     func changePassword(_ email: String, _ pw: String) -> Observable<networkingResult> {
-        httpClient.put(.changePw,
-                        param: ["email": email, "password": pw])
-            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-                guard let afError = error.asAFError else { return .error(error) }
-                switch afError {
-                case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-                  let response = HTTPURLResponse(
-                    url: URL(string: "http://10.156.145.141:8080")!,
-                    statusCode: 200,
-                    httpVersion: nil,
-                    headerFields: nil
-                  )
-                    return .just((response!, Data(base64Encoded: "")!))
-                default:
-                  return .error(error)
-                }
-              }.map{ response, data -> networkingResult in
+        httpClient.put(.changePw, param: ["email": email, "password": pw]).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
+            guard let afError = error.asAFError else { return .error(error) }
+            switch afError {
+            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
+              let response = HTTPURLResponse(
+                url: URL(string: "http://3.35.216.218")!,
+                statusCode: 200,
+                httpVersion: nil,
+                headerFields: nil
+              )
+                return .just((response!, Data(base64Encoded: "")!))
+            default:
+              return .error(error)
+            }
+          }.map{ response, data -> networkingResult in
+            print("pw \(response.statusCode)")
                 switch response.statusCode {
                 case 200:
                     return .ok

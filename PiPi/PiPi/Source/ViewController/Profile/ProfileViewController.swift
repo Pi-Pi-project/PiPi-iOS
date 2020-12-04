@@ -30,12 +30,20 @@ class ProfileViewController: UIViewController {
 
         userImageView.layer.cornerRadius = 50
         portfolioTableView.layer.cornerRadius = 20
-    
-        
+
         bindViewModel()
         setupUI()
         registerCell()
         view.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        self.portfolioTableView.delegate = nil
+        self.portfolioTableView.dataSource = nil
+        
+        loadProfile.accept(())
     }
     
     func bindViewModel() {
@@ -86,6 +94,13 @@ class ProfileViewController: UIViewController {
             rvc.imageview = self.userImageView.image ?? UIImage(named: "")!
 
             self.navigationController?.pushViewController(rvc, animated: true)
+        }).disposed(by: rx.disposeBag)
+        
+        changPwBtn.rx.tap.subscribe(onNext: { _ in
+            let mainView: UIStoryboard = UIStoryboard(name: "Auth", bundle: nil)
+            let nextVC = mainView.instantiateViewController(identifier: "findVC")
+            nextVC.modalPresentationStyle = .fullScreen
+            self.present(nextVC, animated: false, completion: nil)
         }).disposed(by: rx.disposeBag)
     }
     

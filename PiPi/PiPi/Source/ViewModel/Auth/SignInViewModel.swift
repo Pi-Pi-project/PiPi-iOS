@@ -40,9 +40,9 @@ class SignInViewModel: ViewModelType {
                     case .ok:
                         result.onCompleted()
                     case .notFound:
-                        result.onNext("이메일 또는 비밀번호가 틀렸습니다")
+                        print("")
                     default:
-                        result.onNext("로그인 실패")
+                        print("자동 로그인 실패")
                     }
                 }).disposed(by: self.disposeBag)
             }
