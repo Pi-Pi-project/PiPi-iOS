@@ -175,31 +175,41 @@
                                 </constraints>
                                 <state key="normal" title="프로필 수정 완료"/>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="introduce" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LVc-wr-pXC">
+                                <rect key="frame" x="30" y="533" width="354" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Hf1-gB-k8z"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="LVc-wr-pXC" firstAttribute="top" secondItem="lrJ-Om-hyo" secondAttribute="bottom" constant="25" id="6br-Ms-PKN"/>
                             <constraint firstItem="lrJ-Om-hyo" firstAttribute="leading" secondItem="E9v-P7-jLG" secondAttribute="leading" id="8vT-1Z-25Y"/>
                             <constraint firstItem="zzO-mg-Csu" firstAttribute="bottom" secondItem="Z2P-qp-KBT" secondAttribute="bottom" id="EYp-PS-CMT"/>
+                            <constraint firstItem="X74-bc-rgM" firstAttribute="top" secondItem="LVc-wr-pXC" secondAttribute="bottom" constant="32" id="GNI-ga-pDt"/>
                             <constraint firstItem="E9v-P7-jLG" firstAttribute="centerX" secondItem="Gqd-pr-7Da" secondAttribute="centerX" id="HbS-1m-pHz"/>
                             <constraint firstItem="lrJ-Om-hyo" firstAttribute="top" secondItem="E9v-P7-jLG" secondAttribute="bottom" constant="19" id="Jo7-oT-0Kd"/>
                             <constraint firstItem="Z2P-qp-KBT" firstAttribute="centerX" secondItem="Gqd-pr-7Da" secondAttribute="centerX" id="KlH-4C-RJy"/>
+                            <constraint firstItem="LVc-wr-pXC" firstAttribute="trailing" secondItem="E9v-P7-jLG" secondAttribute="trailing" id="LWa-6a-tGv"/>
                             <constraint firstItem="X74-bc-rgM" firstAttribute="centerX" secondItem="Gqd-pr-7Da" secondAttribute="centerX" id="S0P-3R-Co1"/>
                             <constraint firstItem="Asw-zS-iiO" firstAttribute="top" secondItem="X74-bc-rgM" secondAttribute="bottom" constant="74" id="SBp-bG-aMn"/>
                             <constraint firstItem="lrJ-Om-hyo" firstAttribute="centerX" secondItem="Gqd-pr-7Da" secondAttribute="centerX" id="Se6-fu-NjE"/>
+                            <constraint firstItem="LVc-wr-pXC" firstAttribute="leading" secondItem="E9v-P7-jLG" secondAttribute="leading" id="WgL-PZ-Cva"/>
                             <constraint firstItem="E9v-P7-jLG" firstAttribute="top" secondItem="Z2P-qp-KBT" secondAttribute="bottom" constant="56" id="XQQ-Cl-Xzk"/>
+                            <constraint firstItem="LVc-wr-pXC" firstAttribute="centerX" secondItem="Gqd-pr-7Da" secondAttribute="centerX" id="afL-4g-qxT"/>
                             <constraint firstItem="Asw-zS-iiO" firstAttribute="leading" secondItem="Hf1-gB-k8z" secondAttribute="leading" constant="47" id="eK7-hZ-zx9"/>
                             <constraint firstItem="Asw-zS-iiO" firstAttribute="centerX" secondItem="Gqd-pr-7Da" secondAttribute="centerX" id="gXR-z7-2R2"/>
                             <constraint firstItem="zzO-mg-Csu" firstAttribute="leading" secondItem="Z2P-qp-KBT" secondAttribute="trailing" constant="8" symbolic="YES" id="hOy-uG-4Ws"/>
                             <constraint firstItem="E9v-P7-jLG" firstAttribute="leading" secondItem="Hf1-gB-k8z" secondAttribute="leading" constant="30" id="lmw-7m-Yo9"/>
                             <constraint firstItem="Z2P-qp-KBT" firstAttribute="top" secondItem="Hf1-gB-k8z" secondAttribute="top" constant="147" id="qAh-ez-Tvl"/>
-                            <constraint firstItem="X74-bc-rgM" firstAttribute="top" secondItem="lrJ-Om-hyo" secondAttribute="bottom" constant="91" id="wZG-z5-Ztc"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="doneTap" destination="Asw-zS-iiO" id="49c-ns-His"/>
                         <outlet property="fixPortfolioBtn" destination="X74-bc-rgM" id="5VW-Ww-LiU"/>
                         <outlet property="giturlTextField" destination="lrJ-Om-hyo" id="I6C-c4-y9I"/>
+                        <outlet property="introTextField" destination="LVc-wr-pXC" id="jIf-mF-Vrg"/>
                         <outlet property="selectImageBtn" destination="zzO-mg-Csu" id="vUT-BD-GQG"/>
                         <outlet property="userImageView" destination="Z2P-qp-KBT" id="tmD-SR-lPN"/>
                         <outlet property="userSkillsText" destination="E9v-P7-jLG" id="wuz-rZ-VbD"/>
