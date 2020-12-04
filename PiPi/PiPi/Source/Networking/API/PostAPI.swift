@@ -60,8 +60,8 @@ class PostAPI{
         }
     }
     
-    func getApplyPosts() -> Observable<([postModel]?, networkingResult)> {
-        httpClient.get(.getApplyPosts("1"), param: nil).map { response, data -> ([postModel]?, networkingResult) in
+    func getApplyPosts(_ page: String) -> Observable<([postModel]?, networkingResult)> {
+        httpClient.get(.getApplyPosts(page), param: nil).map { response, data -> ([postModel]?, networkingResult) in
             print(response.statusCode)
             switch response.statusCode {
             case 200:
@@ -209,8 +209,8 @@ class PostAPI{
         }
     }
     
-    func getMyPost() -> Observable<([postModel]?, networkingResult)> {
-        httpClient.get(.getMyPost, param: nil).map { response, data -> ([postModel]?, networkingResult) in
+    func getMyPost(_ page: String) -> Observable<([postModel]?, networkingResult)> {
+        httpClient.get(.getMyPost(page), param: nil).map { response, data -> ([postModel]?, networkingResult) in
             print(response.statusCode)
             switch response.statusCode {
             case 200:
