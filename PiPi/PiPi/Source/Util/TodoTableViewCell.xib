@@ -43,22 +43,24 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5UA-U4-Dvx">
-                        <rect key="frame" x="267" y="37" width="19" height="22"/>
-                        <state key="normal" image="checkmark" catalog="system"/>
+                        <rect key="frame" x="262" y="33.5" width="20" height="29"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                        <state key="normal" image="checkmark.square.fill" catalog="system">
+                            <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
                     </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="cXo-GU-mhc" firstAttribute="centerX" secondItem="t0l-cf-J13" secondAttribute="centerX" id="0RE-D8-bcg"/>
                     <constraint firstItem="cXo-GU-mhc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="1P1-uf-TAw"/>
                     <constraint firstItem="cXo-GU-mhc" firstAttribute="top" secondItem="t0l-cf-J13" secondAttribute="bottom" constant="14" id="223-g7-n4b"/>
-                    <constraint firstAttribute="trailing" secondItem="5UA-U4-Dvx" secondAttribute="trailing" constant="16" id="9Hu-RQ-DYe"/>
+                    <constraint firstAttribute="trailing" secondItem="5UA-U4-Dvx" secondAttribute="trailing" constant="20" id="9Hu-RQ-DYe"/>
                     <constraint firstItem="x9T-4a-3t0" firstAttribute="centerY" secondItem="cXo-GU-mhc" secondAttribute="centerY" id="Dzw-rh-O7i"/>
                     <constraint firstAttribute="bottom" secondItem="fL6-NS-q2w" secondAttribute="bottom" constant="12" id="WcK-gX-us8"/>
                     <constraint firstItem="x9T-4a-3t0" firstAttribute="leading" secondItem="cXo-GU-mhc" secondAttribute="trailing" constant="20" id="dID-3x-kol"/>
                     <constraint firstItem="t0l-cf-J13" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="e2t-BM-hnL"/>
                     <constraint firstItem="5UA-U4-Dvx" firstAttribute="centerY" secondItem="x9T-4a-3t0" secondAttribute="centerY" id="f6I-aT-dNZ"/>
                     <constraint firstItem="fL6-NS-q2w" firstAttribute="top" secondItem="cXo-GU-mhc" secondAttribute="bottom" constant="14" id="fRQ-1A-haj"/>
-                    <constraint firstItem="5UA-U4-Dvx" firstAttribute="leading" secondItem="x9T-4a-3t0" secondAttribute="trailing" constant="113" id="hdc-o4-oKV"/>
                     <constraint firstItem="cXo-GU-mhc" firstAttribute="centerX" secondItem="fL6-NS-q2w" secondAttribute="centerX" id="tVj-II-pVt"/>
                 </constraints>
             </tableViewCellContentView>
@@ -74,7 +76,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="checkmark" catalog="system" width="128" height="114"/>
+        <image name="checkmark.square.fill" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
