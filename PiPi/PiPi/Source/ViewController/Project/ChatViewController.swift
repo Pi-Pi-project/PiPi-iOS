@@ -36,7 +36,7 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.messageTextfield.delegate = self
         self.socketClient = SocketIOManager.shared.socket
         
         SocketIOManager.shared.establishConnection()
@@ -48,8 +48,15 @@ class ChatViewController: UIViewController {
         
         self.navigationController?.isNavigationBarHidden = false
         
+        addKeyboardNotification()
+        
         setupUI()
         bindViewModel()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func setupUI() {
@@ -57,10 +64,6 @@ class ChatViewController: UIViewController {
         messageTextfield.backgroundColor = .white
         textInputView.backgroundColor = UIColor().hexUIColor(hex: "DBDBDB")
         setButton(sendBtn)
-        
-        messageTextfield.rx.text.orEmpty.subscribe(onNext: { _ in
-            self.addKeyboardNotification()
-        }).disposed(by: rx.disposeBag)
     }
     
     func bindViewModel() {
@@ -128,21 +131,13 @@ class ChatViewController: UIViewController {
         count += 1
         refreshControl.endRefreshing()
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     private func addKeyboardNotification() {
         NotificationCenter.default.addObserver( self, selector: #selector(keyboardWillShow),
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide),
@@ -152,38 +147,24 @@ class ChatViewController: UIViewController {
     }
 
     @objc private func keyboardWillShow(_ notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if keyboardSize.height == 0.0 || keyboardShown == true {
-                return
-            }
-            
-            UIView.animate(withDuration: 0.33, animations: {[unowned self] () -> Void in
-                if originY == nil { originY = textInputView.frame.origin.y }
-                textInputView.frame.origin.y = originY! - keyboardSize.height + messageTextfield.frame.height
-            }, completion: {_ in
-                self.keyboardShown = true
-            })
-        }
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+          
+        self.view.frame.origin.y = 0 - keyboardSize.height + textInputView.frame.height + messageTextfield.frame.height
     }
-    
-    
+      
     @objc private func keyboardWillHide(_ notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if keyboardShown == false {
-                return
-            }
-            
-            UIView.animate(withDuration: 0.33, animations: {[unowned self] () -> Void in
-                guard let originY = originY else { return }
-                textInputView.frame.origin.y = originY
-            }, completion: {_ in
-                self.keyboardShown = false
-            })
-        }
+        self.view.frame.origin.y = 0
     }
 }
 
-
+extension ChatViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == messageTextfield {
+            messageTextfield.resignFirstResponder()
+        }
+        return true
+    }
+}
 
 class MyChatCell: UITableViewCell {
     @IBOutlet weak var myMessageLabel: UILabel!
@@ -193,11 +174,6 @@ class YourChatCell: UITableViewCell {
     @IBOutlet weak var yourNameLabel: UILabel!
     @IBOutlet weak var yourMessageLabel: UILabel!
     @IBOutlet weak var yourImageView: UIImageView!
-}
-
-enum CellType {
-    case YourMessages
-    case MyMessages
 }
 
 extension BehaviorRelay where Element: RangeReplaceableCollection {
