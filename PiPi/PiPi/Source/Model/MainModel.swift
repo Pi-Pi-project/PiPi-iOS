@@ -42,6 +42,7 @@ struct detailModel: Codable {
     let content: String
     let max: Int?
     var applied: Bool
+    let mine: Bool
 }
 
 struct User: Codable {
@@ -63,3 +64,5 @@ struct Applies: Codable {
 struct roomId: Codable {
     let roomId: Int
 }
+
+
