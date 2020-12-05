@@ -18,7 +18,7 @@ class CalendarViewController: UIViewController {
     
     var selectIndexPath = Int()
     private let viewModel = CalendarViewModel()
-    private var todoDate = BehaviorRelay<String>(value: "")
+    private var todoDate = PublishRelay<String>()
     private var alertDone = BehaviorRelay<Void>(value: ())
     private var todoText = BehaviorRelay<String>(value: "")
     private var successTodo = PublishRelay<Int>()
