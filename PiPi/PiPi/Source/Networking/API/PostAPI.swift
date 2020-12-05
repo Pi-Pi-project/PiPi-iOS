@@ -247,4 +247,19 @@ class PostAPI{
         }
     }
     
+    func emailOutput(_ email: String) -> Observable<([postModel]?, networkingResult)> {
+        httpClient.aiPost(.output, param: ["email": email]).map { response, data -> ([postModel]?, networkingResult) in
+            print(response.statusCode)
+            print("api \(email)")
+            switch response.statusCode {
+            case 200:
+                guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault)}
+                
+                return (data, .ok)
+            default:
+                print(response.statusCode)
+                return (nil, .fault)
+            }
+        }
+    }
 }

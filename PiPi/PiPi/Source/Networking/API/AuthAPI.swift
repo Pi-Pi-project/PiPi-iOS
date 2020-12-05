@@ -97,7 +97,7 @@ class AuthAPI {
     func setProfile(_ api: PiPiAPI, param: Parameters, img: Data?) -> DataRequest {
         return AF.upload(multipartFormData: { (multipartFormData) in
             if img != nil {
-                multipartFormData.append(img!, withName: "profileImg", mimeType: "image/jpg")
+                multipartFormData.append(img!, withName: "profileImg",fileName: "image.jpg", mimeType: "image/jpg")
             }
             
             for (key, value) in param {
@@ -192,6 +192,17 @@ class AuthAPI {
         }
     }
     
-    
-    
+    func emailInput(_ email: String) -> Observable<networkingResult> {
+        httpClient.aiPost(.input, param: ["email": email]).map{ response, data -> networkingResult in
+            switch response.statusCode {
+            case 200:
+                return .ok
+            case 404:
+                return .notFound
+            default:
+                print(response.statusCode)
+                return .fault
+            }
+        }
+    }
 }

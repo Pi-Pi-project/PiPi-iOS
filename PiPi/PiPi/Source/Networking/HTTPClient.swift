@@ -30,6 +30,13 @@ class HTTPClient {
                            headers: api.header())
     }
     
+    func aiPost(_ api: PiPiAPI, param: Parameters?, encoding: ParameterEncoding = JSONEncoding.default) -> httpResult {
+        return requestData(.post,"http://192.168.137.55:5000" + api.path(),
+                           parameters: param,
+                           encoding: encoding,
+                           headers: api.header())
+    }
+    
     func put(_ api: PiPiAPI, param: Parameters?) -> httpResult {
         return requestData(.put, baseURL + api.path(),
                            parameters: param,

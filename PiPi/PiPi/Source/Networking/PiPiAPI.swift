@@ -19,6 +19,8 @@ enum PiPiAPI {
     case changePw
     case changePwSendEmail
     case showUserInfo
+    case input
+    case output
     
     //Post
     case wirtePost
@@ -114,12 +116,16 @@ enum PiPiAPI {
             return "/chat/\(id)?page=\(page)"
         case .getIndividualCaht(let email):
             return "/chat?email=\(email)"
+        case .input:
+            return "/input"
+        case .output:
+            return "/output"
         }
     }
     
     func header() -> HTTPHeaders? {
         switch self {
-        case .signIn, .postAuthCode, .checkAuthCode, .register, .changePw:
+        case .signIn, .postAuthCode, .checkAuthCode, .register, .changePw, .output:
             return nil
             
         case .refreshToken:
