@@ -50,8 +50,8 @@ class PorfolioViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        portfolioTableView.reloadData()
         loadPortfolio.accept(())
+        portfolioTableView.reloadData()
     }
     
     func bindViewModel() {

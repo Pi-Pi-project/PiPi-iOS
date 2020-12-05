@@ -27,15 +27,16 @@ class SeeProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.portfolioTableView.dataSource = nil
-        self.portfolioTableView.delegate = nil
-        
         userImageView.layer.cornerRadius = 50
         
         registerCell()
         bindViewModel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.portfolioTableView.delegate = nil
+        self.portfolioTableView.dataSource = nil
+    }
     
     func bindViewModel() {
         let input = SeeProfileViewModel.input(profileUser: Driver.just(email), loadProfile: loadProfile.asSignal(onErrorJustReturn: ()), showInfo: showInfo.asSignal(onErrorJustReturn: ()))

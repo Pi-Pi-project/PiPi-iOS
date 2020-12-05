@@ -49,6 +49,7 @@ class SetProfileViewModel: ViewModelType {
         
         input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { userS, userG, userE, userI, userIntro in
             api.setProfile(.setProfile, param: ["email": userE, "skills": userS ?? [],"giturl": userG ?? "", "introduce": userIntro ?? ""], img: userI).responseJSON { (response) in
+                print(response)
                 switch response.response?.statusCode {
                 case 200:
                     result.onCompleted()
