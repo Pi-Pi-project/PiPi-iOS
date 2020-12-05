@@ -32,7 +32,6 @@ class SIgnInViewController: UIViewController {
         bindViewModel()
     }
 
-    
     func setUI() {
         findPwBtn.rx.tap.subscribe(onNext: { _ in
             self.moveScene("findVC")

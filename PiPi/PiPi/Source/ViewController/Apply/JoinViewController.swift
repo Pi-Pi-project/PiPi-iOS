@@ -22,9 +22,12 @@ class JoinViewController: UIViewController {
     private let selectSearch = PublishRelay<String>()
     private let loadMoreData = PublishSubject<Int>()
     private let loadMoreSearch = PublishSubject<Int>()
+    private let showInfo = BehaviorRelay<Void>(value: ())
+    private let email = PublishRelay<String>()
     
     var check = Bool()
     var count: Int = 0
+    var model = [postModel]()
     
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
@@ -40,11 +43,11 @@ class JoinViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
- 
+        
         searchBar.placeholder = "카테고리로 검색하기"
         searchBar.optionArray = category
         searchBar.selectedRowColor = UIColor().hexUIColor(hex: "61BFAD")
-    
+
         searchBtn.rx.tap.subscribe(onNext: { _ in
             self.selectSearch.accept(self.category[self.searchBar.selectedIndex ?? 0])
             self.check = true
@@ -54,8 +57,6 @@ class JoinViewController: UIViewController {
         bindViewModel()
         registerCell()
     }
-
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -69,6 +70,10 @@ class JoinViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        loadData.accept(())
+        tableView.reloadData()
+        
         self.navigationController?.isNavigationBarHidden = false
     }
     
@@ -97,10 +102,13 @@ class JoinViewController: UIViewController {
         }).disposed(by: rx.disposeBag)
         
         tableView.rowHeight = 200
+        
     }
     
     func bindViewModel() {
         let input = MainViewModel.input(
+            showInfo: showInfo.asSignal(onErrorJustReturn: ()),
+            email: email.asSignal(onErrorJustReturn: "312"),
             loadData: loadData.asSignal(onErrorJustReturn: ()),
             loadMoreData: loadMoreData.asSignal(onErrorJustReturn: 0),
             selectPostRow: tableView.rx.itemSelected.asSignal(),
@@ -110,6 +118,7 @@ class JoinViewController: UIViewController {
         
         output.loadData
             .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
+                
                 var skillSet = String()
                 for i in 0..<repository.postSkillsets.count {
                     skillSet.append(" " + repository.postSkillsets[i].skill + " ")
@@ -121,8 +130,22 @@ class JoinViewController: UIViewController {
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet
                 cell.userImgView.kf.setImage(with: userimg)
+                
             }.disposed(by: rx.disposeBag)
-
+        
+        output.email.emit(onNext: { result in
+            print("email \(result)")
+            self.email.accept(result)
+        }).disposed(by: rx.disposeBag)
+        
+        output.likePost.subscribe(onNext: { data in
+            print(data)
+            for i in 0..<data.count {
+                output.loadData.insert(element: data[i])
+            }
+            self.tableView.reloadData()
+        }).disposed(by: rx.disposeBag)
+        
         output.loadMoreData.subscribe(onNext:{ data in
             for i in 0..<data.count {
                 output.loadData.add(element: data[i])
@@ -137,11 +160,10 @@ class JoinViewController: UIViewController {
             self.tableView.reloadData()
         }).disposed(by: rx.disposeBag)
         
-        output.data.drive().disposed(by: rx.disposeBag)
-        output.data.drive(onNext: { _ in self.tableView.reloadData()}).disposed(by: rx.disposeBag)
         output.searchResult.emit(onCompleted : {
             self.tableView.reloadData()
         }).disposed(by: rx.disposeBag)
+        
         output.nextView.asObservable().subscribe(onNext: { id in
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
             vc.selectIndexPath = id
