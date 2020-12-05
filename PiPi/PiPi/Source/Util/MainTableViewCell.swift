@@ -24,7 +24,7 @@ class MainTableViewCell: UITableViewCell {
     
     func setupUI() {
         coverView.backgroundColor = .black
-        coverView.alpha = 0.5
+        coverView.alpha = 0.6
         
         projectLabel.textColor = .white
         
@@ -43,7 +43,6 @@ class MainTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
 }
 
