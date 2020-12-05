@@ -14,6 +14,8 @@ class MainViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     
     struct input {
+        let showInfo: Signal<Void>
+        let email: Signal<String>
         let loadData: Signal<Void>
         let loadMoreData: Signal<Int>
         let selectPostRow: Signal<IndexPath>
@@ -30,21 +32,54 @@ class MainViewModel: ViewModelType {
         let loadData: BehaviorRelay<[postModel]>
         let loadMoreData: BehaviorRelay<[postModel]>
         let loadMoreSearch: BehaviorRelay<[postModel]>
+        let likePost: BehaviorRelay<[postModel]>
+        let like: Signal<String>
+        let email: Signal<String>
     }
     
     func transform(_ input: input) -> output {
         let api = PostAPI()
+        let load = ProfileAPI()
         let result = PublishSubject<String>()
+        let like = PublishSubject<String>()
+        let emailResult = PublishSubject<String>()
         let searchResult = PublishSubject<String>()
         let nextView = PublishSubject<String>()
         let loadData = BehaviorRelay<[postModel]>(value: [])
         let loadMoreData = BehaviorRelay<[postModel]>(value: [])
         let loadMoreSearch = BehaviorRelay<[postModel]>(value: [])
+        let likePost = BehaviorRelay<[postModel]>(value: [])
         let info = Signal.combineLatest(input.selectPostRow, loadData.asSignal(onErrorJustReturn: [])).asObservable()
         var select = String()
         let categoty = Driver.combineLatest(input.searchText, input.loadMoreSearch)
+        let email = PublishRelay<String>()
         
-        input.loadData.asObservable().subscribe(onNext: { _ in
+        input.showInfo.asObservable().subscribe(onNext: { _ in
+            load.showUserInfo().subscribe(onNext: { data, response in
+                switch response {
+                case .ok:
+                    print("email받음")
+                    emailResult.onNext(data!.email)
+//                    email = data!.email
+                default:
+                    result.onNext("프로필 로드 실패")
+                }
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+        
+        input.email.asObservable().subscribe(onNext: { email in
+            print("vm \(email)")
+            api.emailOutput(email).subscribe(onNext: { response, statusCode in
+                switch statusCode {
+                case .ok:
+                    print(response)
+                    likePost.accept(response!)
+                    like.onCompleted()
+                default:
+                    result.onNext("프로필 로드 실패")
+                }
+            }).disposed(by: self.disposeBag)
+
             api.getPosts(0).subscribe(onNext: { response, statusCode in
                 switch statusCode {
                 case .ok:
@@ -101,6 +136,8 @@ class MainViewModel: ViewModelType {
                       indexPath: Signal.just(select),
                       searchResult: searchResult.asSignal(onErrorJustReturn: "search 실패"), loadData: loadData,
                       loadMoreData: loadMoreData,
-                      loadMoreSearch: loadMoreSearch)
+                      loadMoreSearch: loadMoreSearch,
+                      likePost: likePost, like: like.asSignal(onErrorJustReturn: ""),
+                      email: emailResult.asSignal(onErrorJustReturn: ""))
     }
 }

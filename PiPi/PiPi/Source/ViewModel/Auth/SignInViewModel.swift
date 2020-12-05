@@ -32,9 +32,19 @@ class SignInViewModel: ViewModelType {
         let isEnable = info.map { PiPiFilter.isEmpty($0.0) && PiPiFilter.isEmpty($0.1)}
         let result = PublishSubject<String>()
         
-        input.loadAutoLogin.asObservable().subscribe(onNext: { _ in
+        input.loadAutoLogin.asObservable().withLatestFrom(info).subscribe(onNext: { userE, userP, isAuto in
             if let userId = UserDefaults.standard.string(forKey: "id"){
                 let userPw = UserDefaults.standard.string(forKey: "pw")!
+//                api.emailInput(userId).subscribe(onNext: { response in
+//                    print(response)
+//                    switch response {
+//                    case .ok:
+//                        print("input")
+//                    default:
+//                        print("asdf")
+//                    }
+//                }).disposed(by: self.disposeBag)
+                
                 api.signIn(userId, userPw).subscribe(onNext: { response in
                     switch response {
                     case .ok:
@@ -61,6 +71,16 @@ class SignInViewModel: ViewModelType {
                     result.onNext("이메일 또는 비밀번호가 틀렸습니다")
                 default:
                     result.onNext("로그인 실패")
+                }
+            }).disposed(by: self.disposeBag)
+            
+            api.emailInput(userE).subscribe(onNext: { response in
+                print(response)
+                switch response {
+                case .ok:
+                    print("input")
+                default:
+                    print("asdf")
                 }
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
