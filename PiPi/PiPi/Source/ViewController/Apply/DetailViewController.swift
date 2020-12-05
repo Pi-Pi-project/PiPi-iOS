@@ -77,13 +77,20 @@ class DetailViewController: UIViewController {
             self.ppNameLabel.text = result.title
             self.ppIntroLabel.text = "  " + result.idea + "  "
             self.ppSkillLabel.text = skillSet
-            self.ppDetailTextView.text = result.content
+            self.ppDetailTextView.text =
+                result.content
             self.ppMaxLabel.text = "\(result.max ?? 0)"
             self.setButton(self.applyBtn, result.applied)
             self.ppSkillLabel.layer.borderColor = UIColor.lightGray.cgColor
             self.ppSkillLabel.layer.borderWidth = 1
             self.setBorder(self.ppIntroLabel)
             self.setBorder(self.ppSkillLabel)
+            
+            if result.mine {
+                self.applyBtn.setTitle("내 공고글", for: .normal)
+                self.applyBtn.isEnabled = false
+            }
+            
         }).disposed(by: rx.disposeBag)
         
         output.resultApplyT.asObservable().subscribe(onCompleted: {
