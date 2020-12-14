@@ -27,6 +27,7 @@ class ApplyViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
         button.addTarget(self, action: #selector(floatingBtn), for: .touchUpInside)
+        button.setImage(UIImage(named: "post.png"), for: .normal)
         return button
     }()
     
