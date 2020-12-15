@@ -34,8 +34,9 @@ class SeeProfileViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.portfolioTableView.delegate = nil
-        self.portfolioTableView.dataSource = nil
+        super.viewWillAppear(true)
+                
+        portfolioTableView.reloadData()
     }
     
     func bindViewModel() {
@@ -43,6 +44,9 @@ class SeeProfileViewController: UIViewController {
         let output = viewModel.transform(input)
         
         SeeProfileViewModel.loadProfile.asObservable().subscribe(onNext: { result in
+            self.portfolioTableView.delegate = nil
+            self.portfolioTableView.dataSource = nil
+            
             let profileImg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.profileImg)")
             self.userNameLabel.text = result.nickname
             self.userImageView.kf.setImage(with: profileImg)
