@@ -19,19 +19,15 @@ class SendCodeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        setupUI()
+        addKeyboardNotification()
+        setupUI()
         bindViewModel()
     }
-    
+        
     func setupUI() {
         nextBtn.rx.tap
             .subscribe(onNext: {
-                if PiPiFilter.checkEmail(self.emailTextField.text!) {
-                    self.setUpErrorHidden(self.emailError)
-                } else {
-                    self.setUpErrorMessage(self.emailError, title: "이메일 형식이 맞지 않습니다.", superTextField: self.emailTextField)
-                }
+                self.nextBtn.isEnabled = false
             }).disposed(by: rx.disposeBag)
     }
 
@@ -48,6 +44,7 @@ class SendCodeViewController: UIViewController {
         
         output.result.emit(onNext: {
             self.setUpErrorMessage(self.emailError, title: $0, superTextField: self.emailTextField)
+            self.nextBtn.isEnabled = true
         }, onCompleted: {  self.nextWithData()}).disposed(by: rx.disposeBag)
     }
     
@@ -57,4 +54,32 @@ class SendCodeViewController: UIViewController {
         vc.email = emailTextField.text!
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    private func addKeyboardNotification() {
+        NotificationCenter.default.addObserver( self, selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func keyboardWillShow(note: NSNotification) {
+        if ((note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            self.view.frame.origin.y = -20
+        }
+    }
+
+    @objc func keyboardWillHide(note: NSNotification) {
+        if ((note.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
 }
+

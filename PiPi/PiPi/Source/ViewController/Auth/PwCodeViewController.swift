@@ -20,6 +20,7 @@ class PwCodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        addKeyboardNotification()
 //        setupUI()
         bindViewModel()
     }
@@ -56,5 +57,31 @@ class PwCodeViewController: UIViewController {
         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "pwCheck") as? PwCheckViewController else { return }
         vc.email = emailTextField.text!
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func addKeyboardNotification() {
+        NotificationCenter.default.addObserver( self, selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func keyboardWillShow(note: NSNotification) {
+        if ((note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            self.view.frame.origin.y = -20
+        }
+    }
+
+    @objc func keyboardWillHide(note: NSNotification) {
+        if ((note.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            self.view.frame.origin.y = 0
+        }
     }
 }

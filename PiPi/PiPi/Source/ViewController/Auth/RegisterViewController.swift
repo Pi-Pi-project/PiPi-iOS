@@ -26,6 +26,7 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addKeyboardNotification()
         bindViewModel()
         // Do any additional setup after loading the view.
     }
@@ -53,14 +54,31 @@ class RegisterViewController: UIViewController {
         vc.email = email
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    private func addKeyboardNotification() {
+        NotificationCenter.default.addObserver( self, selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
-    */
+    
+    @objc func keyboardWillShow(note: NSNotification) {
+        if ((note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            self.view.frame.origin.y = -20
+        }
+    }
+
+    @objc func keyboardWillHide(note: NSNotification) {
+        if ((note.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            self.view.frame.origin.y = 0
+        }
+    }
 
 }

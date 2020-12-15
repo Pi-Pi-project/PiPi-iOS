@@ -41,10 +41,14 @@ class SetProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        userImageView.layer.cornerRadius = userImageView.frame.height/2
+        userImageView.layer.borderWidth = 0.5
+        userImageView.layer.borderColor = UIColor.black.cgColor
+        
         skillsTextField.textFieldDelegate = self
         skillsTextField.layer.borderWidth = 0.5
         skillsTextField.layer.borderColor = UIColor.gray.cgColor
-        
+        addKeyboardNotification()
         completeBtn.rx.tap.subscribe(onNext: { _ in
             print(self.skillArray)
         }).disposed(by: rx.disposeBag)
@@ -112,6 +116,36 @@ class SetProfileViewController: UIViewController {
     }
     
 
+    private func addKeyboardNotification() {
+        NotificationCenter.default.addObserver( self, selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func keyboardWillShow(note: NSNotification) {
+        if ((note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            self.view.frame.origin.y = -20
+        }
+    }
+
+    @objc func keyboardWillHide(note: NSNotification) {
+        if ((note.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
 }
 
 extension SetProfileViewController: UITextFieldDelegate {
