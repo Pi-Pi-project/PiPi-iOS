@@ -23,7 +23,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let join = UITapGestureRecognizer(target: self, action: #selector(joinTapGesture(recognizer:)))
+        let apply = UITapGestureRecognizer(target: self, action: #selector(applyTapGesture(recognizer:)))
+        let myPost = UITapGestureRecognizer(target: self, action: #selector(myPostTapGesture(recognizer:)))
+        
         setupUI()
+        
+        btnView[0].addGestureRecognizer(join)
+        btnView[1].addGestureRecognizer(apply)
+        btnView[2].addGestureRecognizer(myPost)
         
         joinBtn.rx.tap.subscribe(onNext: {
             self.moveScene("joinVC")
@@ -54,6 +62,18 @@ class ViewController: UIViewController {
         btnView[0].layer.cornerRadius = 10
         btnView[1].layer.cornerRadius = 10
         btnView[2].layer.cornerRadius = 10
+    }
+    
+    @objc func joinTapGesture(recognizer: UITapGestureRecognizer) {
+        self.moveScene("joinVC")
+    }
+    
+    @objc func applyTapGesture(recognizer: UITapGestureRecognizer) {
+        self.moveScene("applyVC")
+    }
+    
+    @objc func myPostTapGesture(recognizer: UITapGestureRecognizer) {
+        self.moveScene("mypostVC")
     }
 }
 
