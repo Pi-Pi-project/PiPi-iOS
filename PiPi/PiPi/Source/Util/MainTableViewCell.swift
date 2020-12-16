@@ -24,7 +24,8 @@ class MainTableViewCell: UITableViewCell {
     
     func setupUI() {
         coverView.backgroundColor = .black
-        coverView.alpha = 0.6
+        coverView.alpha = 0.7
+        
         
         projectLabel.textColor = .white
         
