@@ -28,7 +28,8 @@ class SeeProfileViewController: UIViewController {
         super.viewDidLoad()
         
         userImageView.layer.cornerRadius = 50
-        
+        portfolioTableView.allowsSelection = false
+
         registerCell()
         bindViewModel()
     }

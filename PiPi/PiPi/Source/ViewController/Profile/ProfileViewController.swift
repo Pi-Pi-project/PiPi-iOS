@@ -30,6 +30,7 @@ class ProfileViewController: UIViewController {
 
         userImageView.layer.cornerRadius = 50
         portfolioTableView.layer.cornerRadius = 20
+        portfolioTableView.allowsSelection = false
 
         bindViewModel()
         setupUI()
