@@ -39,7 +39,6 @@ class MainViewModel: ViewModelType {
     
     func transform(_ input: input) -> output {
         let api = PostAPI()
-        let load = ProfileAPI()
         let result = PublishSubject<String>()
         let like = PublishSubject<String>()
         let emailResult = PublishSubject<String>()
@@ -52,34 +51,8 @@ class MainViewModel: ViewModelType {
         let info = Signal.combineLatest(input.selectPostRow, loadData.asSignal(onErrorJustReturn: [])).asObservable()
         var select = String()
         let categoty = Driver.combineLatest(input.searchText, input.loadMoreSearch)
-        let email = PublishRelay<String>()
-        
-        input.showInfo.asObservable().subscribe(onNext: { _ in
-            load.showUserInfo().subscribe(onNext: { data, response in
-                switch response {
-                case .ok:
-                    print("email받음")
-                    emailResult.onNext(data!.email)
-//                    email = data!.email
-                default:
-                    result.onNext("프로필 로드 실패")
-                }
-            }).disposed(by: self.disposeBag)
-        }).disposed(by: disposeBag)
         
         input.email.asObservable().subscribe(onNext: { email in
-            print("vm \(email)")
-            api.emailOutput(email).subscribe(onNext: { response, statusCode in
-                switch statusCode {
-                case .ok:
-                    print(response)
-                    likePost.accept(response!)
-                    like.onCompleted()
-                default:
-                    result.onNext("프로필 로드 실패")
-                }
-            }).disposed(by: self.disposeBag)
-
             api.getPosts(0).subscribe(onNext: { response, statusCode in
                 switch statusCode {
                 case .ok:
