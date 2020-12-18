@@ -23,12 +23,12 @@ class ApplyViewController: UIViewController {
     var count: Int = 0
 
     lazy var floatingButton: UIButton = {
-        let button = UIButton(frame: .zero)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
-        button.addTarget(self, action: #selector(floatingBtn), for: .touchUpInside)
-        button.setImage(UIImage(named: "post.png"), for: .normal)
-        return button
+            let button = UIButton(frame: .zero)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
+            button.addTarget(self, action: #selector(floatingBtn), for: .touchUpInside)
+            button.setImage(UIImage(named: "post.png"), for: .normal)
+            return button
     }()
     
     override func viewDidLoad() {
@@ -132,5 +132,4 @@ class ApplyViewController: UIViewController {
         let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "postVC") as! PostViewController
         present(pushVC, animated: true, completion: nil)
     }
-
 }
