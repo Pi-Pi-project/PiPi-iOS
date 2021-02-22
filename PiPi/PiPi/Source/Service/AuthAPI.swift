@@ -9,16 +9,13 @@ import Foundation
 import RxSwift
 import Alamofire
 
-
-
-
 class AuthAPI {
     
     let baseURL = "http://3.35.216.218"
-    let httpClient = HTTPClient()
+    let request = ServiceType()
     
     func sendAuthCode(_ email: String) -> Observable<networkingResult> {
-        httpClient.post(.postAuthCode, param: ["email": email])
+        (.postAuthCode, param: ["email": email])
           .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
             guard let afError = error.asAFError else { return .error(error) }
             switch afError {
