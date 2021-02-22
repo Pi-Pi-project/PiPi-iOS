@@ -42,12 +42,10 @@
 		EB55D52325640B7D00A5A84D /* AddPortFolioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55D52225640B7D00A5A84D /* AddPortFolioViewController.swift */; };
 		EB55D52625640CBC00A5A84D /* AddPortfolioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55D52525640CBC00A5A84D /* AddPortfolioViewModel.swift */; };
 		EB6AC6FE255400760010172E /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6AC6FD255400760010172E /* PostViewModel.swift */; };
-		EB6B6C21255E45DB00288DC6 /* FloatingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B6C20255E45DB00288DC6 /* FloatingBtn.swift */; };
 		EB6B6C24255E516C00288DC6 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B6C23255E516B00288DC6 /* ProfileModel.swift */; };
 		EB6B6C27255E525100288DC6 /* SeeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B6C26255E525100288DC6 /* SeeProfileViewController.swift */; };
 		EB6B6C2E255E531300288DC6 /* SeeProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B6C2D255E531300288DC6 /* SeeProfileViewModel.swift */; };
 		EB6B6C31255E533A00288DC6 /* ProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B6C30255E533A00288DC6 /* ProfileAPI.swift */; };
-		EB8C8B98254003A800ACA865 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B97254003A800ACA865 /* Provider.swift */; };
 		EB8C8B9D2540051800ACA865 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9C2540051800ACA865 /* AuthAPI.swift */; };
 		EB8C8BA0254009C200ACA865 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8B9F254009C200ACA865 /* SplashViewController.swift */; };
 		EB8C8BA32540140000ACA865 /* SendCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C8BA22540140000ACA865 /* SendCodeViewController.swift */; };
@@ -74,7 +72,7 @@
 		EBADE11E256862AA006DCDA0 /* PwCheckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADE11D256862A9006DCDA0 /* PwCheckViewModel.swift */; };
 		EBD6FACF2573E1F7002B1C9B /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD6FACE2573E1F7002B1C9B /* ChatListViewModel.swift */; };
 		EBEBE4EF253D64A500C7E100 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4EE253D64A500C7E100 /* Extension.swift */; };
-		EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */; };
+		EBEBE4F5253D64E600C7E100 /* HTTPType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4F4253D64E600C7E100 /* HTTPType.swift */; };
 		EBEBE4F8253D64F300C7E100 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE4F7253D64F300C7E100 /* Token.swift */; };
 		EBEBE4FB253D650000C7E100 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBEBE4FA253D650000C7E100 /* Auth.storyboard */; };
 		EBEBE504253D6A8D00C7E100 /* SIgnInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBE503253D6A8D00C7E100 /* SIgnInViewController.swift */; };
@@ -125,12 +123,10 @@
 		EB55D52225640B7D00A5A84D /* AddPortFolioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPortFolioViewController.swift; sourceTree = "<group>"; };
 		EB55D52525640CBC00A5A84D /* AddPortfolioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPortfolioViewModel.swift; sourceTree = "<group>"; };
 		EB6AC6FD255400760010172E /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
-		EB6B6C20255E45DB00288DC6 /* FloatingBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingBtn.swift; sourceTree = "<group>"; };
 		EB6B6C23255E516B00288DC6 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		EB6B6C26255E525100288DC6 /* SeeProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeProfileViewController.swift; sourceTree = "<group>"; };
 		EB6B6C2D255E531300288DC6 /* SeeProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeProfileViewModel.swift; sourceTree = "<group>"; };
 		EB6B6C30255E533A00288DC6 /* ProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAPI.swift; sourceTree = "<group>"; };
-		EB8C8B97254003A800ACA865 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		EB8C8B9C2540051800ACA865 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		EB8C8B9F254009C200ACA865 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		EB8C8BA22540140000ACA865 /* SendCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCodeViewController.swift; sourceTree = "<group>"; };
@@ -159,7 +155,7 @@
 		EBADE11D256862A9006DCDA0 /* PwCheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwCheckViewModel.swift; sourceTree = "<group>"; };
 		EBD6FACE2573E1F7002B1C9B /* ChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
 		EBEBE4EE253D64A500C7E100 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		EBEBE4F4253D64E600C7E100 /* HTTPType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPType.swift; sourceTree = "<group>"; };
 		EBEBE4F7253D64F300C7E100 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		EBEBE4FA253D650000C7E100 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		EBEBE503253D6A8D00C7E100 /* SIgnInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIgnInViewController.swift; sourceTree = "<group>"; };
@@ -196,7 +192,6 @@
 			isa = PBXGroup;
 			children = (
 				EB0BF40D254FBDC600317097 /* JoinViewController.swift */,
-				EB6B6C20255E45DB00288DC6 /* FloatingBtn.swift */,
 				EB0BF4162550224B00317097 /* DetailViewController.swift */,
 				EB0BF41F25518E5000317097 /* ApplyViewController.swift */,
 				EB0BF42925519ADB00317097 /* MyPostViewController.swift */,
@@ -247,7 +242,15 @@
 			path = Apply;
 			sourceTree = "<group>";
 		};
-		EB8C8B9A2540050B00ACA865 /* API */ = {
+		EB8B76D625E3DC16004B666B /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				EBAC81032539690100DAD71B /* AppDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		EB8B76D725E3DC4A004B666B /* Service */ = {
 			isa = PBXGroup;
 			children = (
 				EB8C8B9C2540051800ACA865 /* AuthAPI.swift */,
@@ -255,7 +258,23 @@
 				EB6B6C30255E533A00288DC6 /* ProfileAPI.swift */,
 				EBADE0F225661961006DCDA0 /* ProjectAPI.swift */,
 			);
-			path = API;
+			path = Service;
+			sourceTree = "<group>";
+		};
+		EB8B76D925E3DC94004B666B /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				EBFE09EE2574BC8C0069AFD0 /* SocketIOManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		EB8B76DB25E3DCCE004B666B /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				EBEBE4EE253D64A500C7E100 /* Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		EBAC80F72539690100DAD71B = {
@@ -282,7 +301,6 @@
 				EBAC812825396D3600DAD71B /* Supporting Files */,
 				EBAC812725396D3200DAD71B /* Source */,
 				EBAC812625396D2300DAD71B /* Resourse */,
-				EBAC81032539690100DAD71B /* AppDelegate.swift */,
 			);
 			path = PiPi;
 			sourceTree = "<group>";
@@ -299,6 +317,10 @@
 		EBAC812725396D3200DAD71B /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				EB8B76DB25E3DCCE004B666B /* Extension */,
+				EB8B76D925E3DC94004B666B /* Managers */,
+				EB8B76D725E3DC4A004B666B /* Service */,
+				EB8B76D625E3DC16004B666B /* Application */,
 				EBEBE4ED253D648700C7E100 /* Model */,
 				EBEBE4EC253D647B00C7E100 /* UI */,
 				EBEBE4EB253D645B00C7E100 /* Util */,
@@ -342,11 +364,8 @@
 		EBEBE4E8253D642600C7E100 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				EB8C8B9A2540050B00ACA865 /* API */,
-				EBEBE4F4253D64E600C7E100 /* HTTPClient.swift */,
+				EBEBE4F4253D64E600C7E100 /* HTTPType.swift */,
 				EBEBE509253D706F00C7E100 /* PiPiAPI.swift */,
-				EB8C8B97254003A800ACA865 /* Provider.swift */,
-				EBFE09EE2574BC8C0069AFD0 /* SocketIOManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -359,7 +378,6 @@
 				EB0BF44E2553B6E300317097 /* Apply */,
 				EB129FD4254EFD57009D5151 /* Auth */,
 				EBAC81072539690100DAD71B /* ViewController.swift */,
-				EB0BF4502553BF5800317097 /* PostViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -372,7 +390,6 @@
 				EB6B6C29255E52FB00288DC6 /* Apply */,
 				EB129FD5254EFD61009D5151 /* Auth */,
 				EBEBE50D253D709E00C7E100 /* ViewModelType.swift */,
-				EB6AC6FD255400760010172E /* PostViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -380,7 +397,6 @@
 		EBEBE4EB253D645B00C7E100 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				EBEBE4EE253D64A500C7E100 /* Extension.swift */,
 				EB0BF3FF254F0EA700317097 /* MainTableViewCell.swift */,
 				EB0BF400254F0EA700317097 /* MainTableViewCell.xib */,
 				EB0BF404254F117900317097 /* ListTableViewCell.swift */,
@@ -423,6 +439,7 @@
 				EB918F9F2570C2CA0083D870 /* ChatViewController.swift */,
 				EBADE0E425660BBD006DCDA0 /* CalendarViewController.swift */,
 				EBADE10C2566F18D006DCDA0 /* FinishViewController.swift */,
+				EB0BF4502553BF5800317097 /* PostViewController.swift */,
 				EBADE0EB256617D9006DCDA0 /* ProjectViewController.swift */,
 			);
 			path = Project;
@@ -431,6 +448,7 @@
 		EBFE0A0525771DB50069AFD0 /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				EB6AC6FD255400760010172E /* PostViewModel.swift */,
 				EBADE0E8256617CE006DCDA0 /* ProjectViewModel.swift */,
 				EBADE0F525664AEC006DCDA0 /* CalendarViewModel.swift */,
 				EBD6FACE2573E1F7002B1C9B /* ChatListViewModel.swift */,
@@ -571,7 +589,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB6AC6FE255400760010172E /* PostViewModel.swift in Sources */,
-				EBEBE4F5253D64E600C7E100 /* HTTPClient.swift in Sources */,
+				EBEBE4F5253D64E600C7E100 /* HTTPType.swift in Sources */,
 				EB0BF43E2552B1A600317097 /* ApplyListViewModel.swift in Sources */,
 				EBEBE507253D6A9A00C7E100 /* SignInViewModel.swift in Sources */,
 				EB252688256108AC00908A05 /* PorfolioViewModel.swift in Sources */,
@@ -588,7 +606,6 @@
 				EB55D52625640CBC00A5A84D /* AddPortfolioViewModel.swift in Sources */,
 				EB0BF414254FC11A00317097 /* MainViewModel.swift in Sources */,
 				EBADE0FA2566DBE8006DCDA0 /* TodoTableViewCell.swift in Sources */,
-				EB6B6C21255E45DB00288DC6 /* FloatingBtn.swift in Sources */,
 				EBEBE4EF253D64A500C7E100 /* Extension.swift in Sources */,
 				EB0BF40E254FBDC600317097 /* JoinViewController.swift in Sources */,
 				EBEBE4F8253D64F300C7E100 /* Token.swift in Sources */,
@@ -629,7 +646,6 @@
 				EB0BF40A254F12AC00317097 /* PostAPI.swift in Sources */,
 				EB046F5225469A1800340F12 /* RegisterViewController.swift in Sources */,
 				EBA03BF4256FC00B00000810 /* ChatListViewController.swift in Sources */,
-				EB8C8B98254003A800ACA865 /* Provider.swift in Sources */,
 				EBEBE50E253D709E00C7E100 /* ViewModelType.swift in Sources */,
 				EBFE09EF2574BC8C0069AFD0 /* SocketIOManager.swift in Sources */,
 				EB129FD8254EFE6B009D5151 /* PwCodeViewController.swift in Sources */,
@@ -790,6 +806,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.develop.PiPi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -810,6 +827,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.develop.PiPi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
