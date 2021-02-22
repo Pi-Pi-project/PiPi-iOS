@@ -39,10 +39,10 @@ class PostViewModel: ViewModelType {
             input.max,
             input.img)
         let isEnabel = info.map {
-            PiPiFilter.isEmpty($0.0) &&
-            PiPiFilter.isEmpty($0.1) &&
-            PiPiFilter.isEmpty($0.3) &&
-            PiPiFilter.isEmpty($0.4) }
+            !$0.0.isEmpty &&
+                !$0.1.isEmpty &&
+                !$0.3.isEmpty &&
+                !$0.4.isEmpty }
         
         let result = PublishSubject<String>()
         

@@ -26,7 +26,7 @@ class PwCheckViewModel: ViewModelType {
     func transform(_ input: input) -> output {
         let api = AuthAPI()
         let info = input.email
-        let isEnable = info.map { PiPiFilter.isEmpty($0) }
+        let isEnable = info.map { !$0.isEmpty }
         let result = PublishSubject<String>()
     
         input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { email in

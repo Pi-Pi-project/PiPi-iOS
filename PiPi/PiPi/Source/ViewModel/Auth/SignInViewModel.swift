@@ -29,7 +29,7 @@ class SignInViewModel: ViewModelType {
     func transform(_ input: input) -> output {
         let api = AuthAPI()
         let info = Driver.combineLatest(input.userEmail, input.userPw, input.isAuto)
-        let isEnable = info.map { PiPiFilter.isEmpty($0.0) && PiPiFilter.isEmpty($0.1)}
+        let isEnable = info.map { !$0.0.isEmpty && !$0.1.isEmpty }
         let result = PublishSubject<String>()
         
         input.loadAutoLogin.asObservable().withLatestFrom(info).subscribe(onNext: { userE, userP, isAuto in

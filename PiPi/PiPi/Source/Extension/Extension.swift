@@ -9,33 +9,6 @@ import Foundation
 import UIKit
 import RxSwift
 
-extension UIColor {
-    func hexUIColor(hex: String) -> UIColor {
-        var rgbValue: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&rgbValue)
-        return UIColor(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-                       green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-                       blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-                       alpha: CGFloat(1.0)
-        )
-    }
-}
-
-extension UIButton {
-    open override var isEnabled: Bool {
-        didSet {
-            if self.isEnabled == true {
-                self.backgroundColor = UIColor.magenta
-                self.tintColor = .white
-                //테두리
-            }else {
-                self.backgroundColor = UIColor.white
-                self.tintColor = .magenta
-            }
-        }
-    }
-}
-
 extension UIViewController {
         
     func moveReference() {
@@ -151,7 +124,32 @@ extension UIViewController {
     }
 }
 
+extension UIColor {
+    func hexUIColor(hex: String) -> UIColor {
+        var rgbValue: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&rgbValue)
+        return UIColor(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+                       green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+                       blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+                       alpha: CGFloat(1.0)
+        )
+    }
+}
+
 extension UIButton {
+    open override var isEnabled: Bool {
+        didSet {
+            if self.isEnabled == true {
+                self.backgroundColor = UIColor.magenta
+                self.tintColor = .white
+                //테두리
+            }else {
+                self.backgroundColor = UIColor.white
+                self.tintColor = .magenta
+            }
+        }
+    }
+    
     func load(url: URL) {
         DispatchQueue.global().async { [weak self] in
             if let data = try? Data(contentsOf: url) {
@@ -166,14 +164,6 @@ extension UIButton {
 }
 
 struct PiPiFilter {
-    static func isEmpty(_ text: String) -> Bool {
-        if text.isEmpty {
-            return false
-        } else {
-            return true
-        }
-    }
-    
     static func checkEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,50}"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)

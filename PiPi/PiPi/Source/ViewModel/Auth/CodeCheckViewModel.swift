@@ -27,7 +27,7 @@ class CodeCheckViewModel: ViewModelType {
     func transform(_ input: input) -> output {
         let api = AuthAPI()
         let info = Driver.combineLatest(input.authCode, input.email)
-        let isEnable = info.map { PiPiFilter.isEmpty($0.0) }
+        let isEnable = info.map { !$0.0.isEmpty }
         let result = PublishSubject<String>()
         
         input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { code, email in

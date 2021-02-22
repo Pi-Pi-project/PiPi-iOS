@@ -30,7 +30,7 @@ class RegisterViewModel: ViewModelType {
         let api = AuthAPI()
         let result = PublishSubject<String>()
         let info = Driver.combineLatest(input.email, input.nickname, input.userRepw)
-        let isEnable = info.map{ PiPiFilter.isEmpty($0.0) && PiPiFilter.isEmpty($0.1) && PiPiFilter.isEmpty($0.2)}
+        let isEnable = info.map{ !$0.0.isEmpty && !$0.1.isEmpty && !$0.2.isEmpty }
         
         input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { email, nickname, userRepw in
             api.register(email, userRepw, nickname).subscribe(onNext: { response in
