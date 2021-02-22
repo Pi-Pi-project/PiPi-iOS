@@ -9,45 +9,44 @@ import Foundation
 import Alamofire
 
 enum PiPiAPI {
+    
     //Auth
-    case signIn
+    case signIn(_ email: String, _ password: String)
     case refreshToken
-    case postAuthCode
-    case checkAuthCode
-    case register
-    case setProfile
-    case changePw
-    case changePwSendEmail
+    case postAuthCode(_ email: String)
+    case checkAuthCode(_ email: String, _ code: String)
+    case register(_ email: String, _ password: String, _ nickname: String)
+    case setProfile(_ email: String, skills: [String],_ giturl: String, _ profileImg: String)
+    case changePw(_ email: String, _ password: String)
+    case changePwSendEmail(_ email: String)
     case showUserInfo
-    case input
-    case output
     
     //Post
-    case wirtePost
-    case getPost(_ id: Int)
+    case wirtePost(_ title: String, _ category: String, _ skills: [String], _ idea: String, _ content: String, _ max: Int)
+    case getPost(_ page: Int)
     case getDetailPost(_ id: String)
     case getApplyPosts(_ id: String)
-    case projectApply
-    case deProjectApply
+    case projectApply(_ id: String)
+    case deProjectApply(_ id: String)
     case getApplyList(_ id: String)
-    case rejectApply
-    case acceptApply
+    case rejectApply(_ userEmail: String, _ postId: String)
+    case acceptApply(_ userEmail: String, _ postId: String)
     case getMyPost(_ page: String)
-    case searchPost(_ category: String, _ page: Int)
+    case searchPost(_ page: String, _ category: String)
     
     //Profile
     case getProfile(_ email: String)
     case getPortfolios(_ email: String)
-    case addPorfolios
-    case selectPortfolio
+    case addPorfolios(title: String, _ introduce: String, _ giturl: String)
+    case selectPortfolio(_ first: Int, _ second: Int)
     
     //Projects
-    case createProject
+    case createProject(_ postId: String)
     case getProject(_ page: String)
-    case createTodo
+    case createTodo(_ todo: String, _ date: String, projectId: Int)
     case getTodo(_ id: Int, _ date: String)
     case successTodo(_ id: String)
-    case finishProject
+    case finishProject(id: Int, _ giturl: String, _ introduce: String)
     case getRoom
     case getChats(_ id: Int, _ page: Int)
     case getIndividualCaht(_ email: String)
@@ -116,18 +115,26 @@ enum PiPiAPI {
             return "/chat/\(id)?page=\(page)"
         case .getIndividualCaht(let email):
             return "/chat?email=\(email)"
-        case .input:
-            return "/input"
-        case .output:
-            return "/output"
+        }
+    }
+    
+    func method() -> HTTPMethod {
+        switch self {
+        case .postAuthCode, .checkAuthCode, .register, .setProfile, .changePwSendEmail, .signIn, .addPorfolios, .wirtePost, .projectApply, .createProject, .createTodo:
+            return .post
+        case .changePw, .selectPortfolio, .rejectApply, .acceptApply, .successTodo, .finishProject:
+            return .put
+        case .showUserInfo, .refreshToken, .getProfile, .getPortfolios, .getPost, .getDetailPost, .getApplyList, .getApplyPosts, .getMyPost, .searchPost, .getProject, .getTodo:
+            return .get
+        default:
+            return .delete
         }
     }
     
     func header() -> HTTPHeaders? {
         switch self {
-        case .signIn, .postAuthCode, .checkAuthCode, .register, .changePw, .output:
+        case .signIn, .postAuthCode, .checkAuthCode, .register, .changePw:
             return nil
-            
         case .refreshToken:
             let renewalToken: String = "tokenValue"
             let userDefault = UserDefaults.standard
@@ -135,76 +142,39 @@ enum PiPiAPI {
             userDefault.synchronize(  )
             guard let token = userDefault.string(forKey: "refreshToken") else { return nil }
             return ["Authorization" : "Bearer " + token]
-            
         default:
             guard let token = Token.token else { return [:] }
             return ["Authorization" : "Bearer " + token]
         }
     }
     
-//    var param: Parameters? {
-//        switch self {
-//        case .signIn(let email, let password):
-//            return ["email": email, "password": password]
-//        case .refreshToken:
-//            return
-//        case .postAuthCode(let email):
-//            return ["email": email]
-//        case .checkAuthCode(let email, let code):
-//            return ["email": email, "code": code]
-//        case .register(let email, let password, let nickname):
-//            return ["email": email, "password": password, "nickname": nickname]
-//        case .setProfile(let email, let skills, let giturl, let profileImg):
-//            return ["email": email, "skills": skills,]
-//        case .changePw:
-//            return
-//        case .wirtePost:
-//            return
-//        case .getPost(let page):
-//            return
-//        case .getApplyPosts:
-//            return
-//        case .getDetailPost(let id):
-//            return
-//        case .projectApply, .deProjectApply:
-//            return
-//        case .getApplyList(let id):
-//            return
-//        case .rejectApply:
-//            return
-//        case .acceptApply:
-//            return
-//        case .getMyPost:
-//            return
-//        case .createProject, .projectList:
-//            return
-//        }
-//    }
+    var param: Parameters? {
+        switch self {
+        case .signIn(let email, let password):
+            return ["email": email, "password": password]
+        case .postAuthCode(let email):
+            return ["email": email]
+        case .checkAuthCode(let email, let code):
+            return ["email": email, "code": code]
+        case .register(let email, let password, let nickname):
+            return ["email": email, "password": password, "nickname": nickname]
+        case .changePw(let email, let password):
+            return ["email": email, "password": password]
+        case .projectApply(let id), .deProjectApply(let id):
+            return ["id": id]
+        case .rejectApply(let userEmail, let postId), .acceptApply(let userEmail, let postId):
+            return ["userEmail": userEmail, "postId": postId]
+        case .createProject(let postId):
+            return ["postId": postId]
+        case .createTodo(let todo, let date, let projectId):
+            return ["todo": todo, "date": date, "projectId": projectId]
+        case .finishProject(let id, let giturl, let introduce):
+            return ["id": id, "giturl": giturl, "introduce": introduce]
+        default:
+            return nil
+        }
+    }
 }
 
 
 
-//case signIn(_ email: String, _ password: String)
-//case refreshToken
-//case postAuthCode(_ email: String)
-//case checkAuthCode(_ email: String, _ code: String)
-//case register(_ email: String, _ password: String, _ nickname: String)
-//case setProfile(_ email: String, skills: [String],_ giturl: String, _ profileImg: String)
-//case changePw(_ email: String, _ password: String)
-//case changePwSendEmail(_ email: String)
-//
-////Post
-//case wirtePost(_ title: String, _ category: String, _ skills: [String], _ idea: String, _ content: String, _ max: Int)
-//case getPost(_ page: Int)
-//case getDetailPost(_ id: String)
-//
-//case getApplyPosts(_ id: String)
-//case projectApply(_ id: String)
-//case deProjectApply(_ id: String)
-//
-//case getApplyList(_ id: String)
-//case rejectApply(_ userEmail: String, _ postId: String)
-//case acceptApply(_ userEmail: String, _ postId: String)
-//
-//case getMyPost(_ page: String)
-//case searchPost(_ page: String, _ category: String)
