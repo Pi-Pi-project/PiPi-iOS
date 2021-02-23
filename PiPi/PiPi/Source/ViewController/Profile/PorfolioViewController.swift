@@ -33,23 +33,23 @@ class PorfolioViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("in")
-        rightButton.rx.tap.subscribe(onNext: { _ in
-            let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "addPortfolio") as! AddPortFolioViewController
+        navigationController?.navigationBar.topItem?.title = "Select Portfolio"
+        navigationItem.rightBarButtonItem = rightButton
+        navigationItem.leftBarButtonItem = leftButton
+        
+        rightButton.rx.tap.subscribe(onNext: {[unowned self] _ in
+            let VC1 = storyboard!.instantiateViewController(withIdentifier: "addPortfolio") as! AddPortFolioViewController
             let navController = UINavigationController(rootViewController: VC1)
             self.present(navController, animated:true, completion: nil)
         }).disposed(by: rx.disposeBag)
-        
-        
-        self.navigationController?.navigationBar.topItem?.title = "Select Portfolio"
-        self.navigationItem.rightBarButtonItem = rightButton
-        self.navigationItem.leftBarButtonItem = leftButton
         
         bindViewModel()
         registerCell()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
         loadPortfolio.accept(())
         portfolioTableView.reloadData()
     }
@@ -83,11 +83,13 @@ class PorfolioViewController: UIViewController {
             self.portfolioTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }).disposed(by: rx.disposeBag)
         
-        output.result.emit(onCompleted: {
-            self.loadPortfolio.accept(())
-            self.portfolioTableView.reloadData()
+        output.result.emit(onCompleted: {[unowned self] in
+            loadPortfolio.accept(())
+            portfolioTableView.reloadData()
         }).disposed(by: rx.disposeBag)
-        output.doneResult.emit(onCompleted: { self.dismiss(animated: true, completion: nil)}).disposed(by: self.rx.disposeBag)
+        output.doneResult.emit(onCompleted: {[unowned self] in
+            self.dismiss(animated: true, completion: nil)
+        }).disposed(by: self.rx.disposeBag)
     }
     
     func registerCell() {
@@ -95,14 +97,4 @@ class PorfolioViewController: UIViewController {
         portfolioTableView.register(nib, forCellReuseIdentifier: "portfolioCell")
         portfolioTableView.rowHeight = 140
     }
-    
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-//    }
-
 }

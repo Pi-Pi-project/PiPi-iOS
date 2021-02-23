@@ -72,6 +72,10 @@ class SeeProfileViewController: UIViewController {
             }.disposed(by: self.rx.disposeBag)
             portfolioSum.accept(portfolioView)
         }).disposed(by: rx.disposeBag)
+        
+        output.result.emit(onNext: { error in
+            print(error)
+        }).disposed(by: rx.disposeBag)
     }
     
     func registerCell() {

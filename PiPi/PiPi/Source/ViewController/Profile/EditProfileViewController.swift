@@ -20,15 +20,15 @@ class EditProfileViewController: UIViewController {
     @IBOutlet weak var fixPortfolioBtn: UIButton!
     @IBOutlet weak var introTextField: UITextField!
     
-    var email = String()
     private let viewModel = SetProfileViewModel()
     private var imageData = BehaviorRelay<Data?>(value: nil)
     private var skillSet = BehaviorRelay<[String]?>(value: [])
     private let getEmail = BehaviorRelay<Void>(value: ())
-
+    
+    var email = String()
     var giturl = String()
     var skills = String()
-    var imageview = UIImage()
+    var loadImage = UIImage()
     var tokens = [Skills]()
     var skillArray = [String]()
     
@@ -51,6 +51,7 @@ class EditProfileViewController: UIViewController {
         userSkillsText.layer.borderColor = UIColor.gray.cgColor
         giturlTextField.text = giturl
         userSkillsText.text = skills
+        userImageView.image = loadImage
         
         let array = skills.spaceArray()
         for i in 0..<array.count {
@@ -58,20 +59,17 @@ class EditProfileViewController: UIViewController {
         }
         skillArray.append(skills)
         
-        userImageView.image = imageview
-        
-        self.selectImageBtn.rx.tap.subscribe(onNext: { _ in
-            self.imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
-            self.imagePicker.allowsEditing = false
-            self.present(self.imagePicker, animated: true, completion: nil)
+        selectImageBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+            imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
         }).disposed(by: rx.disposeBag)
         
-        fixPortfolioBtn.rx.tap.subscribe(onNext: { _ in
-            let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "portfolioVC") as! PorfolioViewController
-            let navController = UINavigationController(rootViewController: VC1)
-            self.present(navController, animated:true, completion: nil)
+        fixPortfolioBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+            let vc = storyboard?.instantiateViewController(withIdentifier: "portfolioVC") as! PorfolioViewController
+            let naviController = UINavigationController(rootViewController: vc)
+            self.present(naviController, animated:true, completion: nil)
         }).disposed(by: rx.disposeBag)
-        
     }
     
     func bindViewModel() {
@@ -87,15 +85,15 @@ class EditProfileViewController: UIViewController {
         
         self.setButton(doneTap)
         
-        userSkillsText.rx.text.subscribe(onNext: { text in
-            self.skillArray = (text?.spaceArray())!
-            self.skillSet.accept(self.skillArray)
+        userSkillsText.rx.text.subscribe(onNext: {[unowned self] text in
+            skillArray = (text?.spaceArray())!
+            skillSet.accept(skillArray)
         }).disposed(by: rx.disposeBag)
         
-        output.result.emit(onCompleted: { self.navigationController?.popViewController(animated: true)}
+        output.result.emit(onCompleted: { [unowned self] in navigationController?.popViewController(animated: true)}
         ).disposed(by: rx.disposeBag)
         
-        output.email.emit(onNext: { email in
+        output.email.emit(onNext: {[unowned self] email in
             self.email = email
         }).disposed(by: rx.disposeBag)
         
@@ -114,17 +112,6 @@ class EditProfileViewController: UIViewController {
         }
     }
 }
-
-//extension EditProfileViewController: UITextFieldDelegate {
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        guard textField == userSkillsText.textField else { return true }
-//        guard let text = userSkillsText.text, !text.isEmpty else { return true }
-//        userSkillsText.append(tokens: [Skills(title: text.stringUpper(text))], animated: true)
-//        skillArray.append(userSkillsText.text ?? "")
-//        userSkillsText.text = nil
-//        return false
-//    }
-//}
 
 extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = true
 
         userImageView.layer.cornerRadius = 50
         portfolioTableView.layer.cornerRadius = 20
@@ -41,8 +41,8 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        self.portfolioTableView.delegate = nil
-        self.portfolioTableView.dataSource = nil
+        portfolioTableView.delegate = nil
+        portfolioTableView.dataSource = nil
         
         loadProfile.accept(())
     }
@@ -82,26 +82,26 @@ class ProfileViewController: UIViewController {
             portfolioSum.accept(portfolioView)
         }).disposed(by: rx.disposeBag)
         
-        output.result.emit(onCompleted: {
-            self.loadProfile.accept(())
+        output.result.emit(onCompleted: {[unowned self] in
+            loadProfile.accept(())
         }).disposed(by: rx.disposeBag)
     }
     
     func setupUI() {
-        eidtProfileBtn.rx.tap.subscribe(onNext: { _ in
-            guard let rvc = self.storyboard?.instantiateViewController(withIdentifier: "editProfileVC") as? EditProfileViewController else { return }
-            rvc.giturl = self.userGitLabel.text ?? ""
-            rvc.skills = self.userSkillLabel.text ?? ""
-            rvc.imageview = self.userImageView.image ?? UIImage(named: "")!
+        eidtProfileBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+            guard let rvc = storyboard?.instantiateViewController(withIdentifier: "editProfileVC") as? EditProfileViewController else { return }
+            rvc.giturl = userGitLabel.text ?? ""
+            rvc.skills = userSkillLabel.text ?? ""
+            rvc.loadImage = userImageView.image ?? UIImage(named: "")!
 
-            self.navigationController?.pushViewController(rvc, animated: true)
+            navigationController?.pushViewController(rvc, animated: true)
         }).disposed(by: rx.disposeBag)
         
-        changPwBtn.rx.tap.subscribe(onNext: { _ in
+        changPwBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
             let mainView: UIStoryboard = UIStoryboard(name: "Auth", bundle: nil)
             let nextVC = mainView.instantiateViewController(identifier: "findVC")
             nextVC.modalPresentationStyle = .fullScreen
-            self.present(nextVC, animated: false, completion: nil)
+            present(nextVC, animated: false, completion: nil)
         }).disposed(by: rx.disposeBag)
     }
     
