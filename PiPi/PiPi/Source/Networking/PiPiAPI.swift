@@ -16,13 +16,13 @@ enum PiPiAPI {
     case postAuthCode(_ email: String)
     case checkAuthCode(_ email: String, _ code: String)
     case register(_ email: String, _ password: String, _ nickname: String)
-    case setProfile(_ email: String, skills: [String],_ giturl: String, _ profileImg: String)
+    case setProfile
     case changePw(_ email: String, _ password: String)
     case changePwSendEmail(_ email: String)
     case showUserInfo
     
     //Post
-    case wirtePost(_ title: String, _ category: String, _ skills: [String], _ idea: String, _ content: String, _ max: Int)
+    case wirtePost
     case getPost(_ page: Int)
     case getDetailPost(_ id: String)
     case getApplyPosts(_ id: String)
