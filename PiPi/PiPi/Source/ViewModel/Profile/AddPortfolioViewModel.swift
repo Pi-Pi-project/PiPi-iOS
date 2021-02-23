@@ -30,15 +30,15 @@ class AddPortfolioViewModel: ViewModelType {
         let info = Driver.combineLatest(input.proName, input.proGit, input.proIntro)
         let isEnable = info.map { !$0.0.isEmpty && !$0.1.isEmpty && !$0.2.isEmpty }
         
-        input.addTap.asObservable().withLatestFrom(info).subscribe(onNext: { name, giturl, intro in
+        input.addTap.asObservable().withLatestFrom(info).subscribe(onNext: {[weak self] name, giturl, intro in
+            guard let self = self else { return }
             api.addPortfolios(name, giturl, intro).subscribe(onNext: { response in
                 print(response)
                 switch response {
                 case .ok:
-                    print("oncompleted")
                     result.onCompleted()
                 default:
-                    result.onNext("")
+                    result.onNext("포트폴리오 추가가 실행되지 않음")
                 }
             }).disposed(by: self.dispoedBag)
         }).disposed(by: dispoedBag)

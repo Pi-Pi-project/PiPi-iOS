@@ -35,7 +35,8 @@ class PortfolioViewModel: ViewModelType {
         let doneResult = PublishSubject<String>()
         var email = String()
         
-        input.showEmail.asObservable().subscribe(onNext: { _ in
+        input.showEmail.asObservable().subscribe(onNext: {[weak self] _ in
+            guard let self = self else { return }
             api.showUserInfo().subscribe(onNext: { data, response in
                 switch response  {
                 case .ok:
@@ -46,9 +47,9 @@ class PortfolioViewModel: ViewModelType {
             }).disposed(by: self.dispoeBag)
         }).disposed(by: dispoeBag)
         
-        input.loadPortfolio.asObservable().subscribe(onNext: { _ in
+        input.loadPortfolio.asObservable().subscribe(onNext: {[weak self] _ in
+            guard let self = self else { return }
             api.getPortfolios(email).subscribe(onNext: { data, response in
-                print(response)
                 switch response {
                 case .ok:
                     PortfolioViewModel.loadPortfolio.accept(data!)
@@ -59,9 +60,11 @@ class PortfolioViewModel: ViewModelType {
             }).disposed(by: self.dispoeBag)
         }).disposed(by: dispoeBag)
         
-        input.doneTap.asObservable().withLatestFrom(doneInfo).subscribe(onNext: { firstPortfolio, secondPortfolio, data in
-            let firstId = String(data[firstPortfolio ?? 0].id )
-            let secondId = String(data[secondPortfolio ?? 0].id )
+        input.doneTap.asObservable().withLatestFrom(doneInfo).subscribe(onNext: {[weak self] firstPortfolio, secondPortfolio, data in
+            guard let self = self else { return }
+            let firstId = data[firstPortfolio ?? 0].id
+            let secondId = data[secondPortfolio ?? 0].id
+            
             api.selectPortfolio(firstId, secondId).subscribe(onNext: { response in
                 switch response {
                 case .ok:
@@ -73,8 +76,9 @@ class PortfolioViewModel: ViewModelType {
                     doneResult.onNext("지정된 프로젝트가 없음")
                 }
             }).disposed(by: self.dispoeBag)
-        }).disposed(by: dispoeBag
-        )
+            
+        }).disposed(by: dispoeBag)
+        
         return output(result: result.asSignal(onErrorJustReturn: ""), doneResult: doneResult.asSignal(onErrorJustReturn: "포트폴리오 목록 수정 실패"))
     }
 }

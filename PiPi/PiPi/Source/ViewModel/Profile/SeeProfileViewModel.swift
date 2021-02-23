@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 
 class SeeProfileViewModel: ViewModelType {
-    
     private let disposeBag = DisposeBag()
     static var loadProfile = PublishRelay<profileModel>()
     static var email = PublishRelay<String>()
@@ -19,8 +18,6 @@ class SeeProfileViewModel: ViewModelType {
         let profileUser: Driver<String>
         let loadProfile: Signal<Void>
         let showInfo: Signal<Void>
-//        let eidtTap: Signal<Void>
-//        let changePwTap: Signal<Void>
     }
     
     struct output {
@@ -32,7 +29,8 @@ class SeeProfileViewModel: ViewModelType {
         let result = PublishSubject<String>()
         let info = input.profileUser
         
-        input.showInfo.asObservable().subscribe(onNext: { _ in
+        input.showInfo.asObservable().subscribe(onNext: {[weak self] _ in
+            guard let self = self else { return }
             api.showUserInfo().subscribe(onNext: { data, response in
                 switch response {
                 case .ok:
@@ -44,13 +42,14 @@ class SeeProfileViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.loadProfile.withLatestFrom(info).asObservable().subscribe(onNext: { email in
+        input.loadProfile.withLatestFrom(info).asObservable().subscribe(onNext: {[weak self] email in
+            guard let self = self else { return }
             api.getProfile(email).subscribe(onNext: { data, response in
                 switch response {
                 case .ok:
                     SeeProfileViewModel.loadProfile.accept(data!)
                 default:
-                    print("asd")
+                    result.onNext("프로필 가져오기 실패")
                 }
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)

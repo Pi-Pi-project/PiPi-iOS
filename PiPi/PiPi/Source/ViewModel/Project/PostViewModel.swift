@@ -48,6 +48,7 @@ class PostViewModel: ViewModelType {
         
         input.postTap.withLatestFrom(info).asObservable().subscribe(onNext: {
             title, category, skills, idea, content, max, img in
+            
             api.formDataPost(.wirtePost, param: ["title": title, "category": category, "skills": skills, "idea": idea, "content": content, "max": Int(max)], img: img ?? nil).responseJSON { (response) in
                 switch response.response?.statusCode {
                 case 200:
