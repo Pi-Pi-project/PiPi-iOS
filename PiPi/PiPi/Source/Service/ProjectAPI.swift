@@ -10,10 +10,11 @@ import RxSwift
 import RxCocoa
 
 class ProjectAPI {
-    let httpClient = HTTPClient()
+    let request = ServiceType()
     
     func getProject(_ page: String) -> Observable<([ProjectModel]?, networkingResult)> {
-        httpClient.get(.getProject(page), param: nil).map { response, data -> ([ProjectModel]?, networkingResult) in
+        request.requestDate(.getProject(page))
+            .map { response, data -> ([ProjectModel]?, networkingResult) in
             switch response.statusCode {
             case 200:
                 do {
@@ -30,21 +31,8 @@ class ProjectAPI {
     }
     
     func createTodo(_ todo: String, _ date: String, _ id: Int) -> Observable<networkingResult> {
-        httpClient.post(.createTodo, param: ["todo": todo, "date": date, "projectId": id]).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }.map { response, data -> networkingResult in
+        request.requestDate(.createTodo(todo, date, projectId: id))
+            .map { response, data -> networkingResult in
             switch response.statusCode {
             case 200:
                 return .ok
@@ -55,21 +43,8 @@ class ProjectAPI {
     }
     
     func getTodo(_ id: Int, _ date: String) -> Observable<([todo]?, networkingResult)> {
-        httpClient.get(.getTodo(id, date), param: nil).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }.map { response, data -> ([todo]?, networkingResult)in
+        request.requestDate(.getTodo(id, date))
+            .map { response, data -> ([todo]?, networkingResult)in
             switch response.statusCode {
             case 200:
                 guard let data = try? JSONDecoder().decode([todo].self, from: data) else { return (nil, .fault)}
@@ -81,21 +56,8 @@ class ProjectAPI {
     }
     
     func successTodo(_ id: Int) -> Observable<networkingResult> {
-        httpClient.put(.successTodo(String(id)), param: nil).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }.map { response, data -> networkingResult in
+        request.requestDate(.successTodo(String(id)))
+            .map { response, data -> networkingResult in
             print(response.statusCode)
             switch response.statusCode {
             case 200:
@@ -111,21 +73,8 @@ class ProjectAPI {
     }
     
     func finishProject(_ id: Int, _ giturl: String, _ introduce: String) -> Observable<networkingResult> {
-        httpClient.put(.finishProject, param: ["id": id, "giturl": giturl, "introduce": introduce]).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }.map { response, data -> networkingResult in
+        request.requestDate(.finishProject(id: id, giturl, introduce))
+            .map { response, data -> networkingResult in
             print(response.statusCode)
             switch response.statusCode {
             case 200:
@@ -141,7 +90,8 @@ class ProjectAPI {
     }
     
     func getRoom() -> Observable<([room]?, networkingResult)> {
-        httpClient.get(.getRoom, param: nil).map{ response, data ->  ([room]?, networkingResult) in
+        request.requestDate(.getRoom)
+            .map{ response, data ->  ([room]?, networkingResult) in
             switch response.statusCode{
             case 200:
                 guard let data = try? JSONDecoder().decode([room].self, from: data) else { return (nil, .fault) }
@@ -153,7 +103,8 @@ class ProjectAPI {
     }
     
     func getChats(_ id: Int, _ page: Int) -> Observable<([getChat]?, networkingResult)> {
-        httpClient.get(.getChats(id, page), param: nil).map{ response, data -> ([getChat]?, networkingResult) in
+        request.requestDate(.getChats(id, page))
+            .map{ response, data -> ([getChat]?, networkingResult) in
             print(response.statusCode)
             switch response.statusCode {
             case 200:

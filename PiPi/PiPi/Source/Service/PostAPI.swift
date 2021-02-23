@@ -10,12 +10,12 @@ import RxSwift
 import Alamofire
 
 class PostAPI{
-    
-    let httpClient = HTTPClient()
-    let baseURL = "http://3.35.216.218"
+    let request = ServiceType()
+    let baseURL = "http://18.223.24.131"
     
     func createProject(_ id: String) -> Observable<networkingResult> {
-        httpClient.post(.createProject, param: ["postId": id]).map { response, data -> networkingResult in
+        request.requestDate(.createProject(id))
+            .map { response, data -> networkingResult in
             switch response.statusCode{
             case 200:
                 return .ok
@@ -48,7 +48,8 @@ class PostAPI{
     }
     
     func getPosts(_ page: Int) -> Observable<([postModel]?, networkingResult)> {
-        httpClient.get(.getPost(page), param: nil).map { response, data -> ([postModel]?, networkingResult) in
+        request.requestDate(.getPost(page))
+            .map { response, data -> ([postModel]?, networkingResult) in
             print("get post \(response.statusCode)")
             switch response.statusCode {
             case 200:
@@ -61,7 +62,8 @@ class PostAPI{
     }
     
     func getApplyPosts(_ page: String) -> Observable<([postModel]?, networkingResult)> {
-        httpClient.get(.getApplyPosts(page), param: nil).map { response, data -> ([postModel]?, networkingResult) in
+        request.requestDate(.getApplyPosts(page))
+            .map { response, data -> ([postModel]?, networkingResult) in
             print(response.statusCode)
             switch response.statusCode {
             case 200:
@@ -74,7 +76,8 @@ class PostAPI{
     }
 
     func getDetailPost(_ id: String) -> Observable<(detailModel?, networkingResult)> {
-        httpClient.get(.getDetailPost(id), param: nil).map { response, data -> (detailModel?, networkingResult) in
+        request.requestDate(.getDetailPost(id))
+            .map { response, data -> (detailModel?, networkingResult) in
             print(response.statusCode)
             switch response.statusCode {
             case 200:
@@ -88,22 +91,8 @@ class PostAPI{
     }
 
     func postProjectApply(_ id: String) -> Observable<networkingResult> {
-        httpClient.post(.projectApply, param: ["id": id])
-            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }.map { response, data -> networkingResult in
+        request.requestDate(.projectApply(id))
+            .map { response, data -> networkingResult in
             switch response.statusCode {
             case 200:
                 return .ok
@@ -116,22 +105,8 @@ class PostAPI{
     }
 
     func deleteProjectApply(_ id: String) -> Observable<networkingResult> {
-        httpClient.delete(.deProjectApply, param: ["id" : id])
-            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }.map { response, data -> networkingResult in
+        request.requestDate(.deProjectApply(id))
+            .map { response, data -> networkingResult in
             switch response.statusCode {
             case 200:
                 return .ok
@@ -144,7 +119,8 @@ class PostAPI{
     }
     
     func getApplyList(_ id: String) -> Observable<([ApplyList]?, networkingResult)> {
-        httpClient.get(.getApplyList(id), param: nil).map { response, data -> ([ApplyList]?, networkingResult) in
+        request.requestDate(.getApplyList(id))
+            .map { response, data -> ([ApplyList]?, networkingResult) in
             print(data)
             switch response.statusCode {
             case 200:
@@ -158,22 +134,8 @@ class PostAPI{
     }
 
     func deleteRejectApply(_ userEmail: String, _ postID: String) -> Observable<networkingResult> {
-        httpClient.put(.rejectApply, param: ["userEmail": userEmail, "postId": postID])
-            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }.map { response, data -> networkingResult in
+        request.requestDate(.rejectApply(userEmail, postID))
+            .map { response, data -> networkingResult in
             switch response.statusCode {
             case 200:
                 return .ok
@@ -184,22 +146,8 @@ class PostAPI{
     }
 
     func postAcceptApply(_ userEmail: String, _ postID: String) -> Observable<networkingResult> {
-        httpClient.put(.acceptApply, param: ["userEmail": userEmail, "postId":postID])
-            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }.map { response, data -> networkingResult in
+        request.requestDate(.acceptApply(userEmail, postID))
+            .map { response, data -> networkingResult in
             switch response.statusCode {
             case 200:
                 return .ok
@@ -210,7 +158,8 @@ class PostAPI{
     }
     
     func getMyPost(_ page: String) -> Observable<([postModel]?, networkingResult)> {
-        httpClient.get(.getMyPost(page), param: nil).map { response, data -> ([postModel]?, networkingResult) in
+        request.requestDate(.getMyPost(page))
+            .map { response, data -> ([postModel]?, networkingResult) in
             print(response.statusCode)
             switch response.statusCode {
             case 200:
@@ -222,8 +171,9 @@ class PostAPI{
         }
     }
     
-    func searchPost(_ category: String,_ page: Int) -> Observable<([postModel]?, networkingResult)> {
-        httpClient.get(.searchPost(category, page), param: nil).map{ response,data -> ([postModel]?, networkingResult) in
+    func searchPost(_ category: String,_ page: String) -> Observable<([postModel]?, networkingResult)> {
+        request.requestDate(.searchPost(page, category))
+            .map{ response,data -> ([postModel]?, networkingResult) in
             switch response.statusCode {
             case 200:
                 guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault) }
@@ -235,29 +185,14 @@ class PostAPI{
     }
 
     func getIndividualChat(_ email: String) -> Observable<(roomId?, networkingResult)> {
-        httpClient.get(.getIndividualCaht(email), param: nil).map{ (response, data) -> (roomId?, networkingResult) in
+        request.requestDate(.getIndividualCaht(email))
+            .map{ (response, data) -> (roomId?, networkingResult) in
             switch response.statusCode {
             case 200:
                 guard let data = try? JSONDecoder().decode(roomId.self, from: data) else { return (nil, .fault)}
                 
                 return (data, .ok)
             default:
-                return (nil, .fault)
-            }
-        }
-    }
-    
-    func emailOutput(_ email: String) -> Observable<([postModel]?, networkingResult)> {
-        httpClient.aiPost(.output, param: ["email": email]).map { response, data -> ([postModel]?, networkingResult) in
-            print(response.statusCode)
-            print("api \(email)")
-            switch response.statusCode {
-            case 200:
-                guard let data = try? JSONDecoder().decode([postModel].self, from: data) else { return (nil, .fault)}
-                
-                return (data, .ok)
-            default:
-                print(response.statusCode)
                 return (nil, .fault)
             }
         }

@@ -11,26 +11,11 @@ import Alamofire
 
 class AuthAPI {
     
-    let baseURL = "http://3.35.216.218"
+    let baseURL = "http://18.223.24.131"
     let request = ServiceType()
     
     func sendAuthCode(_ email: String) -> Observable<networkingResult> {
-        (.postAuthCode, param: ["email": email])
-          .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }
+        request.requestDate(.postAuthCode(email))
           .map { response, data -> networkingResult in
             print(response.statusCode)
             switch response.statusCode {
@@ -48,22 +33,7 @@ class AuthAPI {
       }
     
     func checkAuthCode(_ email: String, _ code: String) -> Observable<networkingResult> {
-        httpClient.post(.checkAuthCode, param: ["email":email, "code":code])
-            .catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }
+        request.requestDate(.checkAuthCode(email, code))
             .map { response, data -> networkingResult in
             print(response.statusCode)
             switch response.statusCode {
@@ -78,7 +48,8 @@ class AuthAPI {
     }
     
     func register(_ email: String, _ pw: String, _ nickName: String) -> Observable<networkingResult> {
-        httpClient.post(.register, param: ["email": email, "password": pw, "nickname": nickName]).map { response, data -> networkingResult in
+        request.requestDate(.register(email, pw, nickName))
+            .map { response, data -> networkingResult in
             print(response.statusCode)
             switch response.statusCode {
             case 200:
@@ -105,8 +76,6 @@ class AuthAPI {
                         multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
                     }
                 }else {
-                    print(key)
-                    print(value)
                     multipartFormData.append("\(value)".data(using: .utf8)!, withName: key, mimeType: "text/plain")
                 }
             }
@@ -114,22 +83,9 @@ class AuthAPI {
     }
     
     func changePassword(_ email: String, _ pw: String) -> Observable<networkingResult> {
-        httpClient.put(.changePw, param: ["email": email, "password": pw]).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://3.35.216.218")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }.map{ response, data -> networkingResult in
-            print("pw \(response.statusCode)")
+        request.requestDate(.changePw(email, pw))
+            .map{ response, data -> networkingResult in
+                print("pw \(response.statusCode)")
                 switch response.statusCode {
                 case 200:
                     return .ok
@@ -143,8 +99,7 @@ class AuthAPI {
     }
     
     func signIn(_ email: String, _ pw: String) -> Observable<networkingResult> {
-        httpClient.post(.signIn,
-                        param: ["email": email, "password": pw])
+        request.requestDate(.signIn(email, pw))
             .map{ response, data -> networkingResult in
                 print(response.statusCode)
                 switch response.statusCode {
@@ -163,41 +118,13 @@ class AuthAPI {
     }
     
     func changPwSendEmail(_ email: String) -> Observable<networkingResult> {
-        httpClient.post(.changePwSendEmail, param: ["email":email]).catchError{ error -> Observable<(HTTPURLResponse, Data)> in
-            guard let afError = error.asAFError else { return .error(error) }
-            switch afError {
-            case .responseSerializationFailed(reason: .inputDataNilOrZeroLength):
-              let response = HTTPURLResponse(
-                url: URL(string: "http://10.156.145.141:8080")!,
-                statusCode: 200,
-                httpVersion: nil,
-                headerFields: nil
-              )
-                return .just((response!, Data(base64Encoded: "")!))
-            default:
-              return .error(error)
-            }
-          }.map { resposne, data -> networkingResult in
+        request.requestDate(.changePwSendEmail(email)).map { resposne, data -> networkingResult in
             switch resposne.statusCode {
             case 200:
                 return .ok
             case 409:
                 return .notFound
             default:
-                return .fault
-            }
-        }
-    }
-    
-    func emailInput(_ email: String) -> Observable<networkingResult> {
-        httpClient.aiPost(.input, param: ["email": email]).map{ response, data -> networkingResult in
-            switch response.statusCode {
-            case 200:
-                return .ok
-            case 404:
-                return .notFound
-            default:
-                print(response.statusCode)
                 return .fault
             }
         }
