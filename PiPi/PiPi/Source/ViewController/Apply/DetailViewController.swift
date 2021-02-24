@@ -11,7 +11,7 @@ import RxSwift
 import NSObject_Rx
 
 class DetailViewController: UIViewController {
-
+    
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var userImg: UIButton!
     @IBOutlet weak var userName: UILabel!
@@ -40,10 +40,10 @@ class DetailViewController: UIViewController {
         ppDetailTextView.layer.cornerRadius = 10
         userImg.clipsToBounds = true
         userImg.layer.cornerRadius = 30
-        
-        applyBtn.rx.tap.subscribe(onNext: { _ in
-            self.showAlert(title: "신청", message: "신청하시겠습니까?")
-            self.navigationController?.popViewController(animated: true)
+        applyBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
+        applyBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+            showAlert(title: "신청", message: "신청하시겠습니까?")
+            navigationController?.popViewController(animated: true)
         }).disposed(by: rx.disposeBag)
     }
     
@@ -54,50 +54,48 @@ class DetailViewController: UIViewController {
             selectApply: applyBtn.rx.tap.asDriver())
         let output = viewModel.transform(input)
         
-        output.loadDetail.asObservable().subscribe(onNext: { result in
-            let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.img)")
-            self.backImageView.kf.setImage(with: backimg)
-            let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.userImg ?? "")")
-            self.userImg.load(url: userimg!)
-            
-            self.userImg.rx.tap.subscribe(onNext: { _ in
-                guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "profileVC") as? SeeProfileViewController else { return }
-                print(result.userEmail)
-                vc.email = result.userEmail
-                self.navigationController?.pushViewController(vc, animated: true)
-            }).disposed(by: self.rx.disposeBag)
-            
+        output.loadDetail.asObservable().subscribe(onNext: {[unowned self] result in
             var skillSet = String()
+            let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.img)")
+            backImageView.kf.setImage(with: backimg)
+            let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.userImg ?? "")")
+            userImg.load(url: userimg!)
+            
             for i in 0..<result.postSkillsets.count {
                 skillSet.append("  " + result.postSkillsets[i].skill)
             }
             skillSet.append("  ")
-            self.userName.text = result.userNickname
-            self.ppNameLabel.text = result.title
-            self.ppIntroLabel.text = "  " + result.idea + "  "
-            self.ppSkillLabel.text = skillSet
-            self.ppDetailTextView.text =
-                result.content
-            self.ppMaxLabel.text = "\(result.max ?? 0)"
-            self.setButton(self.applyBtn, result.applied)
-            self.ppSkillLabel.layer.borderColor = UIColor.lightGray.cgColor
-            self.ppSkillLabel.layer.borderWidth = 1
-            self.setBorder(self.ppIntroLabel)
-            self.setBorder(self.ppSkillLabel)
+            userName.text = result.userNickname
+            ppNameLabel.text = result.title
+            ppIntroLabel.text = "  " + result.idea + "  "
+            ppDetailTextView.text = result.content
+            ppMaxLabel.text = "\(result.max ?? 0)"
+            ppSkillLabel.layer.borderColor = UIColor.lightGray.cgColor
+            ppSkillLabel.layer.borderWidth = 1
+            ppSkillLabel.text = result.postSkillsets.isEmpty ? " 스킬이 지정되지 않았습니다. " : skillSet
             
             if result.mine {
-                self.applyBtn.setTitle("내 공고글", for: .normal)
-                self.applyBtn.isEnabled = false
+                applyBtn.setTitle("내 공고글", for: .normal)
+                applyBtn.isEnabled = false
             }
             
+            userImg.rx.tap.subscribe(onNext: {[unowned self] _ in
+                guard let vc = storyboard?.instantiateViewController(withIdentifier: "profileVC") as? SeeProfileViewController else { return }
+                vc.email = result.userEmail
+                navigationController?.pushViewController(vc, animated: true)
+            }).disposed(by: self.rx.disposeBag)
+            
+            setButton(applyBtn, result.applied)
+            setBorder(ppIntroLabel)
+            setBorder(ppSkillLabel)
         }).disposed(by: rx.disposeBag)
         
-        output.resultApplyT.asObservable().subscribe(onCompleted: {
-            self.setButton(self.applyBtn, true)
+        output.resultApplyT.asObservable().subscribe(onCompleted: {[unowned self] in
+            setButton(applyBtn, true)
         }).disposed(by: rx.disposeBag)
         
-        output.resultApplyF.asObservable().subscribe(onCompleted: {
-            self.setButton(self.applyBtn, false)
+        output.resultApplyF.asObservable().subscribe(onCompleted: {[unowned self] in
+            setButton(applyBtn, false)
         }).disposed(by: rx.disposeBag)
     }
 }

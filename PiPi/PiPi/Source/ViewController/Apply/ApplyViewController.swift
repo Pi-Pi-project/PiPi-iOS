@@ -13,7 +13,7 @@ import Kingfisher
 import iOSDropDown
 
 class ApplyViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     private let viewModel = ApplyViewModel()
@@ -21,26 +21,28 @@ class ApplyViewController: UIViewController {
     private let loadMoreData = PublishSubject<Int>()
     
     var count: Int = 0
-
+    
     lazy var floatingButton: UIButton = {
-            let button = UIButton(frame: .zero)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
-            button.addTarget(self, action: #selector(floatingBtn), for: .touchUpInside)
-            button.setImage(UIImage(named: "post.png"), for: .normal)
-            return button
+        let button = UIButton(frame: .zero)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
+        button.addTarget(self, action: #selector(floatingBtn), for: .touchUpInside)
+        button.setImage(UIImage(named: "post.png"), for: .normal)
+        return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false
-
+        
+        navigationController?.isNavigationBarHidden = false
+        
         bindViewModel()
         registerCell()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         if let view = UIApplication.shared.windows.filter({$0.isKeyWindow}).first{
             view.addSubview(floatingButton)
             setupUI()
@@ -50,6 +52,7 @@ class ApplyViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         if let view = UIApplication.shared.windows.filter({$0.isKeyWindow}).first, floatingButton.isDescendant(of: view) {
             floatingButton.removeFromSuperview()
         }
@@ -63,11 +66,11 @@ class ApplyViewController: UIViewController {
         let nib = UINib(nibName: "MainTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "joinCell")
         
-        tableView.rx.didScroll.asObservable().subscribe(onNext: { _ in
-            if self.tableView.contentOffset.y > self.tableView.contentSize.height - self.tableView.bounds.size.height {
-                self.loadMoreData.onNext(self.count)
-                self.count += 1
-                self.tableView.reloadData()
+        tableView.rx.didScroll.asObservable().subscribe(onNext: {[unowned self] _ in
+            if tableView.contentOffset.y > tableView.contentSize.height - tableView.bounds.size.height {
+                loadMoreData.onNext(count)
+                count += 1
+                tableView.reloadData()
             }
         }).disposed(by: rx.disposeBag)
         
@@ -83,14 +86,13 @@ class ApplyViewController: UIViewController {
         
         ApplyViewModel.loadApplyData
             .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
-                print(repository.id)
                 var skillSet = String()
+                let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
+                let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg ?? "")")
                 
                 for i in 0..<repository.postSkillsets.count {
                     skillSet = " " + repository.postSkillsets[i].skill + " "
                 }
-                let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
-                let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg ?? "")")
                 
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title
@@ -98,21 +100,20 @@ class ApplyViewController: UIViewController {
                 cell.userImgView.kf.setImage(with: userimg)
             }.disposed(by: rx.disposeBag)
         
-        output.loadMoreData.subscribe(onNext:{ data in
+        output.loadMoreData.subscribe(onNext:{[unowned self] data in
             for i in 0..<data.count {
                 ApplyViewModel.loadApplyData.add(element: data[i])
             }
-            self.tableView.reloadData()
+            tableView.reloadData()
         }).disposed(by: rx.disposeBag)
         
-        output.detailView.asObservable().subscribe(onNext: { id in
-            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
+        output.detailView.asObservable().subscribe(onNext: {[unowned self] id in
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }
             vc.selectIndexPath = id
-            print(id)
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         }).disposed(by: rx.disposeBag)
         
-        output.result.emit(onCompleted : { self.tableView.reloadData() }).disposed(by: rx.disposeBag)
+        output.result.emit(onCompleted : {[unowned self] in tableView.reloadData() }).disposed(by: rx.disposeBag)
     }
     
     func setupUI(){

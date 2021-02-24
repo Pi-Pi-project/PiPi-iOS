@@ -11,7 +11,7 @@ import RxCocoa
 import iOSDropDown
 
 class MyPostViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: DropDown!
     @IBOutlet weak var searchBtn: UIButton!
@@ -22,7 +22,7 @@ class MyPostViewController: UIViewController {
     private let loadMoreData = PublishSubject<Int>()
     
     var count: Int = 0
-
+    
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -34,14 +34,16 @@ class MyPostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false
-
+        
+        navigationController?.isNavigationBarHidden = false
+        
         bindViewModel()
         registerCell()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         if let view = UIApplication.shared.windows.filter({$0.isKeyWindow}).first{
             view.addSubview(floatingButton)
             setupUI()
@@ -50,6 +52,7 @@ class MyPostViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         if let view = UIApplication.shared.windows.filter({$0.isKeyWindow}).first, floatingButton.isDescendant(of: view) {
             floatingButton.removeFromSuperview()
         }
@@ -59,11 +62,11 @@ class MyPostViewController: UIViewController {
         let nib = UINib(nibName: "MainTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "joinCell")
         
-        tableView.rx.didScroll.asObservable().subscribe(onNext: { _ in
-            if self.tableView.contentOffset.y > self.tableView.contentSize.height - self.tableView.bounds.size.height {
-                self.loadMoreData.onNext(self.count)
-                self.count += 1
-                self.tableView.reloadData()
+        tableView.rx.didScroll.asObservable().subscribe(onNext: {[unowned self] _ in
+            if tableView.contentOffset.y > tableView.contentSize.height - tableView.bounds.size.height {
+                loadMoreData.onNext(count)
+                count += 1
+                tableView.reloadData()
             }
         }).disposed(by: rx.disposeBag)
         
@@ -79,34 +82,34 @@ class MyPostViewController: UIViewController {
         MyPostViewModel.loadMyPost
             .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
                 var skillSet = String()
+                let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
                 
                 for i in 0..<repository.postSkillsets.count {
                     skillSet.append(" " + repository.postSkillsets[i].skill + " ")
                 }
                 
-                let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
                 cell.backImageView.kf.setImage(with: backimg)
                 cell.projectLabel.text = repository.title
                 cell.skilsLabel.text = skillSet
                 cell.userImgView.isHidden = true
                 cell.applyListBtn.isHidden = false
-                cell.applyListBtn.rx.tap.subscribe(onNext: { _ in
-                    self.selectIndexPath.accept(row)
+                
+                cell.applyListBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+                    selectIndexPath.accept(row)
                 }).disposed(by: self.rx.disposeBag)
             }.disposed(by: rx.disposeBag)
-
-        output.loadMoreData.subscribe(onNext:{ data in
+        
+        output.loadMoreData.subscribe(onNext:{[unowned self] data in
             for i in 0..<data.count {
                 MyPostViewModel.loadMyPost.add(element: data[i])
             }
-            self.tableView.reloadData()
+            tableView.reloadData()
         }).disposed(by: rx.disposeBag)
         
-        output.detailView.asObservable().subscribe(onNext: { id in
-            print("Asf")
-            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "applylistVC") as? ApplyListViewController else { return }
+        output.detailView.asObservable().subscribe(onNext: {[unowned self] id in
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: "applylistVC") as? ApplyListViewController else { return }
             vc.selectIndexPath = id
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         }).disposed(by: rx.disposeBag)
     }
     
@@ -124,7 +127,7 @@ class MyPostViewController: UIViewController {
     }
     
     @objc func floatingBtn(){
-        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "postVC") as! PostViewController
+        let pushVC = storyboard?.instantiateViewController(withIdentifier: "postVC") as! PostViewController
         present(pushVC, animated: true, completion: nil)
     }
 }

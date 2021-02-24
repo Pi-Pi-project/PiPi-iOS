@@ -11,7 +11,7 @@ import RxCocoa
 import Kingfisher
 
 class ApplyListViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var createProjectBtn: UIButton!
     
@@ -22,6 +22,7 @@ class ApplyListViewController: UIViewController {
     private let reject = BehaviorRelay<Void>(value: ())
     private let goToChat = BehaviorRelay<Int>(value: 0)
     private var index = Int()
+    
     var selectIndexPath = String()
     
     override func viewDidLoad() {
@@ -50,42 +51,37 @@ class ApplyListViewController: UIViewController {
                 cell.userImageView.kf.setImage(with: url)
                 cell.userName.text = repository.userNickname
                 
-                cell.accessBtn.rx.tap.subscribe(onNext: { _ in
-                    self.selectApply.accept(row)
-                }).disposed(by: self.rx.disposeBag)
+                cell.accessBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+                    selectApply.accept(row)
+                }).disposed(by: cell.disposeBag)
                 
-                cell.rejectBtn.rx.tap.subscribe(onNext: { _ in
-                    self.selectApply.accept(row)
-                }).disposed(by: self.rx.disposeBag)
+                cell.rejectBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+                    selectApply.accept(row)
+                }).disposed(by: cell.disposeBag)
                 
-                cell.chatBtn.rx.tap.subscribe(onNext: { _ in
-                    self.goToChat.accept(row)
-                }).disposed(by: self.rx.disposeBag)
+                cell.chatBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+                    goToChat.accept(row)
+                }).disposed(by: cell.disposeBag)
                 
                 self.setButton(cell.chatBtn, false)
             }.disposed(by: rx.disposeBag)
         
-        output.accept.emit(onNext: { _ in
-                self.loadData.accept(())
-                self.tableView.reloadData()
-            }).disposed(by: rx.disposeBag)
-        
-        output.reject.emit(onNext: { _ in
-                self.loadData.accept(())
-                self.tableView.reloadData()
-            }).disposed(by: rx.disposeBag)
-        
-        output.create.emit(onNext: { message in
-            self.showAlert(title: "실패", message: message)
-        },onCompleted: {
-            self.navigationController?.popViewController(animated: true)
+        Observable.of(output.accept, output.reject).merge().subscribe(onNext: {[unowned self] _ in
+            loadData.accept(())
+            tableView.reloadData()
         }).disposed(by: rx.disposeBag)
         
-        output.goChat.emit(onNext: { id in
+        output.create.emit(onNext: {[unowned self] message in
+            showAlert(title: "실패", message: message)
+        },onCompleted: {[unowned self] in
+            navigationController?.popViewController(animated: true)
+        }).disposed(by: rx.disposeBag)
+        
+        output.goChat.emit(onNext: {[unowned self] id in
             let storyboard = UIStoryboard(name: "Chat", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "chatVC") as! ChatViewController
             vc.roomId = id
-            self.navigationController!.pushViewController(vc, animated: true)
+            navigationController!.pushViewController(vc, animated: true)
         }).disposed(by: rx.disposeBag)
     }
     
@@ -95,14 +91,4 @@ class ApplyListViewController: UIViewController {
         
         tableView.rowHeight = 72
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
