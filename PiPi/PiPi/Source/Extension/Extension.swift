@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import RxSwift
+import RxCocoa
 
 extension UIViewController {
         
@@ -193,5 +194,19 @@ extension UIImage {
     func toString() -> String? {
         let data: Data? = self.pngData()
         return data?.base64EncodedString(options: .endLineWithLineFeed)
+    }
+}
+
+extension BehaviorRelay where Element: RangeReplaceableCollection {
+    func add(element: Element.Element) {
+        var array = self.value
+        array.append(element)
+        self.accept(array)
+    }
+    
+    func insert(element: Element.Element) {
+        var array = self.value
+        array.insert(element, at: 0 as! Element.Index)
+        self.accept(array)
     }
 }
