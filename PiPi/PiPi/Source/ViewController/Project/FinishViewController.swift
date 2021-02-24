@@ -43,49 +43,4 @@ class FinishViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }).disposed(by: rx.disposeBag)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-}
-
-
-class FinishViewModel: ViewModelType {
-    private let disposeBag = DisposeBag()
-    
-    struct input{
-        let completedTap: Driver<Void>
-        let projectUrl: Driver<String>
-        let projectIntro: Driver<String>
-        let selectIndexPath: Driver<Int>
-    }
-    
-    struct output{
-        let result: Signal<String>
-    }
-    
-    func transform(_ input: input) -> output {
-        let api = ProjectAPI()
-        let result = PublishSubject<String>()
-        let info = Driver.combineLatest(input.selectIndexPath, input.projectUrl, input.projectIntro)
-        
-        input.completedTap.asObservable().withLatestFrom(info).subscribe(onNext: { id ,url, intro in
-            api.finishProject(id, url, intro).subscribe(onNext: { response in
-                print(response)
-                switch response {
-                case .ok:
-                    result.onCompleted()
-                default:
-                    result.onNext("프로젝트 완료하는 중에 예상치 못한 오류")
-                }
-            }).disposed(by: self.disposeBag)
-        }).disposed(by: disposeBag)
-        
-        return output(result: result.asSignal(onErrorJustReturn: "프로젝트 완료 실패"))
-    }
 }
