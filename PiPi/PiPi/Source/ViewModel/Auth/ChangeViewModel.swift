@@ -30,7 +30,8 @@ class ChangeViewModel: ViewModelType {
         let info = Driver.combineLatest(input.newPw, input.rePw, input.userEmail)
         let isEnable = info.map { $0.0 == $0.1 && !$0.0.isEmpty}
         
-        input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext:{ newPw, rePw, userE in
+        input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext:{[weak self] newPw, rePw, userE in
+            guard let self = self else {return}
             api.changePassword(userE, rePw).subscribe(onNext: { response in
                 switch response {
                 case .ok:

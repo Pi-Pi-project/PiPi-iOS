@@ -32,7 +32,8 @@ class RegisterViewModel: ViewModelType {
         let info = Driver.combineLatest(input.email, input.nickname, input.userRepw)
         let isEnable = info.map{ !$0.0.isEmpty && !$0.1.isEmpty && !$0.2.isEmpty }
         
-        input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { email, nickname, userRepw in
+        input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: {[weak self] email, nickname, userRepw in
+            guard let self = self else {return}
             api.register(email, userRepw, nickname).subscribe(onNext: { response in
                 switch response {
                 case .ok:

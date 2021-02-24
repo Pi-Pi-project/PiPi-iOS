@@ -33,9 +33,9 @@ class DetailViewModel: ViewModelType {
         let resultApplyF = PublishSubject<String>()
         let info = Signal.combineLatest(input.selectApply.asSignal(onErrorJustReturn: ()), loadDetail.asSignal())
         
-        input.loadDetail.asObservable().subscribe(onNext: { id in
+        input.loadDetail.asObservable().subscribe(onNext: {[weak self] id in
+            guard let self = self else {return}
             api.getDetailPost(input.selectIndexPath).subscribe(onNext: { response,statusCode in
-                print(statusCode)
                 switch statusCode {
                 case .ok:
                     loadDetail.accept(response!)
@@ -46,7 +46,8 @@ class DetailViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.selectApply.asObservable().withLatestFrom(info).subscribe(onNext: { selectApply, data in
+        input.selectApply.asObservable().withLatestFrom(info).subscribe(onNext: {[weak self] selectApply, data in
+            guard let self = self else {return}
             if !data.applied {
                 api.postProjectApply(input.selectIndexPath).subscribe(onNext: { response in
                     print("postApply \(response)")

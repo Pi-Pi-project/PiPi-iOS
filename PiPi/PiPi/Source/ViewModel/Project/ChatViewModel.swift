@@ -32,9 +32,9 @@ class ChatViewModel: ViewModelType {
         let loadChat = BehaviorRelay<[getChat]>(value: [])
         let chat = PublishSubject<String>()
         let refresh = PublishRelay<[getChat]>()
-        let info = input.roomId
         
-        input.showEmail.asObservable().subscribe(onNext: { _ in
+        input.showEmail.asObservable().subscribe(onNext: {[weak self] _ in
+            guard let self = self else {return}
             api.showUserInfo().subscribe(onNext: { data, response in
                 switch response {
                 case .ok:
@@ -45,7 +45,8 @@ class ChatViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.loadChat.asObservable().subscribe(onNext: { _ in
+        input.loadChat.asObservable().subscribe(onNext: {[weak self] _ in
+            guard let self = self else {return}
             load.getChats(input.roomId, 0).subscribe(onNext: { data, response in
                 switch response {
                 case .ok:
@@ -57,7 +58,8 @@ class ChatViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.loadMoreChat.asObservable().subscribe(onNext: { page in
+        input.loadMoreChat.asObservable().subscribe(onNext: {[weak self] page in
+            guard let self = self else {return}
             load.getChats(input.roomId, page).subscribe(onNext: { data, response in
                 switch response {
                 case .ok:

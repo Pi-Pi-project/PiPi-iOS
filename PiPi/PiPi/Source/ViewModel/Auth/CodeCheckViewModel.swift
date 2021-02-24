@@ -30,7 +30,8 @@ class CodeCheckViewModel: ViewModelType {
         let isEnable = info.map { !$0.0.isEmpty }
         let result = PublishSubject<String>()
         
-        input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { code, email in
+        input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: {[weak self] code, email in
+            guard let self = self else {return}
             api.checkAuthCode(email, code).subscribe(onNext: { response in
                 switch response {
                 case .ok:

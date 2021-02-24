@@ -29,10 +29,10 @@ class ChatListViewModel: ViewModelType {
         let loadList = PublishRelay<[room]>()
         let room = PublishSubject<Int>()
         var select = Int()
-        
         let info = Signal.combineLatest(input.selectIndexPath, loadList.asSignal())
             
-        input.loadList.asObservable().subscribe(onNext:{ _ in
+        input.loadList.asObservable().subscribe(onNext:{[weak self] _ in
+            guard let self = self else {return}
             api.getRoom().subscribe(onNext: { data, response in
                 switch response{
                 case .ok:

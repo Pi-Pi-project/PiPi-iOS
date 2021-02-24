@@ -52,7 +52,8 @@ class MainViewModel: ViewModelType {
         var select = String()
         let categoty = Driver.combineLatest(input.searchText, input.loadMoreSearch)
         
-        input.email.asObservable().subscribe(onNext: { email in
+        input.email.asObservable().subscribe(onNext: {[weak self] email in
+            guard let self = self else {return}
             api.getPosts(0).subscribe(onNext: { response, statusCode in
                 switch statusCode {
                 case .ok:
@@ -64,7 +65,8 @@ class MainViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.loadMoreData.asObservable().subscribe(onNext: { count in
+        input.loadMoreData.asObservable().subscribe(onNext: {[weak self] count in
+            guard let self = self else {return}
             api.getPosts(count).subscribe(onNext: { response, statusCode in
                 switch statusCode {
                 case .ok:
@@ -80,8 +82,9 @@ class MainViewModel: ViewModelType {
             nextView.onNext(select)
         }).disposed(by: disposeBag)
         
-        input.searchText.asObservable().subscribe(onNext: { searchText in
-            api.searchPost(searchText, 0).subscribe(onNext: { response, statusCode in
+        input.searchText.asObservable().subscribe(onNext: {[weak self] searchText in
+            guard let self = self else {return}
+            api.searchPost(searchText, String(0)).subscribe(onNext: { response, statusCode in
                 switch statusCode {
                 case .ok:
                     loadData.accept(response!)
@@ -92,8 +95,9 @@ class MainViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.loadMoreSearch.withLatestFrom(categoty).asObservable().subscribe(onNext: { cate, page in
-            api.searchPost(cate, page).subscribe(onNext: { response, statusCode in
+        input.loadMoreSearch.withLatestFrom(categoty).asObservable().subscribe(onNext: {[weak self] cate, page in
+            guard let self = self else {return}
+            api.searchPost(cate, String(page)).subscribe(onNext: { response, statusCode in
                 switch statusCode {
                 case .ok:
                     loadMoreSearch.accept(response!)

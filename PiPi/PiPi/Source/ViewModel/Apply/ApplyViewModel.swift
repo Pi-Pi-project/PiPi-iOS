@@ -33,7 +33,8 @@ class ApplyViewModel: ViewModelType {
         var select = String()
         let loadMoreData = BehaviorRelay<[postModel]>(value: [])
         
-        input.loadData.asObservable().subscribe(onNext: { _ in
+        input.loadData.asObservable().subscribe(onNext: {[weak self] _ in
+            guard let self = self else {return}
             api.getApplyPosts("0").subscribe(onNext: { response, statusCode in
                 print(statusCode)
                 switch statusCode {
@@ -51,7 +52,8 @@ class ApplyViewModel: ViewModelType {
             detailView.onNext(select)
         }).disposed(by: disposeBag)
         
-        input.loadMoreData.asObservable().subscribe(onNext: { count in
+        input.loadMoreData.asObservable().subscribe(onNext: {[weak self] count in
+            guard let self = self else {return}
             api.getApplyPosts("\(count)").subscribe(onNext: { response, statusCode in
                 switch statusCode {
                 case .ok:

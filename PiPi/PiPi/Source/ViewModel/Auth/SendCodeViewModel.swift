@@ -29,7 +29,8 @@ class SendCodeViewModel: ViewModelType {
         let isEnable = info.map { !$0.isEmpty }
         let result = PublishSubject<String>()
     
-        input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: { email in
+        input.doneTap.withLatestFrom(info).asObservable().subscribe(onNext: {[weak self] email in
+            guard let self = self else {return}
             api.sendAuthCode(email).subscribe(onNext: { response in
                 switch response {
                 case .ok:

@@ -29,7 +29,8 @@ class ProjectViewModel: ViewModelType {
         let detailProject = PublishSubject<String>()
         let info = Driver.combineLatest(input.selectIndexPath, ProjectViewModel.loadProject.asDriver(onErrorJustReturn: []))
         
-        input.loadProject.asObservable().subscribe(onNext: { _ in
+        input.loadProject.asObservable().subscribe(onNext: {[weak self] _ in
+            guard let self = self else {return}
             api.getProject("0").subscribe(onNext: { data, response in
                 print(response)
                 switch response {

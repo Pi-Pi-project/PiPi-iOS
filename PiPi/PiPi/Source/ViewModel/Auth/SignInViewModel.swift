@@ -32,7 +32,8 @@ class SignInViewModel: ViewModelType {
         let isEnable = info.map { !$0.0.isEmpty && !$0.1.isEmpty }
         let result = PublishSubject<String>()
         
-        input.loadAutoLogin.asObservable().withLatestFrom(info).subscribe(onNext: { userE, userP, isAuto in
+        input.loadAutoLogin.asObservable().withLatestFrom(info).subscribe(onNext: {[weak self] userE, userP, isAuto in
+            guard let self = self else {return}
             if let userId = UserDefaults.standard.string(forKey: "id"){
                 let userPw = UserDefaults.standard.string(forKey: "pw")!
                 

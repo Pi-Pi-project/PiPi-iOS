@@ -37,7 +37,8 @@ class CalendarViewModel: ViewModelType {
         let todoInfo = Driver.combineLatest(input.selectIndexPath, input.todoText, input.selectDate)
         let successTodo = Driver.combineLatest(input.successTodo, CalendarViewModel.loadTodo.asDriver(onErrorJustReturn: []))
         
-        input.selectDate.asObservable().withLatestFrom(info).subscribe(onNext: { id, date in
+        input.selectDate.asObservable().withLatestFrom(info).subscribe(onNext: {[weak self] id, date in
+            guard let self = self else {return}
             api.getTodo(id, date).subscribe(onNext: { data, response in
                 switch response {
                 case .ok:
@@ -49,7 +50,8 @@ class CalendarViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.alertTap.asObservable().withLatestFrom(todoInfo).subscribe(onNext: { id, todo, date in
+        input.alertTap.asObservable().withLatestFrom(todoInfo).subscribe(onNext: {[weak self] id, todo, date in
+            guard let self = self else {return}
             api.createTodo(todo, date, id).subscribe(onNext: { response in
                 switch response {
                 case .ok:
@@ -60,7 +62,8 @@ class CalendarViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.successTodo.asObservable().withLatestFrom(successTodo).subscribe(onNext: { id, data in
+        input.successTodo.asObservable().withLatestFrom(successTodo).subscribe(onNext: {[weak self] id, data in
+            guard let self = self else {return}
             let todoId = data[id].id
             api.successTodo(todoId).subscribe(onNext: { response in
                 switch response {

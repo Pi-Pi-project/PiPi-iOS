@@ -36,7 +36,8 @@ class SetProfileViewModel: ViewModelType {
         let info = Driver.combineLatest(input.userSkill, input.userGit, input.userEmail, input.userImage, input.userIntro)
         let isEnable = info.map { !$0.0!.isEmpty }
         
-        input.showEmail.asObservable().subscribe(onNext: { _ in
+        input.showEmail.asObservable().subscribe(onNext: {[weak self] _ in
+            guard let self = self else {return}
             show.showUserInfo().subscribe(onNext: { data, response in
                 switch response {
                 case .ok:

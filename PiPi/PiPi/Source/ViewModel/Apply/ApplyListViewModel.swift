@@ -42,7 +42,8 @@ class ApplyListViewModel: ViewModelType {
         let info = Signal.combineLatest(input.selectIndexPath, ApplyListViewModel.loadApplyList.asSignal())
         let chatInfo = Signal.combineLatest(input.goToChat, ApplyListViewModel.loadApplyList.asSignal())
         
-        input.loadApplyData.asObservable().subscribe(onNext: { _ in
+        input.loadApplyData.asObservable().subscribe(onNext: {[weak self] _ in
+            guard let self = self else {return}
             print(input.selectApplyList)
             api.getApplyList(input.selectApplyList).subscribe(onNext: { response, statusCode in
                 switch statusCode {
@@ -55,7 +56,8 @@ class ApplyListViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.selectIndexPath.asObservable().withLatestFrom(info).subscribe(onNext: { row, data in
+        input.selectIndexPath.asObservable().withLatestFrom(info).subscribe(onNext: {[weak self] row, data in
+            guard let self = self else {return}
             if data[row].status != "ACCEPTED"{
                 api.postAcceptApply(data[row].userEmail, input.selectApplyList).subscribe(onNext: { statusCode in
                     switch statusCode {
@@ -77,7 +79,8 @@ class ApplyListViewModel: ViewModelType {
             }
         }).disposed(by: disposeBag)
         
-        input.createProject.asObservable().withLatestFrom(info).subscribe(onNext: { row, data in
+        input.createProject.asObservable().withLatestFrom(info).subscribe(onNext: {[weak self] row, data in
+            guard let self = self else {return}
             api.createProject(input.selectApplyList).subscribe(onNext: { response in
                 switch response {
                 case .ok:
@@ -90,7 +93,8 @@ class ApplyListViewModel: ViewModelType {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
-        input.goToChat.asObservable().withLatestFrom(chatInfo).subscribe(onNext:{ row, data in
+        input.goToChat.asObservable().withLatestFrom(chatInfo).subscribe(onNext:{[weak self] row, data in
+            guard let self = self else {return}
             api.getIndividualChat(data[row].userEmail).subscribe(onNext: { data, response in
                 switch response {
                 case .ok:
