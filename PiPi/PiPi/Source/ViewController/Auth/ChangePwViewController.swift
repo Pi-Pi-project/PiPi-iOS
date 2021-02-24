@@ -16,10 +16,10 @@ class ChangePwViewController: UIViewController {
     @IBOutlet weak var rePwTextField: TKFormTextField!
     @IBOutlet weak var changePwBtn: UIButton!
     
-    var email = String()
-    
     private let viewModel = ChangeViewModel()
     private let errorLabel = UILabel()
+    
+    var email = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,13 +36,9 @@ class ChangePwViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.isEnable.drive(changePwBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-        output.isEnable.drive(onNext: {_ in
-            self.setButton(self.changePwBtn)
-        }).disposed(by: rx.disposeBag)
-        
-        output.result.emit(onNext: {
-            self.setUpErrorMessage(self.errorLabel, title: $0, superTextField: self.rePwTextField)
-        }, onCompleted: {  self.moveScene("signIn")}).disposed(by: rx.disposeBag)
+        output.isEnable.drive(onNext: {[unowned self] _ in setButton(changePwBtn)}).disposed(by: rx.disposeBag)
+        output.result.emit(onNext: {[unowned self] in setUpErrorMessage(errorLabel, title: $0, superTextField: rePwTextField)
+        }, onCompleted: {[unowned self] in moveScene("signIn")}).disposed(by: rx.disposeBag)
     }
     
     private func addKeyboardNotification() {
@@ -61,13 +57,13 @@ class ChangePwViewController: UIViewController {
     
     @objc func keyboardWillShow(note: NSNotification) {
         if ((note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            self.view.frame.origin.y = -20
+            view.frame.origin.y = -20
         }
     }
 
     @objc func keyboardWillHide(note: NSNotification) {
         if ((note.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            self.view.frame.origin.y = 0
+            view.frame.origin.y = 0
         }
     }
 

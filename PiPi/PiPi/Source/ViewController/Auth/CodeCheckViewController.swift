@@ -34,19 +34,17 @@ class CodeCheckViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.isEnable.drive(nextBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-        output.isEnable.drive(onNext: {_ in
-            self.setButton(self.nextBtn)
-        }).disposed(by: rx.disposeBag)
-        
-        output.result.emit(onNext: {
-            self.setUpErrorMessage(self.authCodeLabel, title: $0, superTextField: self.codeTextField)
-        }, onCompleted: { [unowned self] in nextWithData()}).disposed(by: rx.disposeBag)
+        output.isEnable.drive(onNext: {[unowned self] _ in setButton(self.nextBtn) }).disposed(by: rx.disposeBag)
+        output.result.emit(onNext: {[unowned self] in
+            setUpErrorMessage(self.authCodeLabel, title: $0, superTextField: self.codeTextField)
+        }, onCompleted: { [unowned self] in pushWithData()}
+        ).disposed(by: rx.disposeBag)
     }
 
-    func nextWithData() {
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "register") as? RegisterViewController else { return }
+    func pushWithData() {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "register") as? RegisterViewController else { return }
         vc.email = email
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func addKeyboardNotification() {
@@ -65,13 +63,13 @@ class CodeCheckViewController: UIViewController {
     
     @objc func keyboardWillShow(note: NSNotification) {
         if ((note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            self.view.frame.origin.y = -20
+            view.frame.origin.y = -20
         }
     }
 
     @objc func keyboardWillHide(note: NSNotification) {
         if ((note.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            self.view.frame.origin.y = 0
+            view.frame.origin.y = 0
         }
     }
 }

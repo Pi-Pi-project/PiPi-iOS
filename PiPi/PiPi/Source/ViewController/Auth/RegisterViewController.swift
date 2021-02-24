@@ -18,17 +18,16 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var rePwTextField: TKFormTextField!
     @IBOutlet weak var nextBtn: UIButton!
     
-    var email = String()
-    
     private let viewModel = RegisterViewModel()
     private let errorLabel = UILabel()
+    
+    var email = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addKeyboardNotification()
         bindViewModel()
-        // Do any additional setup after loading the view.
     }
     
     func bindViewModel() {
@@ -40,19 +39,16 @@ class RegisterViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.isEnabel.drive(nextBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-        output.isEnabel.drive(onNext: { _ in
-            self.setButton(self.nextBtn)
-        }).disposed(by: rx.disposeBag)
-        
-        output.result.emit(onNext: {
-            self.setUpErrorMessage(self.errorLabel, title: $0, superTextField: self.rePwTextField)
-        }, onCompleted: { [unowned self] in nextWithData()}).disposed(by: rx.disposeBag)
+        output.isEnabel.drive(onNext: {[unowned self] _ in setButton(nextBtn)}).disposed(by: rx.disposeBag)
+        output.result.emit(onNext: {[unowned self] in
+            setUpErrorMessage(errorLabel, title: $0, superTextField: rePwTextField)
+        }, onCompleted: { [unowned self] in pushWithData()}).disposed(by: rx.disposeBag)
     }
     
-    func nextWithData() {
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "setProfile") as? SetProfileViewController else { return }
+    func pushWithData() {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "setProfile") as? SetProfileViewController else { return }
         vc.email = email
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func addKeyboardNotification() {
@@ -71,13 +67,13 @@ class RegisterViewController: UIViewController {
     
     @objc func keyboardWillShow(note: NSNotification) {
         if ((note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            self.view.frame.origin.y = -20
+            view.frame.origin.y = -20
         }
     }
 
     @objc func keyboardWillHide(note: NSNotification) {
         if ((note.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            self.view.frame.origin.y = 0
+            view.frame.origin.y = 0
         }
     }
 

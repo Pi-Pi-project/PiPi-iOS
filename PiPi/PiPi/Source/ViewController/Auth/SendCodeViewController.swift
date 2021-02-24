@@ -9,7 +9,7 @@ import UIKit
 import TKFormTextField
 
 class SendCodeViewController: UIViewController {
-
+    
     @IBOutlet weak var emailTextField: TKFormTextField!
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var introLabel: UILabel!
@@ -19,18 +19,12 @@ class SendCodeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addKeyboardNotification()
-        setupUI()
-        bindViewModel()
-    }
         
-    func setupUI() {
-        nextBtn.rx.tap
-            .subscribe(onNext: {
-                self.nextBtn.isEnabled = false
-            }).disposed(by: rx.disposeBag)
+        addKeyboardNotification()
+        bindViewModel()
+        
+        nextBtn.rx.tap.subscribe(onNext: {[unowned self] in nextBtn.isEnabled = false }).disposed(by: rx.disposeBag)
     }
-
     
     func bindViewModel() {
         let input = SendCodeViewModel.input(email: emailTextField.rx.text.orEmpty.asDriver(),
@@ -38,27 +32,24 @@ class SendCodeViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.isEnable.drive(nextBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-        output.isEnable.drive(onNext: {_ in
-            self.setButton(self.nextBtn)
-        }).disposed(by: rx.disposeBag)
-        
-        output.result.emit(onNext: {
-            self.setUpErrorMessage(self.emailError, title: $0, superTextField: self.emailTextField)
-            self.nextBtn.isEnabled = true
-        }, onCompleted: {  self.nextWithData()}).disposed(by: rx.disposeBag)
+        output.isEnable.drive(onNext: {[unowned self] _ in setButton(self.nextBtn)}).disposed(by: rx.disposeBag)
+        output.result.emit(onNext: {[unowned self] in
+            setUpErrorMessage(emailError, title: $0, superTextField: emailTextField)
+            nextBtn.isEnabled = true
+        }, onCompleted: {[unowned self] in pushWithData()}
+        ).disposed(by: rx.disposeBag)
     }
     
-    func nextWithData() {
-        print("authCode")
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "authCode") as? CodeCheckViewController else { return }
+    func pushWithData() {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "authCode") as? CodeCheckViewController else { return }
         vc.email = emailTextField.text!
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func addKeyboardNotification() {
-        NotificationCenter.default.addObserver( self, selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil
         )
         
         NotificationCenter.default.addObserver(
@@ -71,15 +62,13 @@ class SendCodeViewController: UIViewController {
     
     @objc func keyboardWillShow(note: NSNotification) {
         if ((note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            self.view.frame.origin.y = -20
-        }
-    }
-
-    @objc func keyboardWillHide(note: NSNotification) {
-        if ((note.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            self.view.frame.origin.y = 0
+            view.frame.origin.y = -20
         }
     }
     
+    @objc func keyboardWillHide(note: NSNotification) {
+        if ((note.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            view.frame.origin.y = 0
+        }
+    }
 }
-

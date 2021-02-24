@@ -24,12 +24,12 @@ class SetProfileViewController: UIViewController {
     private let viewModel = SetProfileViewModel()
     private let errorLabel = UILabel()
     private let getEmail = BehaviorRelay<Void>(value: ())
+    private var skillSet = BehaviorRelay<[String]?>(value: [])
+    private var imageData = BehaviorRelay<Data?>(value: nil)
     
     var email = String()
     let imageString = String()
     var skillArray = [String]()
-    private var skillSet = BehaviorRelay<[String]?>(value: [])
-    private var imageData = BehaviorRelay<Data?>(value: nil)
     
     lazy var imagePicker: UIImagePickerController = {
         let picker: UIImagePickerController = UIImagePickerController()
@@ -49,14 +49,11 @@ class SetProfileViewController: UIViewController {
         skillsTextField.layer.borderWidth = 0.5
         skillsTextField.layer.borderColor = UIColor.gray.cgColor
         addKeyboardNotification()
-        completeBtn.rx.tap.subscribe(onNext: { _ in
-            print(self.skillArray)
-        }).disposed(by: rx.disposeBag)
         
-        pickerBtn.rx.tap.subscribe(onNext: { _ in
-            self.imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
-            self.imagePicker.allowsEditing = false
-            self.present(self.imagePicker, animated: true, completion: nil)
+        pickerBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+            imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
         }).disposed(by: rx.disposeBag)
         
         bindViewModel()
@@ -75,20 +72,10 @@ class SetProfileViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.isEnable.drive(completeBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-        output.isEnable.drive(onNext: { _ in
-            self.setButton(self.completeBtn)
-        }).disposed(by: rx.disposeBag)
-        
-        output.result.emit(
-            onNext: { self.setUpErrorMessage(self.errorLabel, title: $0, superTextField: self.gitTextField)},
-            onCompleted: { [unowned self] in
-                self.moveReference()
-            }
-        ).disposed(by: rx.disposeBag)
-        
-        output.email.emit(onNext: { email in
-            self.email = email
-        }).disposed(by: rx.disposeBag)
+        output.isEnable.drive(onNext: {[unowned self] _ in setButton(completeBtn)}).disposed(by: rx.disposeBag)
+        output.result.emit(onNext: {[unowned self] in setUpErrorMessage(errorLabel, title: $0, superTextField: gitTextField)},
+        onCompleted: { [unowned self] in moveReference()}).disposed(by: rx.disposeBag)
+        output.email.emit(onNext: {[unowned self] email in self.email = email }).disposed(by: rx.disposeBag)
     }
     
     class Skills: ResizingTokenFieldToken, Equatable {
@@ -103,18 +90,13 @@ class SetProfileViewController: UIViewController {
         }
     }
     
-    // MARK: - Navigation
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "gotomain"{
             let destinationNavigationController = segue.destination as! UINavigationController
             let destinationTopViewController = destinationNavigationController.topViewController as! JoinViewController
             self.navigationController?.pushViewController(destinationTopViewController, animated: false)
         }
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    
 
     private func addKeyboardNotification() {
         NotificationCenter.default.addObserver( self, selector: #selector(keyboardWillShow),
@@ -132,13 +114,13 @@ class SetProfileViewController: UIViewController {
     
     @objc func keyboardWillShow(note: NSNotification) {
         if ((note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            self.view.frame.origin.y = -20
+            view.frame.origin.y = -20
         }
     }
 
     @objc func keyboardWillHide(note: NSNotification) {
         if ((note.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            self.view.frame.origin.y = 0
+            view.frame.origin.y = 0
         }
     }
     

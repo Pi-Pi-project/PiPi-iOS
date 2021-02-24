@@ -12,7 +12,7 @@ import NSObject_Rx
 import TKFormTextField
 
 class SIgnInViewController: UIViewController {
-
+    
     @IBOutlet weak var emailTextField: TKFormTextField!
     @IBOutlet weak var pwTextField: TKFormTextField!
     @IBOutlet weak var signInBtn: UIButton!
@@ -31,15 +31,13 @@ class SIgnInViewController: UIViewController {
         setUI()
         bindViewModel()
     }
-
+    
     func setUI() {
-        findPwBtn.rx.tap.subscribe(onNext: { _ in
-            self.moveScene("findVC")
-        }).disposed(by: rx.disposeBag)
+        findPwBtn.rx.tap.subscribe(onNext: {[unowned self] _ in moveScene("findVC") }).disposed(by: rx.disposeBag)
         
-        autoAuthBtn.rx.tap.subscribe(onNext: { _ in
-            self.autoAuthBtn.isSelected = !self.autoAuthBtn.isSelected
-            self.autoLogin.accept(self.autoAuthBtn.isSelected)
+        autoAuthBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+            autoAuthBtn.isSelected = !autoAuthBtn.isSelected
+            autoLogin.accept(autoAuthBtn.isSelected)
         }).disposed(by: rx.disposeBag)
     }
     
@@ -54,12 +52,13 @@ class SIgnInViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.isEnable.drive(signInBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-        output.isEnable.drive(onNext: {_ in
-            self.setButton(self.signInBtn)
+        output.isEnable.drive(onNext: {[unowned self] _ in
+            setButton(signInBtn)
         }).disposed(by: rx.disposeBag)
         
         output.result.emit(
-            onNext: { self.setUpErrorMessage(self.errorLabel, title: $0, superTextField: self.pwTextField )},
-            onCompleted: { self.moveReference() }).disposed(by: rx.disposeBag)
+            onNext: {[unowned self] in setUpErrorMessage(errorLabel, title: $0, superTextField: pwTextField )},
+            onCompleted: {[unowned self] in moveReference() }
+        ).disposed(by: rx.disposeBag)
     }
 }

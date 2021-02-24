@@ -17,7 +17,8 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
+        
+        navigationController?.navigationBar.isHidden = true
         setUI()
     }
     
@@ -33,12 +34,7 @@ class SplashViewController: UIViewController {
         signUpBtn.layer.borderColor = UIColor().hexUIColor(hex: "61BFAD").cgColor
         signUpBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
         
-        signInBtn.rx.tap.subscribe(onNext: {
-            self.moveScene("signIn")
-        }).disposed(by: rx.disposeBag)
-        
-        signUpBtn.rx.tap.subscribe(onNext: {
-            self.moveScene("signUp")
-        }).disposed(by: rx.disposeBag)
+        signInBtn.rx.tap.subscribe(onNext: {[unowned self] in self.moveScene("signIn") }).disposed(by: rx.disposeBag)
+        signUpBtn.rx.tap.subscribe(onNext: {[unowned self] in moveScene("signUp") }).disposed(by: rx.disposeBag)
     }
 }
