@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import Kingfisher
 
 class ChatListViewController: UIViewController {
 
@@ -19,15 +18,16 @@ class ChatListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
-        self.navigationController?.isNavigationBarHidden = true
         
+        bindViewModel()
+        navigationController?.isNavigationBarHidden = true
         chatListTableView.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
+        
+        navigationController?.isNavigationBarHidden = true
     }
     
     func bindViewModel() {
@@ -37,28 +37,16 @@ class ChatListViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.loadList.bind(to: chatListTableView.rx.items(cellIdentifier: "listCell", cellType: UITableViewCell.self)) { row, item, cell in
-            print(item)
-            let coverImg = "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(item.coverImg ?? "")"
             cell.textLabel?.text = item.title
         }.disposed(by: rx.disposeBag)
         
-        output.room.emit(onNext: { id in
-            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "chatVC") as? ChatViewController else { return }
+        output.room.emit(onNext: {[unowned self] id in
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: "chatVC") as? ChatViewController else { return }
             vc.roomId = id
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         }).disposed(by: rx.disposeBag)
         
         chatListTableView.rowHeight = 60
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

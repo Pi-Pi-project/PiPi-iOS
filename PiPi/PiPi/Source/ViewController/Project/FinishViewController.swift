@@ -17,9 +17,9 @@ class FinishViewController: UIViewController {
     @IBOutlet weak var giturlTextField: TKFormTextField!
     @IBOutlet weak var introTextView: UITextView!
     
-    var selectIndexPath = Int()
-    
     private let viewModel = FinishViewModel()
+    
+    var selectIndexPath = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()

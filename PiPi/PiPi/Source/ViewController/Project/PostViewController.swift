@@ -27,10 +27,12 @@ class PostViewController: UIViewController {
     @IBOutlet weak var postBtn: UIButton!
     
     private let viewModel = PostViewModel()
+    
     var skillSet = PublishRelay<[String]>()
     var skillArray = [String]()
     var imagURL = BehaviorRelay<Data?>(value: nil)
     var selectCategory = PublishRelay<String>()
+    let category = ["Web", "MoblieApp", "DataScience", "System", "Network", "MachineLearning", "Security", "Embedded", "VR", "Game" ]
     
     lazy var imagePicker: UIImagePickerController = {
         let picker: UIImagePickerController = UIImagePickerController()
@@ -38,25 +40,9 @@ class PostViewController: UIViewController {
         picker.delegate = self
         return picker
     }()
-    let category = ["Web", "MoblieApp", "DataScience", "System", "Network", "MachineLearning", "Security", "Embedded", "VR", "Game" ]
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        libraryBtn.rx.tap.subscribe(onNext: { _ in
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }).disposed(by: rx.disposeBag)
-        
-        maxSwitch.rx.controlEvent(.touchUpInside).subscribe(onNext: { _ in
-            let value = Int(self.maxSwitch.value)
-            self.maxLabel.text = String(value)
-        }).disposed(by: rx.disposeBag)
-        
-        postBtn.rx.tap.subscribe(onNext: {  _ in
-            self.selectCategory.accept(self.category[self.proCategoryTF.selectedIndex ?? 0])
-            self.skillSet.accept(self.skillArray)
-        }).disposed(by: rx.disposeBag)
         
         bindViewModel()
         setupUI()
@@ -75,29 +61,25 @@ class PostViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.isEnable.drive(postBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-        output.isEnable.drive(onNext: { _ in
-            self.setButton(self.postBtn)
+        output.isEnable.drive(onNext: {[unowned self] _ in
+            setButton(postBtn)
         }).disposed(by: rx.disposeBag)
-        
         output.result.emit(
-            onNext: { print($0)},
-            onCompleted: {
+            onNext: { print($0) },
+            onCompleted: {[unowned  self] in
                 let alert = UIAlertController(title: "공고 글 작성시 주의", message: "공고 마감 기한은 2주입니다.공고글 작성부터 2주가 지나면 자동으로 삭제됩니다.", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default) { (action) in
-                    self.dismiss(animated: true, completion: nil)
-                    self.navigationController?.popViewController(animated: true)
+                    dismiss(animated: true, completion: nil)
+                    navigationController?.popViewController(animated: true)
                 }
-                
                 alert.addAction(action)
                 self.present(alert, animated: true)
-                
             }).disposed(by: rx.disposeBag)
     }
     
     func setupUI() {
         proContentTV.layer.borderColor = UIColor().hexUIColor(hex: "").cgColor
         proContentTV.layer.borderWidth = 1
-        
         proSkillSetTF.layer.borderWidth = 1
         proSkillSetTF.layer.borderColor = UIColor.darkGray.cgColor
         proSkillSetTF.preferredTextFieldReturnKeyType = .done
@@ -107,7 +89,19 @@ class PostViewController: UIViewController {
         proCategoryTF.optionArray = category
         proCategoryTF.selectedRowColor = UIColor().hexUIColor(hex: "61BFAD")
         
-        self.setButton(postBtn)
+        libraryBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+            self.present(imagePicker, animated: true, completion: nil)
+        }).disposed(by: rx.disposeBag)
+        
+        maxSwitch.rx.controlEvent(.touchUpInside).subscribe(onNext: {[unowned self] _ in
+            let value = Int(maxSwitch.value)
+            maxLabel.text = String(value)
+        }).disposed(by: rx.disposeBag)
+        
+        postBtn.rx.tap.subscribe(onNext: {[unowned self]  _ in
+            selectCategory.accept(category[proCategoryTF.selectedIndex ?? 0])
+            skillSet.accept(skillArray)
+        }).disposed(by: rx.disposeBag)
     }
     
     class Skills: ResizingTokenFieldToken, Equatable {
@@ -120,6 +114,10 @@ class PostViewController: UIViewController {
         init(title: String) {
             self.title = title
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }
 

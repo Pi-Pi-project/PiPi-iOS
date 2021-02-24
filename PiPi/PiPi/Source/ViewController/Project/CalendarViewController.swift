@@ -15,8 +15,7 @@ class CalendarViewController: UIViewController {
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var todoView: UIView!
     @IBOutlet weak var todoTableView: UITableView!
-    
-    var selectIndexPath = Int()
+
     private let viewModel = CalendarViewModel()
     private var todoDate = PublishRelay<String>()
     private var alertDone = BehaviorRelay<Void>(value: ())
@@ -24,6 +23,7 @@ class CalendarViewController: UIViewController {
     private var successTodo = PublishRelay<Int>()
     private var deleteTodo = BehaviorRelay<Int>(value: 0)
 
+    var selectIndexPath = Int()
     var currentDate = String()
     
     lazy var addBtn: UIBarButtonItem = {
@@ -47,9 +47,9 @@ class CalendarViewController: UIViewController {
 
         calendar.appearance.headerDateFormat = "YYYY년 M월"
 
-        self.navigationController?.navigationBar.topItem?.title = "관리"
-        self.navigationItem.rightBarButtonItems = [addBtn, doneBtn]
-        self.navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.topItem?.title = "관리"
+        navigationItem.rightBarButtonItems = [addBtn, doneBtn]
+        navigationController?.isNavigationBarHidden = false
 
         bindViewModel()
         registerCell()
@@ -75,19 +75,19 @@ class CalendarViewController: UIViewController {
                 cell.checkBtn.tintColor = UIColor.red
             }
             
-            cell.checkBtn.rx.tap.subscribe(onNext: { _ in
-                self.successTodo.accept(row)
+            cell.checkBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+                successTodo.accept(row)
             }).disposed(by: self.rx.disposeBag)
             
         }.disposed(by: rx.disposeBag)
         
-        addBtn.rx.tap.subscribe(onNext: { _ in
-            self.todoAlert()
+        addBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+            todoAlert()
         }).disposed(by: rx.disposeBag)
         
-        doneBtn.rx.tap.subscribe(onNext: { _ in
-            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "finishVC") as? FinishViewController else { return }
-            vc.selectIndexPath = self.selectIndexPath
+        doneBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
+            guard let vc = storyboard?.instantiateViewController(withIdentifier: "finishVC") as? FinishViewController else { return }
+            vc.selectIndexPath = selectIndexPath
             self.present(vc, animated: true, completion: nil)
         }).disposed(by: rx.disposeBag)
     }
@@ -101,22 +101,22 @@ class CalendarViewController: UIViewController {
             successTodo: successTodo.asDriver(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
-        output.result.emit(onCompleted: {
-            self.todoTableView.reloadData()
+        output.result.emit(onCompleted: {[unowned self] in
+            todoTableView.reloadData()
         }).disposed(by: rx.disposeBag)
         
-        output.success.emit(onNext: {_ in 
-            self.todoDate.accept(self.currentDate)
-            self.todoTableView.reloadData()
+        output.success.emit(onNext: {[unowned self] _ in
+            todoDate.accept(currentDate)
+            todoTableView.reloadData()
         }).disposed(by: rx.disposeBag)
         
-        output.todo.emit(onCompleted: {
-            self.todoTableView.reloadData()
+        output.todo.emit(onCompleted: {[unowned self] in
+            todoTableView.reloadData()
         }).disposed(by: rx.disposeBag)
         
-        output.enter.emit(onNext: { _ in
-            self.todoDate.accept(self.currentDate)
-            self.todoTableView.reloadData()
+        output.enter.emit(onNext: {[unowned self] _ in
+            todoDate.accept(currentDate)
+            todoTableView.reloadData()
         }).disposed(by: rx.disposeBag)
     }
     
@@ -142,20 +142,9 @@ class CalendarViewController: UIViewController {
         }
         self.present(alert, animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension CalendarViewController: FSCalendarDelegateAppearance, FSCalendarDataSource {
-
     func calendar(_ calendar: FSCalendar,
                   shouldSelect date: Date,
                   at monthPosition: FSCalendarMonthPosition) -> Bool {
@@ -163,10 +152,9 @@ extension CalendarViewController: FSCalendarDelegateAppearance, FSCalendarDataSo
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        let date_string = self.dateFormatter.string(from: date)
-        self.todoDate.accept(date_string)
+        let date_string = dateFormatter.string(from: date)
+        todoDate.accept(date_string)
         currentDate = date_string
-        print("nameOfDate",date_string)
     }
 }
 

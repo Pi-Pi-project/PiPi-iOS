@@ -30,25 +30,22 @@ class ChatViewController: UIViewController {
     var email = String()
     var roomId = Int()
     var count: Int = 0
-    
     let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.messageTextfield.delegate = self
-        self.socketClient = SocketIOManager.shared.socket
+        navigationController?.isNavigationBarHidden = false
+        messageTextfield.delegate = self
         
+        socketClient = SocketIOManager.shared.socket
         SocketIOManager.shared.establishConnection()
         SocketIOManager.shared.socket.emit("join", roomId)
         
         tableView.refreshControl = refreshControl
         tableView.allowsSelection = false
-        
         refreshControl.attributedTitle = NSAttributedString(string: "더 읽어오기")
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        
-        self.navigationController?.isNavigationBarHidden = false
         
         addKeyboardNotification()
         
@@ -97,34 +94,31 @@ class ChatViewController: UIViewController {
         }.disposed(by: rx.disposeBag)
         
         sendBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
-            self.socketClient.emit("chat", ["roomId": roomId, "userEmail": email, "message": messageTextfield.text ?? ""])
+            socketClient.emit("chat", ["roomId": roomId, "userEmail": email, "message": messageTextfield.text ?? ""])
+            let newChat = getChat(userNickname: email, message: messageTextfield.text!, mine: true, profileImg: "")
             
-            let new = getChat(userNickname: email, message: messageTextfield.text!, mine: true, profileImg: "")
-            
-            output.loadChat.add(element: new)
+            output.loadChat.add(element: newChat)
             messageTextfield.text = ""
         }).disposed(by: rx.disposeBag)
         
         socketClient.on("receive") { (data, ack) in
+            let profileImg = data[1] as! String
             let name = data[2] as! String
             let message = data[3] as! String
-            let profileImg = data[1] as! String
-    
-            let chat = getChat(userNickname: name, message: message, mine: false, profileImg: profileImg)
+            let newChat = getChat(userNickname: name, message: message, mine: false, profileImg: profileImg)
             
-            output.loadChat.add(element: chat)
+            output.loadChat.add(element: newChat)
         }
         
-        output.result.emit(onNext: { email in
+        output.result.emit(onNext: {[unowned self] email in
             self.email = email
         }).disposed(by: rx.disposeBag)
         
-        output.refresh.subscribe(onNext: { moreChat in
+        output.refresh.subscribe(onNext: {[unowned self] moreChat in
             for i in  0..<moreChat.count {
                 output.loadChat.insert(element: moreChat[i])
             }
-            
-            self.tableView.reloadData()
+            tableView.reloadData()
         }).disposed(by: rx.disposeBag)
     }
     
@@ -176,18 +170,4 @@ class YourChatCell: UITableViewCell {
     @IBOutlet weak var yourNameLabel: UILabel!
     @IBOutlet weak var yourMessageLabel: UILabel!
     @IBOutlet weak var yourImageView: UIImageView!
-}
-
-extension BehaviorRelay where Element: RangeReplaceableCollection {
-    func add(element: Element.Element) {
-        var array = self.value
-        array.append(element)
-        self.accept(array)
-    }
-    
-    func insert(element: Element.Element) {
-        var array = self.value
-        array.insert(element, at: 0 as! Element.Index)
-        self.accept(array)
-    }
 }
