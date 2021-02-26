@@ -80,23 +80,11 @@ class MyPostViewController: UIViewController {
         let output = viewModel.transform(input)
         
         MyPostViewModel.loadMyPost
-            .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
-                var skillSet = String()
-                let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
-                
-                for i in 0..<repository.postSkillsets.count {
-                    skillSet.append(" " + repository.postSkillsets[i].skill + " ")
-                }
-                
-                cell.backImageView.kf.setImage(with: backimg)
-                cell.projectLabel.text = repository.title
-                cell.skilsLabel.text = skillSet
+            .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) {[unowned self] (row, item, cell) in
+                cell.configCell(item)
                 cell.userImgView.isHidden = true
                 cell.applyListBtn.isHidden = false
-                
-                cell.applyListBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
-                    selectIndexPath.accept(row)
-                }).disposed(by: self.rx.disposeBag)
+                cell.applyListBtn.rx.tap.subscribe(onNext: {[unowned self] _ in selectIndexPath.accept(row) }).disposed(by: self.rx.disposeBag)
             }.disposed(by: rx.disposeBag)
         
         output.loadMoreData.subscribe(onNext:{[unowned self] data in

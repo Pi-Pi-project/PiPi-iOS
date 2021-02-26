@@ -28,7 +28,6 @@ class JoinViewController: UIViewController {
     
     var check = Bool()
     var count: Int = 0
-    var model = [postModel]()
     
     lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
@@ -79,14 +78,9 @@ class JoinViewController: UIViewController {
         
         tableView.rx.didScroll.asObservable().subscribe(onNext: {[unowned self] _ in
             if tableView.contentOffset.y > tableView.contentSize.height - tableView.bounds.size.height {
-                if check {
-                    loadMoreSearch.onNext(count)
-                    count += 1
-                }else {
                     loadMoreData.onNext(count)
                     count += 1
                     tableView.reloadData()
-                }
             }
         }).disposed(by: rx.disposeBag)
         
@@ -105,20 +99,11 @@ class JoinViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.loadData
-            .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, repository, cell) in
-                var skillSet = String()
-                for i in 0..<repository.postSkillsets.count {
-                    skillSet.append(" " + repository.postSkillsets[i].skill + " ")
-                }
-                
-                let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.img ?? "")")
-                let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg ?? "")")
-                cell.backImageView.kf.setImage(with: backimg)
-                cell.projectLabel.text = repository.title
-                cell.skilsLabel.text = skillSet
-                cell.userImgView.kf.setImage(with: userimg)
+            .bind(to: tableView.rx.items(cellIdentifier: "joinCell", cellType: MainTableViewCell.self)) { (row, item, cell) in
+                cell.configCell(item)
             }.disposed(by: rx.disposeBag)
         
+        output.searchResult.emit(onCompleted : {[unowned self] in tableView.reloadData() }).disposed(by: rx.disposeBag)
         output.email.emit(onNext: {[unowned self] result in email.accept(result) }).disposed(by: rx.disposeBag)
         
         output.likePost.subscribe(onNext: {[unowned self] data in
@@ -134,8 +119,6 @@ class JoinViewController: UIViewController {
             }
             tableView.reloadData()
         }).disposed(by: rx.disposeBag)
-        
-        output.searchResult.emit(onCompleted : {[unowned self] in tableView.reloadData() }).disposed(by: rx.disposeBag)
         
         output.nextView.asObservable().subscribe(onNext: {[unowned self] id in
             guard let vc = storyboard?.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController else { return }

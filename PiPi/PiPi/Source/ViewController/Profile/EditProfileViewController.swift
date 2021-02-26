@@ -44,6 +44,7 @@ class EditProfileViewController: UIViewController {
 
         setupUI()
         bindViewModel()
+        setButton(doneTap)
     }
     
     func setupUI() {
@@ -83,20 +84,13 @@ class EditProfileViewController: UIViewController {
             doneTap: doneTap.rx.tap.asSignal())
         let output = viewModel.transform(input)
         
-        self.setButton(doneTap)
-        
         userSkillsText.rx.text.subscribe(onNext: {[unowned self] text in
             skillArray = (text?.spaceArray())!
             skillSet.accept(skillArray)
         }).disposed(by: rx.disposeBag)
         
-        output.result.emit(onCompleted: { [unowned self] in navigationController?.popViewController(animated: true)}
-        ).disposed(by: rx.disposeBag)
-        
-        output.email.emit(onNext: {[unowned self] email in
-            self.email = email
-        }).disposed(by: rx.disposeBag)
-        
+        output.result.emit(onCompleted: { [unowned self] in navigationController?.popViewController(animated: true)} ).disposed(by: rx.disposeBag)
+        output.email.emit(onNext: {[unowned self] email in self.email = email }).disposed(by: rx.disposeBag)
     }
     
     

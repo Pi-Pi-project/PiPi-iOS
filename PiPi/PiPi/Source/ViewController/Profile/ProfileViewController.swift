@@ -31,11 +31,11 @@ class ProfileViewController: UIViewController {
         userImageView.layer.cornerRadius = 50
         portfolioTableView.layer.cornerRadius = 20
         portfolioTableView.allowsSelection = false
+        view.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
 
         bindViewModel()
         setupUI()
         registerCell()
-        view.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,19 +55,17 @@ class ProfileViewController: UIViewController {
         
         let output = viewModel.transform(input)
         
-        SeeProfileViewModel.loadProfile.asObservable().subscribe(onNext: { result in
-            let profileImg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.profileImg)")
-            self.userNameLabel.text = result.nickname
-            self.userImageView.kf.setImage(with: profileImg)
-            
+        SeeProfileViewModel.loadProfile.bind {[unowned self] result in
             var skillSet = String()
             for i in 0..<result.skills.count {
                 skillSet.append(" " + result.skills[i].skill)
             }
             
-            self.userSkillLabel.text = skillSet
-            self.userGitLabel.text = result.giturl
-            self.userIntroLabel.text = result.introduce
+            userNameLabel.text = result.nickname
+            userImageView.kf.setImage(with: URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.profileImg)"))
+            userSkillLabel.text = skillSet
+            userGitLabel.text = result.giturl
+            userIntroLabel.text = result.introduce
             
             var portfolioView = [portfolio?]()
             portfolioView.append(result.firstPortfolio ?? nil)
@@ -80,11 +78,9 @@ class ProfileViewController: UIViewController {
                 cell.moreLabel.text = repository?.introduce
             }.disposed(by: self.rx.disposeBag)
             portfolioSum.accept(portfolioView)
-        }).disposed(by: rx.disposeBag)
+        }.disposed(by: rx.disposeBag)
         
-        output.result.emit(onCompleted: {[unowned self] in
-            loadProfile.accept(())
-        }).disposed(by: rx.disposeBag)
+        output.result.emit(onCompleted: {[unowned self] in loadProfile.accept(()) }).disposed(by: rx.disposeBag)
     }
     
     func setupUI() {

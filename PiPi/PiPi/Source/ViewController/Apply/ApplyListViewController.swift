@@ -44,18 +44,15 @@ class ApplyListViewController: UIViewController {
         let output = viewModel.transform(input)
         
         ApplyListViewModel.loadApplyList
-            .bind(to: tableView.rx.items(cellIdentifier: "applylistCell", cellType: ListTableViewCell.self)) { (row, repository, cell) in
-                let url = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg)")
-                
-                cell.userImageView.kf.setImage(with: url)
-                cell.userName.text = repository.userNickname
+            .bind(to: tableView.rx.items(cellIdentifier: "applylistCell", cellType: ListTableViewCell.self)) {[unowned self] (row, item, cell) in
+                cell.configCell(item)
                 
                 cell.accessBtn.rx.tap.subscribe(onNext: {[unowned self] _ in selectApply.accept(row) }).disposed(by: cell.disposeBag)
                 cell.rejectBtn.rx.tap.subscribe(onNext: {[unowned self] _ in selectApply.accept(row) }).disposed(by: cell.disposeBag)
                 cell.chatBtn.rx.tap.subscribe(onNext: {[unowned self] _ in goToChat.accept(row) }).disposed(by: cell.disposeBag)
                 
-                self.setButton(cell.chatBtn, false)
-                self.setListBtn(cell.accessBtn, cell.rejectBtn, repository.status)
+                setButton(cell.chatBtn, false)
+                setListBtn(cell.accessBtn, cell.rejectBtn, item.status)
             }.disposed(by: rx.disposeBag)
         
         Observable.of(output.accept, output.reject).merge().subscribe(onNext: {[unowned self] _ in
@@ -80,7 +77,6 @@ class ApplyListViewController: UIViewController {
     func registerCell() {
         let nib = UINib(nibName: "ListTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "applylistCell")
-        
         tableView.rowHeight = 72
     }
 }

@@ -32,10 +32,8 @@ class AddPortFolioViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.isEnable.drive(addBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-        output.isEnable.drive(onNext: {_ in
-            self.setButton(self.addBtn)
-        }).disposed(by: rx.disposeBag)
-        output.result.emit(onCompleted: { self.dismiss(animated: true, completion: nil)}).disposed(by: rx.disposeBag)
+        output.isEnable.drive(onNext: { [unowned self] _ in setButton(self.addBtn) }).disposed(by: rx.disposeBag)
+        output.result.emit(onCompleted: {[unowned self] in dismiss(animated: true, completion: nil)}).disposed(by: rx.disposeBag)
     }
     
 }

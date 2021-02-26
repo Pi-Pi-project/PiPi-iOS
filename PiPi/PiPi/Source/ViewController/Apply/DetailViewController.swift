@@ -54,16 +54,17 @@ class DetailViewController: UIViewController {
             selectApply: applyBtn.rx.tap.asDriver())
         let output = viewModel.transform(input)
         
-        output.loadDetail.asObservable().subscribe(onNext: {[unowned self] result in
-            var skillSet = String()
+        output.loadDetail.bind {[unowned self] result in
             let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.img)")
             backImageView.kf.setImage(with: backimg)
             let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(result.userImg ?? "")")
             userImg.load(url: userimg!)
             
+            var skillSet = String()
             for i in 0..<result.postSkillsets.count {
                 skillSet.append("  " + result.postSkillsets[i].skill)
             }
+            
             skillSet.append("  ")
             userName.text = result.userNickname
             ppNameLabel.text = result.title
@@ -88,14 +89,9 @@ class DetailViewController: UIViewController {
             setButton(applyBtn, result.applied)
             setBorder(ppIntroLabel)
             setBorder(ppSkillLabel)
-        }).disposed(by: rx.disposeBag)
+        }.disposed(by: rx.disposeBag)
         
-        output.resultApplyT.asObservable().subscribe(onCompleted: {[unowned self] in
-            setButton(applyBtn, true)
-        }).disposed(by: rx.disposeBag)
-        
-        output.resultApplyF.asObservable().subscribe(onCompleted: {[unowned self] in
-            setButton(applyBtn, false)
-        }).disposed(by: rx.disposeBag)
+        output.resultApplyT.asObservable().subscribe(onCompleted: {[unowned self] in setButton(applyBtn, true) }).disposed(by: rx.disposeBag)
+        output.resultApplyF.asObservable().subscribe(onCompleted: {[unowned self] in setButton(applyBtn, false) }).disposed(by: rx.disposeBag)
     }
 }

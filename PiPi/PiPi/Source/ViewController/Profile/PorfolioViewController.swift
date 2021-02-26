@@ -65,31 +65,27 @@ class PorfolioViewController: UIViewController {
         let output = viewModel.transform(input)
         
         PortfolioViewModel.loadPortfolio.bind(to: portfolioTableView.rx.items(cellIdentifier: "portfolioCell", cellType: PortfolioTableViewCell.self)) { (row, item, cell) in
-            cell.giturlLabel.text = item.giturl
-            cell.projectNameLabel.text = item.title
-            cell.moreLabel.text = item.introduce
+            cell.configCell(item)
         }.disposed(by: rx.disposeBag)
         
-        portfolioTableView.rx.itemSelected.subscribe(onNext: { indexPath in
-            if self.countCheck == 0 {
-                self.firstPortfolio.accept(indexPath.row)
+        portfolioTableView.rx.itemSelected.subscribe(onNext: {[unowned self] indexPath in
+            if countCheck == 0 {
+                firstPortfolio.accept(indexPath.row)
             }
-            if self.countCheck == 1 {
-                self.secondPortfolio.accept(indexPath.row)
-                self.portfolioTableView.allowsSelection = false
-                self.portfolioTableView.allowsSelectionDuringEditing = false
+            if countCheck == 1 {
+                secondPortfolio.accept(indexPath.row)
+                portfolioTableView.allowsSelection = false
+                portfolioTableView.allowsSelectionDuringEditing = false
             }
-            self.countCheck += 1
-            self.portfolioTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            countCheck += 1
+            portfolioTableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }).disposed(by: rx.disposeBag)
         
         output.result.emit(onCompleted: {[unowned self] in
             loadPortfolio.accept(())
             portfolioTableView.reloadData()
         }).disposed(by: rx.disposeBag)
-        output.doneResult.emit(onCompleted: {[unowned self] in
-            self.dismiss(animated: true, completion: nil)
-        }).disposed(by: self.rx.disposeBag)
+        output.doneResult.emit(onCompleted: {[unowned self] in dismiss(animated: true, completion: nil) }).disposed(by: self.rx.disposeBag)
     }
     
     func registerCell() {
