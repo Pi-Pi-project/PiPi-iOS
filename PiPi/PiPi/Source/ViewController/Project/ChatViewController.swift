@@ -23,9 +23,6 @@ class ChatViewController: UIViewController {
     private let loadChat = BehaviorRelay<Void>(value: ())
     private let loadMoreChat = PublishRelay<Int>()
     
-    var keyboardShown:Bool = false // 키보드 상태 확인
-    var originY:CGFloat? // 오브젝트의 기본 위치
-    var socket: SocketIOManager!
     var socketClient: SocketIOClient!
     var email = String()
     var roomId = Int()
