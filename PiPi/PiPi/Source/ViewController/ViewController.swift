@@ -23,38 +23,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let join = UITapGestureRecognizer(target: self, action: #selector(joinTapGesture(recognizer:)))
-        let apply = UITapGestureRecognizer(target: self, action: #selector(applyTapGesture(recognizer:)))
-        let myPost = UITapGestureRecognizer(target: self, action: #selector(myPostTapGesture(recognizer:)))
+        navigationController?.isNavigationBarHidden = true
         
         setupUI()
-        
-        btnView[0].addGestureRecognizer(join)
-        btnView[1].addGestureRecognizer(apply)
-        btnView[2].addGestureRecognizer(myPost)
-        
-        joinBtn.rx.tap.subscribe(onNext: {
-            self.moveScene("joinVC")
-        }).disposed(by: rx.disposeBag)
-        
-        applyListBtn.rx.tap.subscribe(onNext: {
-            self.moveScene("applyVC")
-        }).disposed(by: rx.disposeBag)
-        
-        myPostBtn.rx.tap.subscribe(onNext: {
-            self.moveScene("mypostVC")
-        }).disposed(by: rx.disposeBag)
-        
-        self.navigationController?.isNavigationBarHidden = true
-        // Do any additional setup after loading the view.
+        setGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
+        
+        navigationController?.isNavigationBarHidden = true
     }
     
-    func setupUI(){
+    func setupUI() {
         view.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
         joinBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
         applyListBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
@@ -64,16 +45,30 @@ class ViewController: UIViewController {
         btnView[2].layer.cornerRadius = 10
     }
     
+    func setGesture() {
+        let join = UITapGestureRecognizer(target: self, action: #selector(joinTapGesture(recognizer:)))
+        let apply = UITapGestureRecognizer(target: self, action: #selector(applyTapGesture(recognizer:)))
+        let myPost = UITapGestureRecognizer(target: self, action: #selector(myPostTapGesture(recognizer:)))
+                
+        btnView[0].addGestureRecognizer(join)
+        btnView[1].addGestureRecognizer(apply)
+        btnView[2].addGestureRecognizer(myPost)
+        
+        joinBtn.rx.tap.subscribe(onNext: {[unowned self] _ in moveScene("joinVC")}).disposed(by: rx.disposeBag)
+        applyListBtn.rx.tap.subscribe(onNext: {[unowned self] _ in moveScene("applyVC")}).disposed(by: rx.disposeBag)
+        myPostBtn.rx.tap.subscribe(onNext: {[unowned self] _ in moveScene("mypostVC")}).disposed(by: rx.disposeBag)
+    }
+    
     @objc func joinTapGesture(recognizer: UITapGestureRecognizer) {
-        self.moveScene("joinVC")
+        moveScene("joinVC")
     }
     
     @objc func applyTapGesture(recognizer: UITapGestureRecognizer) {
-        self.moveScene("applyVC")
+        moveScene("applyVC")
     }
     
     @objc func myPostTapGesture(recognizer: UITapGestureRecognizer) {
-        self.moveScene("mypostVC")
+        moveScene("mypostVC")
     }
 }
 
