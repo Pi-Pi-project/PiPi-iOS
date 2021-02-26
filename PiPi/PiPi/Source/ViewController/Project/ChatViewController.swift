@@ -26,7 +26,7 @@ class ChatViewController: UIViewController {
     var socketClient: SocketIOClient!
     var email = String()
     var roomId = Int()
-    var count: Int = 0
+    var pagenationCnt: Int = 0
     let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -45,7 +45,6 @@ class ChatViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         addKeyboardNotification()
-        
         setupUI()
         bindViewModel()
     }
@@ -70,15 +69,15 @@ class ChatViewController: UIViewController {
             loadMoreChat: loadMoreChat.asSignal(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
-        output.loadChat.asObservable().bind(to: tableView.rx.items) { tableview, row, item -> UITableViewCell in
+        output.loadChat.asObservable().bind(to: tableView.rx.items) {[unowned self] tableview, row, item -> UITableViewCell in
             if item.mine {
-                let cell: MyChatCell = self.tableView.dequeueReusableCell(withIdentifier: "myCell") as! MyChatCell
+                let cell: MyChatCell = tableView.dequeueReusableCell(withIdentifier: "myCell") as! MyChatCell
                 
                 cell.myMessageLabel.text = item.message
                 
                 return cell
             }else {
-                let cell: YourChatCell = self.tableView.dequeueReusableCell(withIdentifier: "youCell") as! YourChatCell
+                let cell: YourChatCell = tableView.dequeueReusableCell(withIdentifier: "youCell") as! YourChatCell
                 
                 cell.yourImageView.layer.cornerRadius = 28
                 cell.yourNameLabel.text = item.userNickname
@@ -93,7 +92,6 @@ class ChatViewController: UIViewController {
         sendBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
             socketClient.emit("chat", ["roomId": roomId, "userEmail": email, "message": messageTextfield.text ?? ""])
             let newChat = getChat(userNickname: email, message: messageTextfield.text!, mine: true, profileImg: "")
-            
             output.loadChat.add(element: newChat)
             messageTextfield.text = ""
         }).disposed(by: rx.disposeBag)
@@ -103,7 +101,6 @@ class ChatViewController: UIViewController {
             let name = data[2] as! String
             let message = data[3] as! String
             let newChat = getChat(userNickname: name, message: message, mine: false, profileImg: profileImg)
-            
             output.loadChat.add(element: newChat)
         }
         
@@ -117,12 +114,6 @@ class ChatViewController: UIViewController {
             }
             tableView.reloadData()
         }).disposed(by: rx.disposeBag)
-    }
-    
-    @objc func refresh() {
-        loadMoreChat.accept(count)
-        count += 1
-        refreshControl.endRefreshing()
     }
 
     private func addKeyboardNotification() {
@@ -141,20 +132,23 @@ class ChatViewController: UIViewController {
 
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-          
         self.view.frame.origin.y = 0 - keyboardSize.height + textInputView.frame.height + messageTextfield.frame.height
     }
       
     @objc private func keyboardWillHide(_ notification: Notification) {
         self.view.frame.origin.y = 0
     }
+    
+    @objc func refresh() {
+        loadMoreChat.accept(pagenationCnt)
+        pagenationCnt += 1
+        refreshControl.endRefreshing()
+    }
 }
 
 extension ChatViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == messageTextfield {
-            messageTextfield.resignFirstResponder()
-        }
+        if textField == messageTextfield { messageTextfield.resignFirstResponder() }
         return true
     }
 }

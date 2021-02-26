@@ -45,25 +45,17 @@ class ApplyListViewController: UIViewController {
         
         ApplyListViewModel.loadApplyList
             .bind(to: tableView.rx.items(cellIdentifier: "applylistCell", cellType: ListTableViewCell.self)) { (row, repository, cell) in
-                self.setListBtn(cell.accessBtn, cell.rejectBtn, repository.status)
                 let url = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(repository.userImg)")
                 
                 cell.userImageView.kf.setImage(with: url)
                 cell.userName.text = repository.userNickname
                 
-                cell.accessBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
-                    selectApply.accept(row)
-                }).disposed(by: cell.disposeBag)
-                
-                cell.rejectBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
-                    selectApply.accept(row)
-                }).disposed(by: cell.disposeBag)
-                
-                cell.chatBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
-                    goToChat.accept(row)
-                }).disposed(by: cell.disposeBag)
+                cell.accessBtn.rx.tap.subscribe(onNext: {[unowned self] _ in selectApply.accept(row) }).disposed(by: cell.disposeBag)
+                cell.rejectBtn.rx.tap.subscribe(onNext: {[unowned self] _ in selectApply.accept(row) }).disposed(by: cell.disposeBag)
+                cell.chatBtn.rx.tap.subscribe(onNext: {[unowned self] _ in goToChat.accept(row) }).disposed(by: cell.disposeBag)
                 
                 self.setButton(cell.chatBtn, false)
+                self.setListBtn(cell.accessBtn, cell.rejectBtn, repository.status)
             }.disposed(by: rx.disposeBag)
         
         Observable.of(output.accept, output.reject).merge().subscribe(onNext: {[unowned self] _ in

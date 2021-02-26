@@ -61,11 +61,8 @@ class PostViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.isEnable.drive(postBtn.rx.isEnabled).disposed(by: rx.disposeBag)
-        output.isEnable.drive(onNext: {[unowned self] _ in
-            setButton(postBtn)
-        }).disposed(by: rx.disposeBag)
-        output.result.emit(
-            onNext: { print($0) },
+        output.isEnable.drive(onNext: {[unowned self] _ in setButton(postBtn) }).disposed(by: rx.disposeBag)
+        output.result.emit(onNext: { print($0) },
             onCompleted: {[unowned  self] in
                 let alert = UIAlertController(title: "공고 글 작성시 주의", message: "공고 마감 기한은 2주입니다.공고글 작성부터 2주가 지나면 자동으로 삭제됩니다.", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default) { (action) in
@@ -89,9 +86,7 @@ class PostViewController: UIViewController {
         proCategoryTF.optionArray = category
         proCategoryTF.selectedRowColor = UIColor().hexUIColor(hex: "61BFAD")
         
-        libraryBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
-            self.present(imagePicker, animated: true, completion: nil)
-        }).disposed(by: rx.disposeBag)
+        libraryBtn.rx.tap.subscribe(onNext: {[unowned self] _ in present(imagePicker, animated: true, completion: nil) }).disposed(by: rx.disposeBag)
         
         maxSwitch.rx.controlEvent(.touchUpInside).subscribe(onNext: {[unowned self] _ in
             let value = Int(maxSwitch.value)

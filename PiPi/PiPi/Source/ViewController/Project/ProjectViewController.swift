@@ -21,6 +21,7 @@ class ProjectViewController: UIViewController {
         super.viewDidLoad()
         
         navigationController?.isNavigationBarHidden = true
+        
         setupUI()
         bindViewModel()
     }

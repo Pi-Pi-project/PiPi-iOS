@@ -68,17 +68,9 @@ class CalendarViewController: UIViewController {
             cell.nameLabel.text = item.nickname
             cell.dataLabel.text = item.date
             cell.todoLabel.text = item.todo
+            cell.checkBtn.tintColor = item.todoStatus == "CHECK" ? UIColor().hexUIColor(hex: "61BFAD") : .red
             
-            if item.todoStatus == "CHECK"{
-                cell.checkBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
-            }else{
-                cell.checkBtn.tintColor = UIColor.red
-            }
-            
-            cell.checkBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
-                successTodo.accept(row)
-            }).disposed(by: self.rx.disposeBag)
-            
+            cell.checkBtn.rx.tap.subscribe(onNext: {[unowned self] _ in successTodo.accept(row) }).disposed(by: self.rx.disposeBag)
         }.disposed(by: rx.disposeBag)
         
         addBtn.rx.tap.subscribe(onNext: {[unowned self] _ in
@@ -101,16 +93,11 @@ class CalendarViewController: UIViewController {
             successTodo: successTodo.asDriver(onErrorJustReturn: 0))
         let output = viewModel.transform(input)
         
-        output.result.emit(onCompleted: {[unowned self] in
-            todoTableView.reloadData()
-        }).disposed(by: rx.disposeBag)
+        output.result.emit(onCompleted: {[unowned self] in todoTableView.reloadData() }).disposed(by: rx.disposeBag)
+        output.todo.emit(onCompleted: {[unowned self] in todoTableView.reloadData() }).disposed(by: rx.disposeBag)
         
         output.success.emit(onNext: {[unowned self] _ in
             todoDate.accept(currentDate)
-            todoTableView.reloadData()
-        }).disposed(by: rx.disposeBag)
-        
-        output.todo.emit(onCompleted: {[unowned self] in
             todoTableView.reloadData()
         }).disposed(by: rx.disposeBag)
         
@@ -128,10 +115,9 @@ class CalendarViewController: UIViewController {
     
     func todoAlert() {
         let alert = UIAlertController(title: "Add TodoList", message: "할 일을 적어주세요", preferredStyle: .alert)
-        let doneAction = UIAlertAction(title: "Done", style: .default) { (action) in
-            print(alert.textFields![0].text!)
-            self.todoText.accept(alert.textFields![0].text!)
-            self.alertDone.accept(())
+        let doneAction = UIAlertAction(title: "Done", style: .default) {[unowned self] (action) in
+            todoText.accept(alert.textFields![0].text!)
+            alertDone.accept(())
         }
         let backAction = UIAlertAction(title: "Back", style: .cancel, handler: nil)
         
@@ -140,7 +126,7 @@ class CalendarViewController: UIViewController {
         alert.addTextField { (textField) in
             textField.placeholder = "ex) 로그인 UI 짜기"
         }
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 }
 

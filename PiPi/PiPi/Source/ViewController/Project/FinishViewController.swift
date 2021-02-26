@@ -39,8 +39,6 @@ class FinishViewController: UIViewController {
         let input = FinishViewModel.input(completedTap: completeBtn.rx.tap.asDriver(), projectUrl: giturlTextField.rx.text.orEmpty.asDriver(), projectIntro: introTextView.rx.text.orEmpty.asDriver(), selectIndexPath: Driver.just(selectIndexPath))
         let output = viewModel.transform(input)
         
-        output.result.emit(onCompleted: {
-            self.dismiss(animated: true, completion: nil)
-        }).disposed(by: rx.disposeBag)
+        output.result.emit(onCompleted: {[unowned self] in dismiss(animated: true, completion: nil) }).disposed(by: rx.disposeBag)
     }
 }

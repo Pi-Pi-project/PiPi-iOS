@@ -19,8 +19,9 @@ class ChatListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bindViewModel()
         navigationController?.isNavigationBarHidden = true
+        
+        bindViewModel()
         chatListTableView.backgroundColor = UIColor().hexUIColor(hex: "61BFAD")
     }
     
