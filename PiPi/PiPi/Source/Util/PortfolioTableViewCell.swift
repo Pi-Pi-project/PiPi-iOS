@@ -24,4 +24,9 @@ class PortfolioTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func configCell(_ model: portfolio) {
+        projectNameLabel.text = model.title
+        giturlLabel.text = model.giturl
+        moreLabel.text = model.introduce
+    }
 }

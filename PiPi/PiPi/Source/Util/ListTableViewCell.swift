@@ -16,7 +16,7 @@ class ListTableViewCell: UITableViewCell {
     @IBOutlet weak var accessBtn: UIButton!
     @IBOutlet weak var rejectBtn: UIButton!
     
-    private let disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,13 +24,16 @@ class ListTableViewCell: UITableViewCell {
         chatBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
         accessBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
         rejectBtn.tintColor = UIColor().hexUIColor(hex: "61BFAD")
-        // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
     
+    func configCell(_ model: ApplyList) {
+        let url = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(model.userImg)")
+        userImageView.kf.setImage(with: url)
+        userName.text = model.userNickname
+    }
 }

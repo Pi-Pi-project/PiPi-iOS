@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MainTableViewCell: UITableViewCell {
 
@@ -24,8 +25,7 @@ class MainTableViewCell: UITableViewCell {
     
     func setupUI() {
         coverView.backgroundColor = .black
-        coverView.alpha = 0.7
-        
+        coverView.alpha = 0.6
         
         projectLabel.textColor = .white
         
@@ -43,7 +43,19 @@ class MainTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+    }
+    
+    func configCell(_ model: postModel) {
+        var skillSet = String()
+        for i in 0..<model.postSkillsets.count {
+            skillSet.append(" " + model.postSkillsets[i].skill + " ")
+        }
+        let backimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(model.img ?? "")")
+        let userimg = URL(string: "https://pipi-project.s3.ap-northeast-2.amazonaws.com/\(model.userImg ?? "")")
+        backImageView.kf.setImage(with: backimg)
+        projectLabel.text = model.title
+        skilsLabel.text = skillSet
+        userImgView.kf.setImage(with: userimg)
     }
 }
 
